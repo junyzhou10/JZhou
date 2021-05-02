@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on 周君逸</title>
+    <link>/cn/tags/r/</link>
+    <description>Recent content in R on 周君逸</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 16 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/cn/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ClusterLong: R-package对于纵向数据（longitudinal data）聚类分析</title>
+      <link>/cn/posts/clusterlongpackage/</link>
+      <pubDate>Fri, 16 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/cn/posts/clusterlongpackage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OptTrialDesign: R-package设计（临床）实验--在最大化收益和监管要求间达到平衡</title>
+      <link>/cn/posts/opttrialdesignpackage/</link>
+      <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/cn/posts/opttrialdesignpackage/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
