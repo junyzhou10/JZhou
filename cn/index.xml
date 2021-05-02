@@ -55,16 +55,6 @@ PDF 文档请点击这里.
     </item>
     
     <item>
-      <title>About</title>
-      <link>/cn/about/</link>
-      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/cn/about/</guid>
-      <description>Escrito em Go, Hugo é um gerador de sites estáticos de código aberto disponível sobre a licença Apache Licence 2.0. O Hugo suporta TOML, YAML e JSON como arquivos de dados, Markdown e HTML como arquivos de conteúdo, e usa shortcodes para adicionar conteúdos ricos. Outras funcionalidades notaveis são taxonomias, modo multilingual, processamento de imagens, formatos de saída customizaveis, minificação de HTML/CSS/JS e suporte a fluxos SASS/SCSS.
-O Hugo faz o uso de vários projetos de código aberto incluíndo:</description>
-    </item>
-    
-    <item>
       <title>Publications</title>
       <link>/cn/publications/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -73,6 +63,15 @@ O Hugo faz o uso de vários projetos de código aberto incluíndo:</description>
       <description>期刊发表文章      Wu Y, Zhang Y, Zhou J. A Spline-Based Nonparametric Analysis for Interval-Censored Bivariate Survival Data. Statistica Sinica, (in press) DOI: 10.5705/ss.202019.0296.
   Schoelwer, M. J., Tu, W., Zhou, J., &amp;amp; Eugster, E. A. (2017). Targeted Levothyroxine Therapy for Treatment of Congenital Hypothyroidism. Endocrine Practice, 23(9), 1067-1071.
   审核/准备中文章      Junyi Zhou, Ying Zhang, “An Innovative Method to Cluster Sparse, Irregular, and Unbalanced Longitudinal Data with Multiple Outcomes, ” close to submission</description>
+    </item>
+    
+    <item>
+      <title>其人何如</title>
+      <link>/cn/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cn/about/</guid>
+      <description></description>
     </item>
     
     <item>
