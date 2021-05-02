@@ -216,7 +216,7 @@ Y_i = T_i Y_i^{(1)} + (1 - T_i) Y_i^{(0)}.  \tag{1}
 <span class="math display">\[\begin{equation*}
 \xi_i = Y_i^{(1)} - Y_i^{(0)}.
 \end{equation*}\]</span>
-Clearly, the definition of causal effect does not depend on which potential outcome is observed. Besides, ITE should be measured on the same unit, at same time point post-treatment. A direct observation and measurement of ITE is therefore infeasible. However, we are able to estimate the average individual treatment effect under plausible assumptions, which will be discussed in subsection 3.1.2. Here we first denote expected ITE for a specific unit <span class="math inline">\(i\)</span> with a vector of covariates <span class="math inline">\(X_i\)</span>, or individual average treatment effect (IATE), as
+Clearly, the definition of causal effect does not depend on which potential outcome is observed. Besides, ITE should be measured on the same unit, at same time point post-treatment. A direct observation and measurement of ITE is therefore infeasible. However, we are able to estimate the average individual treatment effect under plausible assumptions, which will be discussed in subsection <a href="#sec3.1.2">1.2</a>. Here we first denote expected ITE for a specific unit <span class="math inline">\(i\)</span> with a vector of covariates <span class="math inline">\(X_i\)</span>, or individual average treatment effect (IATE), as
 <span class="math display">\[
 \tau(x) = E\left[ \xi_i \mid  X_i = x \right].
 \]</span>
@@ -242,8 +242,8 @@ Then the ATE could be calculated by
 where the last equality comes from equation <a href="#eq:obsY">(1)</a>. Thus, the ATE could be easily obtained by taking the difference of two group average. This is how clinical trials measure the treatment effect between the proposed therapy against the placebo or standard therapy. However, even when the population treatment effect is not significant, the drug could still benefit a subgroup of the patients which could be hardly measured in traditional clinical trials.</p>
 <p>In order to see the subgroup treatment effect, we need to estimate CATE. The estimation of CATE in randomized experiments is the simplified version of that in observational studies, which just replace the propensity score (will be introduced in subsection <a href="#sec3.1.1">1.2</a>) by constant values.</p>
 </div>
-<div id="observational-studies" class="section level3">
-<h3>3.1.2 Observational Studies</h3>
+<div id="sec3.1.2" class="section level3">
+<h3>1.2 Observational Studies</h3>
 <p>In observational studies, the treatment assignment is related to the outcome and no longer fully random, which means
 <span class="math display">\[
 E[Y^{(k)}] \neq E[Y^{(k)} \mid T] 
@@ -596,8 +596,8 @@ The estimates of covariate-specific causal effects are then given by
 <p>Aside from those advantages comparing to the existing methods, adopting a tree structure helps to alleviate the potential problems of GAM. GAM is known for its great flexibility but has several limitations: 1) it is an additive structure which is not able to account for interaction effects; 2) GAM with B-splines regression is prone to overfit. For the first issue, tree structure, however, could capture the non-linearity even <span class="math inline">\(\tau^{(\cdot)}(X)\)</span> is estimated linearly in each leaf. A common way to solve overfitting issue is by adding penalty terms in the loss function, but it could be computationally very expensive in our case. Here we adopt the idea of random forest to subsample the covariates during the growth of each single tree to mitigate overfitting and simplify the optimization calculation as well.</p>
 </div>
 </div>
-<div id="estimation-processsec3.3.3" class="section level3">
-<h3>3.3 Estimation Process{sec3.3.3}</h3>
+<div id="sec3.3.3" class="section level3">
+<h3>3.3 Estimation Process</h3>
 <p>Denote <span class="math inline">\(\underline\tau = (\tau^{(1)}, \tau^{(2)}, ..., \tau^{(K)})\)</span> and the estimated individual treatment effect from all treatment arms for the <span class="math inline">\(i^{th}\)</span> subject is <span class="math inline">\(\underline{\hat\tau_i} = \left(\hat\tau^{(1)}(X_i), \hat\tau^{(2)}(X_i), ..., \hat\tau^{(K)}(X_i) \right)\)</span>. We propose the following algorithm to generate a single tree</p>
 <ul>
 <li><p><strong>Step 1:</strong> Split the current node into two parts, left subnode and right subnode, at a given value of one covariate. The samples in left and right subnode is denoted by set <span class="math inline">\(\mathcal{S}_L\)</span> and <span class="math inline">\(\mathcal{S}_R\)</span> respectively, each with size <span class="math inline">\(N_L\)</span> and <span class="math inline">\(N_R\)</span>. At each subnode, we first fit <span class="math inline">\(\hat{m}(X)\)</span> and <span class="math inline">\(\hat\pi^{(k)}(X), k = 1, 2, ..., K\)</span> and further obtain the model parameters <span class="math inline">\((\underline{\hat{\gamma}}, \underline{\hat{c}})\)</span> by solving equation <a href="#eq:opt">(16)</a>. Then the estimation of the individual treatment effect <span class="math inline">\(\underline{\hat\tau_i}\)</span> is accessible by equation <a href="#eq:tau">(17)</a> which is called ‘pseudo’ causal effects, since they are mainly used for facilitating the tree build-up. Denote the obtained <span class="math inline">\(N_L\)</span> ‘pseudo’ outcomes in left subnode,
@@ -666,10 +666,23 @@ and the recommended treatment is the one that provides the optimal effect: <span
 </div>
 <div id="cohort-definition" class="section level3">
 <h3>4.2 Cohort Definition</h3>
-<p>We will identify the cohort from medical records stored in INPC. We will use ICD9 code to identify cases of hypertension. To alleviate the concern about underdiagnoses of hypertension, we also examined recorded blood pressure in the medical records. An individual is considered to be hypertensive if his/her blood pressure meets the criteria for hypertension set forth by the <em>Seventh Report of the Joint National Committee on Prevention, Detection, Evaluation, and Treatment of High Blood Pressure</em> (JNC 7). The ICD9 codes used are provided in Table <span class="math inline">\(\ref{tab:ICD9}\)</span>.</p>
+<p>We will identify the cohort from medical records stored in INPC. We will use ICD9 code to identify cases of hypertension. To alleviate the concern about underdiagnoses of hypertension, we also examined recorded blood pressure in the medical records. An individual is considered to be hypertensive if his/her blood pressure meets the criteria for hypertension set forth by the <em>Seventh Report of the Joint National Committee on Prevention, Detection, Evaluation, and Treatment of High Blood Pressure</em> (JNC 7).</p>
 <p>To meet the Standards for Privacy of Individually Identifiable Health Information (“Privacy Rules”) set by the Health Insurance Portability and Accountability Act of 1996, we sought and obtained permission from Indiana University Institutional Review Board to use de-identified data in this research. To comply with the privacy rules, we removed all identifiable information from the study data, including names, addresses, telephone numbers, social-security numbers, hospital identification numbers, etc. We also removed all calendar dates from the medical records and only kept calendar years of the recorded events such as medication prescriptions and dispensing, laboratory tests, outpatient and inpatient visits. To maintain the temporal sequence of recorded events, we designate the date of the initial diagnosis as the index date for that patient, i.e., time zero. All other record dates are indicated by the number of calendar days from the index date. We recognize that the determination of time of “initial” diagnosis is not foolproof as it is conceivable that the patient could have been diagnosed earlier than our medical records showed.</p>
 <p>Our cohort for hypertension patients was extracted for a five year time period between 2004 to 2012. A total of 812,571 patients were identified as hypertension. But considering the fact of incompleteness, the total data available for use will be far less than this number, which may around 20k to 30k.</p>
-
+<!-- \begin{table}[] -->
+<!-- \caption{ICD-9 Code for Hypertension used in data extraction} -->
+<!-- \label{tab:ICD9} -->
+<!-- \resizebox{\textwidth}{!}{% -->
+<!-- \begin{tabular}{p{1.2cm}|p{14cm}} -->
+<!-- 401.9 & Unspecified essential hypertension (hypertension occurring without preexisting renal disease or known organic cause) \\ -->
+<!-- 401.1 & Benign essential hypertension \\ -->
+<!-- 401.0 & Malignant essential hypertension \\ -->
+<!-- 255.10 & Hyperaldosteronism, unspecified (abnormality of electrolyte function caused by excessive secretion of aldosterone by the adrenal cortex) \\ -->
+<!-- 405.0 & Malignant secondary hypertension \\ -->
+<!-- 405.9 & Unspecified secondary hypertension -->
+<!-- \end{tabular}% -->
+<!-- } -->
+<!-- \end{table} -->
 </div>
 <div id="potential-problems-of-emr-data-application" class="section level3">
 <h3>4.2 Potential Problems of EMR Data Application</h3>
