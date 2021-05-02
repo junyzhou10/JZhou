@@ -31,7 +31,7 @@
       <pubDate>Tue, 05 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>/posts/proposal/</guid>
-      <description>Chapter 3. Heterogeneous Treatment Effect Estimation 3.1 Introduction The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. In this proposal, I examine the estimation of causal effects therapeutic treatments by using observational data in a population where the treatment effects vary by observed patient characteristics.</description>
+      <description>Heterogeneous Treatment Effect Estimation 1. Introduction The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. In this proposal, I examine the estimation of causal effects therapeutic treatments by using observational data in a population where the treatment effects vary by observed patient characteristics.</description>
     </item>
     
     <item>
@@ -73,49 +73,25 @@ Hugo makes use of a variety of open source projects including:
     </item>
     
     <item>
-      <title>About</title>
-      <link>/about.pt-br/</link>
-      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/about.pt-br/</guid>
-      <description>Escrito em Go, Hugo é um gerador de sites estáticos de código aberto disponível sobre a licença Apache Licence 2.0. O Hugo suporta TOML, YAML e JSON como arquivos de dados, Markdown e HTML como arquivos de conteúdo, e usa shortcodes para adicionar conteúdos ricos. Outras funcionalidades notaveis são taxonomias, modo multilingual, processamento de imagens, formatos de saída customizaveis, minificação de HTML/CSS/JS e suporte a fluxos SASS/SCSS.
-O Hugo faz o uso de vários projetos de código aberto incluíndo:</description>
-    </item>
-    
-    <item>
       <title>Contact</title>
       <link>/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/contact/</guid>
-      <description>Follow me, @johndoe.</description>
+      <description>Welcome to chat. Topics including, but not limited to, physics, statistics, AI, ML, finance, economics, genomics, and medicine, are all of my interests.
+To send me an email, please go to the front page and click the envelope icon.
+I also use Wechat@junyzhou10</description>
     </item>
     
     <item>
-      <title>Contato</title>
-      <link>/contact/</link>
+      <title>Publications</title>
+      <link>/publications/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/contact/</guid>
-      <description>Me siga em @joaoninguem.</description>
-    </item>
-    
-    <item>
-      <title>Projects</title>
-      <link>/projects/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/</guid>
-      <description>Nothing to see here&amp;hellip; Move along!</description>
-    </item>
-    
-    <item>
-      <title>Projetos</title>
-      <link>/projects/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/</guid>
-      <description>Nada para ver aqui.. Circulando!</description>
+      <guid>/publications/</guid>
+      <description>Journal Publications      Wu Y, Zhang Y, Zhou J. A Spline-Based Nonparametric Analysis for Interval-Censored Bivariate Survival Data. Statistica Sinica, (in press) DOI: 10.5705/ss.202019.0296.
+  Schoelwer, M. J., Tu, W., Zhou, J., &amp;amp; Eugster, E. A. (2017). Targeted Levothyroxine Therapy for Treatment of Congenital Hypothyroidism. Endocrine Practice, 23(9), 1067-1071.
+  Working &amp;amp; Under-reviewing Papers      Junyi Zhou, Ying Zhang, “An Innovative Method to Cluster Sparse, Irregular, and Unbalanced Longitudinal Data with Multiple Outcomes, ” close to submission</description>
     </item>
     
   </channel>

@@ -194,9 +194,16 @@
   </url><url>
     <loc>/about/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/about.pt-br/</loc>
-    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/about/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/about/"
+                />
   </url><url>
     <loc>/authors/</loc>
     <xhtml:link
@@ -211,8 +218,16 @@
                 />
   </url><url>
     <loc>/contact/</loc>
-  </url><url>
-    <loc>/contact/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/contact/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/contact/"
+                />
   </url><url>
     <loc>/categories/lectures/slides/</loc>
     <xhtml:link
@@ -226,9 +241,17 @@
                 href="/categories/lectures/slides/"
                 />
   </url><url>
-    <loc>/projects/</loc>
-  </url><url>
-    <loc>/projects/</loc>
+    <loc>/publications/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/publications/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/publications/"
+                />
   </url><url>
     <loc>/series/</loc>
     <xhtml:link

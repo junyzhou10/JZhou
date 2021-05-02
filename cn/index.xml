@@ -54,5 +54,37 @@ PDF 文档请点击这里.
 相关的报告slides请点击这里.</description>
     </item>
     
+    <item>
+      <title>About</title>
+      <link>/cn/about/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/cn/about/</guid>
+      <description>Escrito em Go, Hugo é um gerador de sites estáticos de código aberto disponível sobre a licença Apache Licence 2.0. O Hugo suporta TOML, YAML e JSON como arquivos de dados, Markdown e HTML como arquivos de conteúdo, e usa shortcodes para adicionar conteúdos ricos. Outras funcionalidades notaveis são taxonomias, modo multilingual, processamento de imagens, formatos de saída customizaveis, minificação de HTML/CSS/JS e suporte a fluxos SASS/SCSS.
+O Hugo faz o uso de vários projetos de código aberto incluíndo:</description>
+    </item>
+    
+    <item>
+      <title>Publications</title>
+      <link>/cn/publications/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cn/publications/</guid>
+      <description>期刊发表文章      Wu Y, Zhang Y, Zhou J. A Spline-Based Nonparametric Analysis for Interval-Censored Bivariate Survival Data. Statistica Sinica, (in press) DOI: 10.5705/ss.202019.0296.
+  Schoelwer, M. J., Tu, W., Zhou, J., &amp;amp; Eugster, E. A. (2017). Targeted Levothyroxine Therapy for Treatment of Congenital Hypothyroidism. Endocrine Practice, 23(9), 1067-1071.
+  审核/准备中文章      Junyi Zhou, Ying Zhang, “An Innovative Method to Cluster Sparse, Irregular, and Unbalanced Longitudinal Data with Multiple Outcomes, ” close to submission</description>
+    </item>
+    
+    <item>
+      <title>联系</title>
+      <link>/cn/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cn/contact/</guid>
+      <description>欢迎聊天。 我感兴趣的主题包括但不限于物理学，统计学，人工智能，机器学习，金融，经济学，基因组学和医学。
+要发送电子邮件，请转到首页，然后单击信封图标。
+我也用微信@junyzhou10</description>
+    </item>
+    
   </channel>
 </rss>

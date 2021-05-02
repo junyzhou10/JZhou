@@ -183,6 +183,19 @@
                 href="/cn/posts/mc-opt-slides/"
                 />
   </url><url>
+    <loc>/cn/about/</loc>
+    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/about/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/about/"
+                />
+  </url><url>
     <loc>/cn/authors/</loc>
     <xhtml:link
                 rel="alternate"
@@ -207,6 +220,18 @@
                 href="/cn/categories/lectures/slides/"
                 />
   </url><url>
+    <loc>/cn/publications/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/publications/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/publications/"
+                />
+  </url><url>
     <loc>/cn/series/</loc>
     <xhtml:link
                 rel="alternate"
@@ -217,6 +242,18 @@
                 rel="alternate"
                 hreflang="cn"
                 href="/cn/series/"
+                />
+  </url><url>
+    <loc>/cn/contact/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/contact/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/contact/"
                 />
   </url>
 </urlset>

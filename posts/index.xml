@@ -31,7 +31,7 @@
       <pubDate>Tue, 05 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>/posts/proposal/</guid>
-      <description>Chapter 3. Heterogeneous Treatment Effect Estimation 3.1 Introduction The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. In this proposal, I examine the estimation of causal effects therapeutic treatments by using observational data in a population where the treatment effects vary by observed patient characteristics.</description>
+      <description>Heterogeneous Treatment Effect Estimation 1. Introduction The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. In this proposal, I examine the estimation of causal effects therapeutic treatments by using observational data in a population where the treatment effects vary by observed patient characteristics.</description>
     </item>
     
     <item>
