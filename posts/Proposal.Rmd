@@ -98,7 +98,7 @@ where the last equality comes from equation \@ref(eq:obsY). Thus, the ATE could 
 
 In order to see the subgroup treatment effect, we need to estimate CATE. The estimation of CATE in randomized experiments is the simplified version of that in observational studies, which just replace the propensity score (will be introduced in subsection [1.2](#sec3.1.1)) by constant values.
 
-### 3.1.2 Observational Studies
+### 1.2 Observational Studies
 In observational studies, the treatment assignment is related to the outcome and no longer fully random, which means 
 $$
 E[Y^{(k)}] \neq E[Y^{(k)} \mid T] 
