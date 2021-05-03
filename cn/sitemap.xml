@@ -41,17 +41,17 @@
                 href="/cn/categories/"
                 />
   </url><url>
-    <loc>/cn/posts/</loc>
+    <loc>/cn/projects/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/"
+                href="/projects/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/"
+                href="/cn/projects/"
                 />
   </url><url>
     <loc>/cn/tags/</loc>
@@ -83,30 +83,30 @@
     <loc>/cn/tags/%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/cn/posts/clusterlongapp/</loc>
+    <loc>/cn/projects/clusterlongapp/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/clusterlongapp/"
+                href="/projects/clusterlongapp/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/clusterlongapp/"
+                href="/cn/projects/clusterlongapp/"
                 />
   </url><url>
-    <loc>/cn/posts/clusterlongpackage/</loc>
+    <loc>/cn/projects/clusterlongpackage/</loc>
     <lastmod>2021-04-16T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/clusterlongpackage/"
+                href="/projects/clusterlongpackage/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/clusterlongpackage/"
+                href="/cn/projects/clusterlongpackage/"
                 />
   </url><url>
     <loc>/cn/tags/r/</loc>
@@ -135,17 +135,17 @@
                 href="/cn/categories/r-package/"
                 />
   </url><url>
-    <loc>/cn/posts/odt-capm/</loc>
+    <loc>/cn/projects/odt-capm/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/odt-capm/"
+                href="/projects/odt-capm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/odt-capm/"
+                href="/cn/projects/odt-capm/"
                 />
   </url><url>
     <loc>/cn/categories/thoughts/</loc>
@@ -167,30 +167,30 @@
     <loc>/cn/tags/%E9%87%91%E8%9E%8D/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/cn/posts/opttrialdesignapp/</loc>
+    <loc>/cn/projects/opttrialdesignapp/</loc>
     <lastmod>2019-08-28T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/opttrialdesignapp/"
+                href="/projects/opttrialdesignapp/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/opttrialdesignapp/"
+                href="/cn/projects/opttrialdesignapp/"
                 />
   </url><url>
-    <loc>/cn/posts/opttrialdesignpackage/</loc>
+    <loc>/cn/projects/opttrialdesignpackage/</loc>
     <lastmod>2019-08-26T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/opttrialdesignpackage/"
+                href="/projects/opttrialdesignpackage/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/opttrialdesignpackage/"
+                href="/cn/projects/opttrialdesignpackage/"
                 />
   </url><url>
     <loc>/cn/tags/em%E7%AE%97%E6%B3%95/</loc>
@@ -199,17 +199,17 @@
     <loc>/cn/tags/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B/</loc>
     <lastmod>2019-04-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/cn/posts/mc-opt-slides/</loc>
+    <loc>/cn/projects/mc-opt-slides/</loc>
     <lastmod>2019-04-10T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/mc-opt-slides/"
+                href="/projects/mc-opt-slides/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/mc-opt-slides/"
+                href="/cn/projects/mc-opt-slides/"
                 />
   </url><url>
     <loc>/cn/authors/</loc>

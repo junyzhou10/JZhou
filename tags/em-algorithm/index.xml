@@ -9,10 +9,10 @@
     <lastBuildDate>Wed, 10 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/em-algorithm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Monte Carlo Optimization</title>
-      <link>/posts/mc-opt-slides/</link>
+      <link>/projects/mc-opt-slides/</link>
       <pubDate>Wed, 10 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/posts/mc-opt-slides/</guid>
+      <guid>/projects/mc-opt-slides/</guid>
       <description>Optimization is the key component of the AI/ML algorithm. Whatever objective function is proposed, the final step is to optimize it. Convex optimization problems, either unconstrained or constrained, are well explored (see here). Even though, the efficiency or performance still largely depends on the shape of the surface of the objective function. For convex problems, the solution could be trapped at saddle points; or for local convex objective functions, the solution might reach to the local optima instead of global optima.</description>
     </item>
     

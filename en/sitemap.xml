@@ -41,17 +41,17 @@
                 href="/categories/"
                 />
   </url><url>
-    <loc>/posts/clusterlongapp/</loc>
+    <loc>/projects/clusterlongapp/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/clusterlongapp/"
+                href="/cn/projects/clusterlongapp/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/clusterlongapp/"
+                href="/projects/clusterlongapp/"
                 />
   </url><url>
     <loc>/tags/development/</loc>
@@ -73,17 +73,17 @@
     <loc>/tags/ml/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/</loc>
+    <loc>/projects/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/"
+                href="/cn/projects/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/"
+                href="/projects/"
                 />
   </url><url>
     <loc>/tags/</loc>
@@ -99,17 +99,17 @@
                 href="/tags/"
                 />
   </url><url>
-    <loc>/posts/clusterlongpackage/</loc>
+    <loc>/projects/clusterlongpackage/</loc>
     <lastmod>2021-04-16T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/clusterlongpackage/"
+                href="/cn/projects/clusterlongpackage/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/clusterlongpackage/"
+                href="/projects/clusterlongpackage/"
                 />
   </url><url>
     <loc>/tags/r/</loc>
@@ -138,17 +138,17 @@
                 href="/categories/r-package/"
                 />
   </url><url>
-    <loc>/posts/odt-capm/</loc>
+    <loc>/projects/odt-capm/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/odt-capm/"
+                href="/cn/projects/odt-capm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/odt-capm/"
+                href="/projects/odt-capm/"
                 />
   </url><url>
     <loc>/tags/finance/</loc>
@@ -173,33 +173,33 @@
     <loc>/tags/causal-inference/</loc>
     <lastmod>2019-11-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/proposal/</loc>
+    <loc>/projects/proposal/</loc>
     <lastmod>2019-11-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/opttrialdesignapp/</loc>
+    <loc>/projects/opttrialdesignapp/</loc>
     <lastmod>2019-08-28T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/opttrialdesignapp/"
+                href="/cn/projects/opttrialdesignapp/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/opttrialdesignapp/"
+                href="/projects/opttrialdesignapp/"
                 />
   </url><url>
-    <loc>/posts/opttrialdesignpackage/</loc>
+    <loc>/projects/opttrialdesignpackage/</loc>
     <lastmod>2019-08-26T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/opttrialdesignpackage/"
+                href="/cn/projects/opttrialdesignpackage/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/opttrialdesignpackage/"
+                href="/projects/opttrialdesignpackage/"
                 />
   </url><url>
     <loc>/tags/em-algorithm/</loc>
@@ -208,17 +208,17 @@
     <loc>/tags/monte-carlo/</loc>
     <lastmod>2019-04-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/mc-opt-slides/</loc>
+    <loc>/projects/mc-opt-slides/</loc>
     <lastmod>2019-04-10T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
-                href="/cn/posts/mc-opt-slides/"
+                href="/cn/projects/mc-opt-slides/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/mc-opt-slides/"
+                href="/projects/mc-opt-slides/"
                 />
   </url><url>
     <loc>/about/</loc>

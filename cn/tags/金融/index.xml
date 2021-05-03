@@ -9,10 +9,10 @@
     <lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="/cn/tags/%E9%87%91%E8%9E%8D/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OptTrialDesign的逻辑与金融里CAPM的联系</title>
-      <link>/cn/posts/odt-capm/</link>
+      <link>/cn/projects/odt-capm/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/cn/posts/odt-capm/</guid>
+      <guid>/cn/projects/odt-capm/</guid>
       <description>OptTrialDesign背后的想法 在最优（临床）试验设计中，我们提出了一种寻找最佳实验设计的新颖方法，既可以最大限度地提高财务收益（即预期净收入，ENR），又可以符合监管要求。我们必须在两者中权衡。因为从制药公角度出发，较短的研究期限导致更早的市场准入，这有助于在LOE（排他性损失）之前最大化利润。但另一方面，监管机构和卫生技术评估（HTA）机构希望看到更加有保证的临床结果，这通常需要更长的研究时间。这两者之间存在一定冲突。
 在具有time-to-event endpoint的实验中，给定target number of events，临床试验设计仍未完全确定。通常有三个参数，样本量（\(N\)），研究持续时间（\(S\)）和招人速度（\(r_a\)）（或招人时间，如果假设uniform \(r_a\)，在此我们不考虑，也不考虑对于具有中期分析的试验，可以按照类似的想法进行扩展），并且这三者存在无限的组合，从而形成了无数满足条件的试验设计。实际上，\(r_a\)不能取任意数字，因为它受到疾病发病率，类型和场所能力的限制。假设研究人员能够提供大致的\(r_a\)，甚至是一个范围，试验设计的自由度就会从3减少到2，并且我们能够在\(2×2\)平面中展示可行的设计集（如下图所示）。值得注意的是，研究持续时间与样本量之间需要权衡取舍。较大的样本量有助于加快试验，反之亦然。
  金融中的CAPM模型 我们休息一会儿，转向资本资产定价模型（CAPM）。CAPM因其在分析投资组合定价方面的贡献而赢得了1990 年诺贝尔经济学奖，并因其简单性和实用价值而闻名。

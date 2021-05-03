@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="color-scheme" content="light dark">
+
+    
+
+    <meta name="author" content="Junyi Zhou">
+    <meta name="description" content="Nice connection between the idea behind OptTrialDesign &amp; CAPM in finance">
+    <meta name="keywords" content="personal, projects, apps">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Connection between the Idea behind OptTrialDesign &amp; CAPM in Finance"/>
+<meta name="twitter:description" content="Nice connection between the idea behind OptTrialDesign &amp; CAPM in finance"/>
+
+    <meta property="og:title" content="Connection between the Idea behind OptTrialDesign &amp; CAPM in Finance" />
+<meta property="og:description" content="Nice connection between the idea behind OptTrialDesign &amp; CAPM in finance" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/projects/odt-capm/" /><meta property="article:section" content="projects" />
+<meta property="article:published_time" content="2020-01-01T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-01-01T00:00:00&#43;00:00" />
+
+
+
+    <title>
+  Connection between the Idea behind OptTrialDesign &amp; CAPM in Finance · Junyi Zhou
+</title>
+
+    
+      <link rel="canonical" href="/projects/odt-capm/">
+    
+
+    <link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.1.7" as="font" type="font/woff2" crossorigin>
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.406d0bb9b7e93dd1c4497ee4abb177af6bea8f6c16aea89ae05f2aef56ef44e5.css" integrity="sha256-QG0LubfpPdHESX7kq7F3r2vqj2wWrqia4F8q71bvROU=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.dde8a61eb31a32353b4baf3d9113f03c4ea2a8ca9bb736f59ca2d2b2cb664f0b.css" integrity="sha256-3eimHrMaMjU7S689kRPwPE6iqMqbtzb1nKLSsstmTws=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+
+    <meta name="generator" content="Hugo 0.83.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="preload-transitions colorscheme-auto"
+        onload=""
+  >
+    
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      Junyi Zhou
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/about/">About</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/projects/">Projects</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/publications/">Publications</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/contact/">Contact me</a>
+            </li>
+          
+        
+        
+          
+          
+          
+            
+              
+                <li class="navigation-item menu-separator">
+                  <span>|</span>
+                </li>
+                
+              
+              <li class="navigation-item">
+                <a href="/cn/projects/odt-capm/">中文</a>
+              </li>
+            
+          
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1 class="title">
+        <a class="title-link" href="/projects/odt-capm/">
+          Connection between the Idea behind OptTrialDesign &amp; CAPM in Finance
+        </a>
+      </h1>
+    </header>
+
+    
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+<div id="idea-behind-opttrialdesign" class="section level4">
+<h4>Idea behind OptTrialDesign</h4>
+<p>In <a href="Dgn_stgy_Junyi_Nektar.pdf">Optimal Design Strategy</a>, we propose a novel way to find the optimal trial design, in terms of maximizing the financial outcomes, i.e., Expected Net Revenue (ENR), but also under the regulatory requirements. We have to trade-off because in pharmaceutical companies’ position, a shorter study/trial duration leads to earlier market access which helps to maximize the profits before LOE (loss of exclusivity). On the other hand, regulatory agencies and health technology assessment (HTA) bodies wish to see a more guaranteed clinical results, which usually require longer study duration. This leads to the conflicts.</p>
+<p>In trials with time-to-event endpoint, the trial design is still not fully determined with given target number of events. There are usually three parameters, sample size (<span class="math inline">\(N\)</span>), study duration (<span class="math inline">\(S\)</span>), and accrual rate (<span class="math inline">\(r_a\)</span>) (or accrual duration if assuming uniform accrual rate. Here we do not consider it, and also not for trials with interim analysis, which could be extended following similar idea), and there exists infinite combinations of these three to form a trial design that could observe target number of events at the end of the study. In reality, <span class="math inline">\(r_a\)</span> cannot take arbitrary number as it is strongly restricted by the disease incidence/type and accrual ability of sites. Given investigators are able to provide a rough number of <span class="math inline">\(r_a\)</span>, or even a range of it, the degree of freedom is reduced from 3 to 2, and we are able to display the feasible sets of designs in a <span class="math inline">\(2\times 2\)</span> plane (as shown in the figure below). It is noteworthy that there is a trade-off between study duration and sample size. The larger sample size helps to accelerate the trial, and vice versa.</p>
+<p><img src="/images/Opt_constr.jpg" /></p>
+</div>
+<div id="capm-in-finance" class="section level4">
+<h4>CAPM in Finance</h4>
+<p>Let’s take a break and turn to Capital Asset Pricing Model (CAPM) for a while. CAPM won the <a href="https://en.wikipedia.org/wiki/Capital_asset_pricing_model">1990 Nobel Memorial Prize in Economics</a> for its contribution on pricing a portfolio analytically, and was famous for its simplicity and practical value.</p>
+<p>In CAPM, the expected return of an asset or portfolio (<span class="math inline">\(ER_i\)</span>) can be calculated by
+<span class="math display">\[
+ER_i = R_f + \beta_i(ER_m - R_f)
+\]</span>
+where <span class="math inline">\(R_f\)</span> is the risk-free rate (e.g., <a href="https://www.cnbc.com/quotes/US10Y">10-year treasury rate</a>); <span class="math inline">\(\beta_i\)</span> represents the individual risk against the market risk; and <span class="math inline">\(ER_m - R_f\)</span> is the market risk premium. Basically, it means that in ideal situation, the riskier of an asset, the higher return is expected.</p>
+<p>In other words, we can say that in order to find an optimal asset, we actually need to maximize the following objective function
+<span class="math display">\[
+\max_i R_f + \beta_i(ER_m - R_f) \text{ for } i \in \text{feasible assets/portfolio}
+\]</span>
+Then, what is the feasible set? We know the expected return increases as the expected risk for an asset, but due to <a href="https://en.wikipedia.org/wiki/Marginal_utility">Law of Diminishing Marginal Utility</a>, there should be an upper bound of the expected return (cannot go to infinity) and a lower bound of the expected risk (cannot go to 0). Usually, people believe the feasible sets is the region embraced by the parabola in the figure below. That parabola (blue curve) is called <a href="https://en.wikipedia.org/wiki/Efficient_frontier">Efficient Frontier</a> that indicates the largest and smallest expected return at a given risk (notice the limitation of expected risk and return). The assets/portfolio not on the efficient frontier (blue circle points; Notice that there are points outside the efficient frontier simply because the efficient frontier is hypothetical, which can be violated in practice) is inefficient as you can always find another asset with same expected risk but higher expected return on the frontier.</p>
+<p><img src="https://www.investopedia.com/thmb/5OGwx-OvJwZ4c0Q8kU45TkI0yS4=/1787x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/CapitalAssetPricingModelCAPM1_2-e6be6eb7968d4719872fe0bcdc9b8685.png" title="Figure 2. CAPM illustration" /></p>
+<p>Let’s rewrite the problem in the form of optimization problem as
+<span class="math display">\[
+\begin{aligned}
+\max_i &amp; \quad R_f + \beta_i(ER_m - R_f)  \\
+\text{s.t.} &amp; \quad i \in \text{Efficient Frontier}
+\end{aligned}
+\]</span>
+and the objective function <span class="math inline">\(R_f + \beta_i(ER_m - R_f)\)</span> is actually the capital market line, the black straight line in the figure. The optimal solution is thus the tangent point (green point).</p>
+</div>
+<div id="back-to-optimal-trial-design" class="section level4">
+<h4>Back to Optimal Trial Design</h4>
+<p>Now let’s come back to the idea of Optimal Trial Design. Similarly, we want to maximize the ENR which can be expressed as
+<span class="math display">\[
+ENR = c_0(L-S) - c_1S - c_2N = c_0L - (c_0+c_1)S-c_2N
+\]</span>
+where <span class="math inline">\(c_0(L-S)\)</span> is the expected sales; <span class="math inline">\(L\)</span> is the roughly the duration of exclusivity; <span class="math inline">\(c_1S\)</span> is the total maintenance cost; <span class="math inline">\(c_1S\)</span> is the total sample cost. The <strong>efficient frontier</strong> of feasible sets, as aforementioned, is the gray line in Figure 1. Other feasible sets above the efficient frontier are off-optimal as we can always find a better solution on the frontier with either smaller <span class="math inline">\(N\)</span> or smaller <span class="math inline">\(S\)</span>, which yield better ENR.</p>
+<p>With exactly the same idea of CAPM, the trial design problem can be transformed into an constrained optimization problem:
+<span class="math display">\[
+\begin{aligned}
+\max_i &amp; \quad c_0L - (c_0+c_1)S_i-c_2N_i  \\
+\text{s.t.} &amp; \quad i \in \text{Efficient Frontier}
+\end{aligned}
+\]</span>
+and the solution is the tangent point as well (the red point).</p>
+</div>
+
+  </article>
+</section>
+
+  
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+        ©
+        
+          2020 -
+        
+        2021
+         Junyi Zhou 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+        
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+      
+      <script src="/js/coder.min.235666b114443867d43eeb5799d51f6252965e5163f338285e113fa381d3d27e.js" integrity="sha256-I1ZmsRREOGfUPutXmdUfYlKWXlFj8zgoXhE/o4HT0n4="></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+  </body>
+
+</html>
