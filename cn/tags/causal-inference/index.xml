@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Causal Inference on 周君逸</title>
+    <link>/cn/tags/causal-inference/</link>
+    <description>Recent content in Causal Inference on 周君逸</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 05 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="/cn/tags/causal-inference/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Review of Causal Inference</title>
+      <link>/cn/posts/pulearning/</link>
+      <pubDate>Tue, 05 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/cn/posts/pulearning/</guid>
+      <description>Heterogeneous Treatment Effect Estimation 1. Introduction The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. In this proposal, I examine the estimation of causal effects therapeutic treatments by using observational data in a population where the treatment effects vary by observed patient characteristics.</description>
+    </item>
+    
+  </channel>
+</rss>

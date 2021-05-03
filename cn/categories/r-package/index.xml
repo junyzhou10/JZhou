@@ -9,19 +9,19 @@
     <lastBuildDate>Fri, 16 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/cn/categories/r-package/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ClusterLong: R-package对于纵向数据（longitudinal data）聚类分析</title>
-      <link>/cn/projects/clusterlongpackage/</link>
+      <link>/cn/posts/clusterlongpackage/</link>
       <pubDate>Fri, 16 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/cn/projects/clusterlongpackage/</guid>
+      <guid>/cn/posts/clusterlongpackage/</guid>
       <description></description>
     </item>
     
     <item>
       <title>OptTrialDesign: R-package设计（临床）试验--在最大化收益和监管要求间达到平衡</title>
-      <link>/cn/projects/opttrialdesignpackage/</link>
+      <link>/cn/posts/opttrialdesignpackage/</link>
       <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/cn/projects/opttrialdesignpackage/</guid>
+      <guid>/cn/posts/opttrialdesignpackage/</guid>
       <description></description>
     </item>
     

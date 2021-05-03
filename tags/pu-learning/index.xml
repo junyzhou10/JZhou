@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PU learning on Junyi Zhou</title>
+    <link>/tags/pu-learning/</link>
+    <description>Recent content in PU learning on Junyi Zhou</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 28 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/pu-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Positive-and-Unlabeled Learning</title>
+      <link>/posts/pulearning/</link>
+      <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/pulearning/</guid>
+      <description>Introduction Positive and unlabeled learning, or positive-unlabeled (PU) learning, refers to the binary classification problem where only positive labels are observed and the rest are unlabeled. Since unlabeled part of data consists of both positive and negative instances, naively treating them as negative and performing a standard classification learning algorithm will underestimate the probability of being positive (Ward et al. 2009; Yang et al. 2012). Without providing negative instances in the training set, however, will prevent the direct use of well-developed supervised classification methods.</description>
+    </item>
+    
+  </channel>
+</rss>

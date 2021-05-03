@@ -9,19 +9,19 @@
     <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/ml/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Clustering Longitudinal Data (Online App)</title>
-      <link>/projects/clusterlongapp/</link>
+      <link>/posts/clusterlongapp/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/projects/clusterlongapp/</guid>
+      <guid>/posts/clusterlongapp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ClusterLong: An R-package to Cluster Longitudinal Data</title>
-      <link>/projects/clusterlongpackage/</link>
+      <link>/posts/clusterlongpackage/</link>
       <pubDate>Fri, 16 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/projects/clusterlongpackage/</guid>
+      <guid>/posts/clusterlongpackage/</guid>
       <description></description>
     </item>
     

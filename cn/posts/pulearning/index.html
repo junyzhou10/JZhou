@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="cn">
+    <meta name="color-scheme" content="light dark">
+
+    
+
+    <meta name="author" content="周君逸">
+    <meta name="description" content="Review of Causal Inference">
+    <meta name="keywords" content="个人，项目，应用">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Review of Causal Inference"/>
+<meta name="twitter:description" content="Review of Causal Inference"/>
+
+    <meta property="og:title" content="Review of Causal Inference" />
+<meta property="og:description" content="Review of Causal Inference" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/cn/posts/pulearning/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-11-05T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-11-05T00:00:00&#43;00:00" /><meta property="og:site_name" content="周君逸" />
+
+
+
+    <title>
+  Review of Causal Inference · 周君逸
+</title>
+
+    
+      <link rel="canonical" href="/cn/posts/pulearning/">
+    
+
+    <link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.1.7" as="font" type="font/woff2" crossorigin>
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.406d0bb9b7e93dd1c4497ee4abb177af6bea8f6c16aea89ae05f2aef56ef44e5.css" integrity="sha256-QG0LubfpPdHESX7kq7F3r2vqj2wWrqia4F8q71bvROU=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.dde8a61eb31a32353b4baf3d9113f03c4ea2a8ca9bb736f59ca2d2b2cb664f0b.css" integrity="sha256-3eimHrMaMjU7S689kRPwPE6iqMqbtzb1nKLSsstmTws=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+
+    <meta name="generator" content="Hugo 0.83.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="preload-transitions colorscheme-auto"
+        onload=""
+  >
+    
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/cn">
+      周君逸
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/cn/about/">关于</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/cn/posts/">项目</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/cn/publications/">刊物</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/cn/contact/">联系</a>
+            </li>
+          
+        
+        
+          
+          
+          
+            
+              
+                <li class="navigation-item menu-separator">
+                  <span>|</span>
+                </li>
+                
+              
+              <li class="navigation-item">
+                <a href="/posts/pulearning/">English</a>
+              </li>
+            
+          
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="/cn/posts/pulearning/">
+              Review of Causal Inference
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime='2019-11-05T00:00:00Z'>
+                November 5, 2019
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              43-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="/cn/categories/lectures/slides/">Lectures/Slides</a></div>
+
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <a href="/cn/tags/causal-inference/">Causal Inference</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+
+
+<div id="heterogeneous-treatment-effect-estimation" class="section level1">
+<h1>Heterogeneous Treatment Effect Estimation</h1>
+<div id="sec3.1" class="section level2">
+<h2>1. Introduction</h2>
+<p>The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. In this proposal, I examine the estimation of causal effects therapeutic treatments by using observational data in a population where the treatment effects vary by observed patient characteristics. Such estimation is essential for the practice of precision medicine, which by definition targets patients with specific characteristics to maximize the therapeutic benefit.</p>
+<p>This work is proposed within the Rubin-Neyman’s <span class="citation">(Neyman <a href="#ref-neyman1923application" role="doc-biblioref">1923</a>; Rubin <a href="#ref-rubin1974estimating" role="doc-biblioref">1974</a>; Imbens and Rubin <a href="#ref-imbens2015causal" role="doc-biblioref">2015</a>)</span> potential outcome framework. An essential feature of the potential outcome concept is that a given individual could have multiple potential outcomes, each under a different treatment; but since the subject only receives one treatment, only one of these potential outcomes is realized. The lack of observation on all potential outcomes within the subject makes it difficult to assess the effect of the treatment within the subject.</p>
+<p>Denote the potential outcome from treatment <span class="math inline">\(T\)</span> as <span class="math inline">\(Y^{(T)}\)</span>, where <span class="math inline">\(T\in\{0,1,2,...,K\}\)</span> corresponding to <span class="math inline">\(K+1\)</span> potential treatments. In most studies, people simply set <span class="math inline">\(K=1\)</span>, that is there are only two possible treatments, namely treatment (<span class="math inline">\(K = 1\)</span>) and control (<span class="math inline">\(K = 0\)</span>). Two-arm scenario will be mainly discussed in <em>Introduction</em> and <em>Existing Methods</em> section and then extended to multiple arms in <em>Proposed Method</em> section. To further work on estimation of causal effects, we need to make Stable Unit Treatment Value Assumption (SUTVA, <span class="citation">Rubin (<a href="#ref-rubin1980randomization" role="doc-biblioref">1980</a>)</span>):<br />
+<strong>Assumption 1. SUTVA</strong><br />
+<em>1) Treatment applied to one unit does not affect the outcome for other units;</em><br />
+<em>2) There is no hidden variation, for example, different forms or versions of each treatment level, for a single treatment</em><br />
+and then the observed outcome for unit <span class="math inline">\(i\)</span> could be expressed as
+<span class="math display">\[
+Y_i = \left\{
+        \begin{array}{ll}
+        Y_i^{(0)} &amp; \quad \text{if} \quad T_i = 0 \\
+        Y_i^{(1)} &amp; \quad \text{if} \quad T_i = 1
+        \end{array}
+    \right.
+\]</span>
+or equivalently,</p>
+<p><span class="math display" id="eq:obsY">\[\begin{equation}
+Y_i = T_i Y_i^{(1)} + (1 - T_i) Y_i^{(0)}.  \tag{1}
+\end{equation}\]</span></p>
+<p>The causal (or treatment) effect is defined by the comparison between potential outcomes. For unit <span class="math inline">\(i\)</span>, the individual treatment effect (ITE) <span class="math inline">\(\xi_i\)</span> is thus
+<span class="math display">\[\begin{equation*}
+\xi_i = Y_i^{(1)} - Y_i^{(0)}.
+\end{equation*}\]</span>
+Clearly, the definition of causal effect does not depend on which potential outcome is observed. Besides, ITE should be measured on the same unit, at same time point post-treatment. A direct observation and measurement of ITE is therefore infeasible. However, we are able to estimate the average individual treatment effect under plausible assumptions, which will be discussed in subsection <a href="#sec3.1.2">1.2</a>. Here we first denote expected ITE for a specific unit <span class="math inline">\(i\)</span> with a vector of covariates <span class="math inline">\(X_i\)</span>, or individual average treatment effect (IATE), as
+<span class="math display">\[
+\tau(x) = E\left[ \xi_i \mid  X_i = x \right].
+\]</span>
+IATE is conditioning on every single covariate which is a finest case of conditional average treatment effect (CATE), or heterogeneous treatment effect. CATE, on the other hand, can only conditional on part of the covariates that are of interest, which is the main target in the following discussions. The most coarse one is average treatment effect (ATE) which only measures the populational treatment effect, without taking subject features into consideration, noted as <span class="math inline">\(\tau\)</span> and
+<span class="math display">\[
+\tau = E\left[\xi_i\right].
+\]</span></p>
+<p>For any observed potential outcome, we need to think of the reason why this outcome is realized instead of others. Clearly if the treatment is not randomly assigned, there must be some reason for a unit to take such treatment, which means that the treatment assignment is informative. Therefore, the estimation of ATE or CATE varies under different assignment mechanism. The discussion for randomized experiment is listed in subsection <a href="#sec3.1.1">1.1</a> and observational studies in <a href="#sec3.1.2">1.2</a>.</p>
+<div id="sec3.1.1" class="section level3">
+<h3>1.1 Randomized Experiments</h3>
+<p>In randomized experiment, the treatment assignment is totally random which means
+<span class="math display">\[
+T_i \perp (X_i, Y_i^{(0)}, Y_i^{(1)}),
+\]</span>
+or equivalently,
+<span class="math display">\[
+E[Y^{(k)}] = E[Y^{(k)} \mid  T] .
+\]</span>
+Then the ATE could be calculated by
+<span class="math display">\[
+\tau = E[Y_i^{(1)} - Y_i^{(0)}] = E[Y_i^{(1)} \mid T_i = 1] - E[Y_i^{(0)} \mid T_i = 0] = E[Y_i \mid T_i = 1] - E[Y_i \mid T_i = 0]
+\]</span>
+where the last equality comes from equation <a href="#eq:obsY">(1)</a>. Thus, the ATE could be easily obtained by taking the difference of two group average. This is how clinical trials measure the treatment effect between the proposed therapy against the placebo or standard therapy. However, even when the population treatment effect is not significant, the drug could still benefit a subgroup of the patients which could be hardly measured in traditional clinical trials.</p>
+<p>In order to see the subgroup treatment effect, we need to estimate CATE. The estimation of CATE in randomized experiments is the simplified version of that in observational studies, which just replace the propensity score (will be introduced in subsection <a href="#sec3.1.1">1.2</a>) by constant values.</p>
+</div>
+<div id="sec3.1.2" class="section level3">
+<h3>1.2 Observational Studies</h3>
+<p>In observational studies, the treatment assignment is related to the outcome and no longer fully random, which means
+<span class="math display">\[
+E[Y^{(k)}] \neq E[Y^{(k)} \mid T] 
+\]</span>
+and hence, ATE is no longer trivial to obtain. In order to further explore the problem, a stronger assumption is usually provided in literature, namely unconfoundedness or ignorability<br />
+<strong>Assumption 2. Unconfoundedness</strong>
+<span class="math display" id="eq:assump2">\[\begin{equation}
+(Y^{(1)}, Y^{(0)}) \perp T \mid X, \tag{2}
+\end{equation}\]</span><!-- \tag{Assumption 2} -->
+which implies that there is no confounding covariates that are not observed. This is the fundamental assumption that frequently made in observational studies to rule out the potential confounders, since the unobserved confounding covariates could not cancel out as randomized experiments do. Sometimes it is followed by another assumption<br />
+<strong>Assumption 3. Common Support</strong>
+<span class="math display" id="eq:assump3">\[\begin{equation}
+0 &lt; P(T_i = 1 | X_i = x) =\pi(x) &lt; 1 \tag{3}
+\end{equation}\]</span><!-- \tag{Assumption 3} -->
+which in combine called strong ignorability. Assumption <a href="#eq:assump3">(3)</a> is a common support regularization which means that in every corner of the covariate space, no arm will dominate. This assumption is often required in matching, weighting, and sub-classification related approaches to avoid the extreme value of propensity score (will be formally introduced in the next section).</p>
+<p>With assumption <a href="#eq:assump2">(2)</a>, consistency could be deduced
+<span class="math display">\[
+E[Y\mid T=1, X] = E[Y^{(1)}\cdot T + Y^{(0)}\cdot(1-T)\ \mid T=1, X] = E[Y^{(1)}\mid T=1, X],
+\]</span>
+and similarly,
+<span class="math display">\[
+E[Y\mid T=0, X] = E[Y^{(0)}\mid T=0, X].
+\]</span>
+Then, population ATE can be written (for proof, please refer to <a href="#App">Appendix</a>) as either
+<span class="math display" id="eq:ATE1">\[\begin{equation}
+\tau = E_X\{ E[Y\mid T = 1, X] - E[Y\mid T = 0, X]\}, \tag{4}
+\end{equation}\]</span>
+or
+<span class="math display" id="eq:ATE2">\[\begin{equation}
+\tau = E \left[\frac{TY}{\pi(X)} \right] - E \left[\frac{(1 - T)Y}{1-\pi(X)} \right] = E\left[ \frac{T-\pi(X)}{\pi(X)(1-\pi(X))}Y \right], \tag{5}
+\end{equation}\]</span>
+where <span class="math inline">\(\pi(x) = E[T=1|X]\)</span> is called propensity score that measures the possibility of receiving treatment. Similarly, the expression for <strong>CATE</strong> is either
+<span class="math display" id="eq:CATE1">\[\begin{equation}
+\tau(x) =  E[Y\mid T = 1, X=x] - E[Y\mid T = 0, X=x], \tag{6}
+\end{equation}\]</span>
+or
+<span class="math display" id="eq:CATE2">\[\begin{equation}
+\tau(x) = E \left[\frac{TY}{\pi(X)} \;\middle|\; X = x \right] - E \left[\frac{(1-T)Y}{1-\pi(X)} \;\middle|\; X=x \right] = E\left[ \frac{T-\pi(X)}{\pi(X)(1-\pi(X))}Y \;\middle|\; X = x\right].  \tag{7}
+\end{equation}\]</span>
+In some literature, the treatment indicator is denoted as <span class="math inline">\(W = 2T-1 \in \{-1,1\}\)</span>, then equation <a href="#eq:ATE2">(5)</a> and <a href="#eq:CATE2">(7)</a> could be simply expressed by
+<span class="math display" id="eq:CATE3" id="eq:ATE3">\[\begin{align}
+\tau &amp;= E\left[ \frac{WY}{W\pi(X) + (1-W)/2} \right],  \tag{8} \\
+\tau(x) &amp;= E\left[ \frac{WY}{W\pi(X) + (1-W)/2} \;\middle|\; X = x \right].  \tag{9}
+\end{align}\]</span></p>
+<p>Almost every work aiming at finding ATE or CATE start from one of the above equations. For example, equation <a href="#eq:ATE1">(4)</a> and CATE1 are the foundation of conditional mean response methods, whereby the target is transformed to estimating conditional mean response <span class="math inline">\(\mu_k(x) = E[Y \mid T = k, X=x], k \in \{0,1\}\)</span>. Equation <a href="#eq:ATE2">(5)</a>, <a href="#eq:CATE2">(7)</a>, <a href="#eq:ATE3">(8)</a>, and <a href="#eq:CATE3">(9)</a> are the prototype of inverse probability weighted (<strong>IPW</strong>) methods which have been frequently used in modified outcome methods (<strong>MOM</strong>) or modified covariate methods (<strong>MCM</strong>). For instance, if both arm are equally allocated, that is <span class="math inline">\(\pi = 0.5\)</span>, then equation <a href="#eq:CATE3">(9)</a> turns out to be
+<span class="math display">\[
+\tau(x) = E\left[ 2WY \mid X=x \right] 
+\]</span>
+which is the origin of MOM illustrated in <span class="citation">Signorovitch (<a href="#ref-signorovitch2007identifying" role="doc-biblioref">2007</a>)</span> and <span class="citation">Tian et al. (<a href="#ref-tian2014simple" role="doc-biblioref">2014</a>)</span>. More details of these methods will be illustrated in the next section.</p>
+<p>The focus of this dissertation is the estimation of CATE in observational studies.</p>
+</div>
+</div>
+<div id="sec3.2" class="section level2">
+<h2>2 Existing Methods</h2>
+<p><strong>Matching</strong> is the most straightforward and original way of seeking CATE. Under the Assumption 1, 2 and 3, for an individual, as long as we could find another one with the exactly the same covariates <span class="math inline">\(X\)</span> and belongs to different treatment arm, then the expected difference in response of this two individual equals <span class="math inline">\(\tau(X)\)</span>
+<span class="math display">\[
+E[Y \mid T = 1, X = x] - E[Y \mid T= 0, X = x] = E[Y^{(1)} \mid X = x] - E[Y^{(0)} \mid X = x] = \tau(x).
+\]</span>
+However, in real observational studies, such perfectly matched pair may not be easily found, and even found, a single paired difference it is not the expected difference which might involve a large uncertainty.</p>
+<p>Since it is almost impossible to find a perfect match, especially in high dimensional space, people try to figure out a way that only match on important covariates to ease the process. This branch of studies finally ruled by the milestone work from <span class="citation">Rosenbaum and Rubin (<a href="#ref-rosenbaum1983central" role="doc-biblioref">1983</a>)</span> who illustrate that only matching by propensity score is good enough
+<span class="math display">\[
+E[Y \mid T = 1, \pi(x)] - E[Y \mid T= 0, \pi(x)] = E[Y^{(1)} \mid \pi(x)] - E[Y^{(0)} \mid \pi(x)] = \tau(\pi(x))
+\]</span>
+under assumption <a href="#eq:assump2">(2)</a>. Since then, the whole matching task is transformed from a high dimensional space to a linear one, but how to achieve a good estimator of propensity score <span class="math inline">\(\pi(X)\)</span> turns out to be the key problem.</p>
+<p>However, as long as using paired matching, people always suffers from the larger variance coming from a single estimate. This leads to <strong>subclassification</strong> approach that seeks a group of units share similar, or same, which is the perfect scenario, propensity score. As long as at least one unit is in the different treatment group, the difference between the averaged outcome within each subgroup equals the desired treatment effect at given propensity score. It could help to reduce the estimation error by taking the average but if there is not enough samples at each propensity level, the benefit is quite limited.</p>
+<p>Matching or subclassification based on propensity score is tailored mainly for the estimation of ATE. After matching/subclassification at each covariate level, they take the average over all samples to achieve the final ATE
+<span class="math display">\[
+\begin{aligned}
+E_{\pi(x)}\{E[Y \mid T = 1, \pi(x)] - E[Y \mid T = 0, \pi(x)] \} &amp;= E_{\pi(x)}\{E[Y^{(1)} \mid \pi(x)] - E[Y^{(0)} \mid \pi(x)]\} \\
+&amp;= E[Y^{(1)} - Y^{(0)}] = \tau
+\end{aligned}
+\]</span>
+which does not hurt a lot by the missed values along <span class="math inline">\(\pi(x)\)</span>. However, in estimation of CATE, there will be a lot of ‘holes’ in the estimators since it could be infinite numbers between <span class="math inline">\([0,1]\)</span>, and it is then less likely to do the prediction.</p>
+<p><span class="citation">Hirano, Imbens, and Ridder (<a href="#ref-hirano2003efficient" role="doc-biblioref">2003</a>)</span> borrow the strength of equation <a href="#eq:ATE2">(5)</a> to directly estimate the ATE which only need to plug in the pre-estimated propensity score <span class="math inline">\(\hat\pi(X)\)</span> without matching and subclassification
+<span class="math display" id="eq:hirano">\[\begin{equation}
+\tau = \frac{1}{|\mathcal{D}|} \sum_{i \in \mathcal{D}}\left[ \frac{T_i-\hat\pi(X_i)}{\hat\pi(X_i)(1-\hat\pi(X_i)}Y_i \right]. \tag{10}
+\end{equation}\]</span>
+They also claim that this will yield an efficient estimate of ATE. Since the propensity score appears on the denominator to weight the outcome, this method is then called <strong>weighting</strong>, or <strong>Inverse Probability Weighting (IPW)</strong>. Many later literature estimating CATE follows this idea. But the key flaw in this method is the large variability and computational instability introduced by the boundary value of propensity score, for example 0.</p>
+<p>To sum, to estimate CATE, or to recommend the optimal treatment, there are mainly two problems to solve: 1) how to define the loss metric and 2) how to model and achieve the estimators and/or the nuisance parameters in the loss function. For loss functions determination, there could be either direct way or indirect way, which will be mainly discussed in subsection <a href="#sec3.2.1">2.1</a>. For example, in methods described by equation <a href="#eq:hirano">(10)</a>, the loss function is actually measuing the loss in estimated propensity score, which is an indirect way. Moreover, a proper modeling and estimation of <span class="math inline">\(\pi(x)\)</span> is the key to the success. Current methods include model based methods, kernel based methods, and other machine learning methods including, but not limited to regression tree, classification tree, and support vector machine (SVM).</p>
+<p>The structure of this section is designed as follows. The loss metrics that are frequently adopted in current literature will be discussed in subsection <a href="#sec3.2.1">2.1</a>. In subsection <a href="#sec3.2.2">2.2</a>, we will demonstrate the estimation algorithms that used to solve the loss functions.</p>
+<div id="sec3.2.1" class="section level3">
+<h3>2.1 Loss Metric</h3>
+<p>The most different and difficult part in causal inference is the true IATE could never be observed. So no matter what estimation algorithm–either parametric or non-parametric method–is used, a direct evaluation of the loss in estimated treatment effect <span class="math inline">\(\hat\tau(X)\)</span> is infeasible. Following the literature in this field, we measure the loss between <span class="math inline">\(\hat\tau(X)\)</span> and <span class="math inline">\(\tau(X)\)</span>, denote as <span class="math inline">\(l(\hat\tau, \tau)\)</span>, by Mean Squared Error (MSE)
+<span class="math display" id="eq:Loss">\[\begin{equation}
+\mathbb{E}[l(\hat\tau, \tau)] = \frac{1}{|\mathcal{D}|}\sum_{i \in \mathcal{D}} \left(\hat\tau(x_i) - \tau(x_i) \right)^2,  \tag{11}
+\end{equation}\]</span>
+where <span class="math inline">\(\tau(\cdot)\)</span> is the real CATE that is unknown, <span class="math inline">\(\mathcal{D}\)</span> is observed dataset, and <span class="math inline">\(|\mathcal{D}|\)</span> is the size of the it. Generally, there are two main branches to work around this problem, either to avoid directly calculating <span class="math inline">\(\tau\)</span>-loss function, named <strong>Indirect Loss Function</strong>, or to approximately evaluate it, called <strong>Direct Loss Function Approximation</strong>.</p>
+<div id="indirect-loss-function" class="section level4">
+<h4>Indirect Loss Function</h4>
+<div id="propensity-score-based-methods" class="section level5">
+<h5>Propensity Score Based Methods</h5>
+<p>Aforementioned matching, weighting, and subclassification methods belong to this category. Among these methods, an accurate estimation of the propensity score is the essence but estimating <span class="math inline">\(\tau(x)\)</span> accurately is not the direct goal. Due to the conditional independence, the estimation of <span class="math inline">\(\pi\)</span> has nothing to do with outcome <span class="math inline">\(Y\)</span>, which might be its shortcomings due to not fully use the observed information. The corresponding loss function is
+<span class="math display">\[
+\arg\min_\gamma  -\sum_{i \in \mathcal{D}} \log[W_i \pi(X_i;\gamma) + (1-W_i)/2],
+\]</span>
+where <span class="math inline">\(W_i = 2T_i -1 \in \{-1,1\}\)</span>. If the propensity score (PS) adopts the logit function, then it is equivalent to the logit loss function:
+<span class="math display">\[
+\arg\min_\gamma  \sum_{i \in \mathcal{D}} \log\left[1 + e^{-W_i X_i^T\gamma}\right].
+\]</span>
+In many latter studies, estimating <span class="math inline">\(\hat\pi(X)\)</span> is just an intermediate and inevitable step.</p>
+</div>
+<div id="conditional-mean-based-methods" class="section level5">
+<h5>Conditional Mean Based Methods</h5>
+<p>Another set of straightforward methods follow directly from equation <a href="#eq:CATE1">(6)</a> that the estimation of CATE <span class="math inline">\(\tau(X)\)</span> is accomplished by the estimation of the conditional means <span class="math inline">\(\mu_k(X), k \in \{0,1\}\)</span>
+<span class="math display">\[
+\hat\tau(X) = \hat\mu_1(X) - \hat\mu_0(X).
+\]</span>
+There are two different approaches to estimate <span class="math inline">\(\mu_k(X)\)</span>. One is to train separate models for treatment group and control group. The other is to train a single model but treat treatment indicator as an additional covariate. The former one sometimes is named as <strong>T-learner</strong> (stands for two-learner) and the latter one is <strong>S-learner</strong> (stands for single-learner) according to <span class="citation">Künzel et al. (<a href="#ref-kunzel2019metalearners" role="doc-biblioref">2019</a>)</span>. The objective here turns out to be either minimize
+<span class="math display">\[
+\arg\min_{\beta^{(k)}} \mathbb{E}\left\{\left(Y - \mu_k(X;\beta^{(k)}) \right)^2\right\}, \quad k \in \{0, 1\}
+\]</span>
+for T-learner, where <span class="math inline">\(\beta^{(k)}\)</span> is a set of parameters for model <span class="math inline">\(\mu_k(\cdot)\)</span> , or
+<span class="math display">\[
+\arg\min_\beta \mathbb{E}\left\{\left(Y - \mu(X, T;\beta) \right)^2\right\}
+\]</span>
+for S-learner, where <span class="math inline">\(\mu(X, T=k;\beta) = \mu_k(X;\beta)\)</span>, and <span class="math inline">\(\beta\)</span> are the parameters for <span class="math inline">\(\mu(\cdot,\cdot)\)</span>. Since both loss metric is not direct focusing on CATE, we categorize this method in indirect loss function branch.</p>
+<p>Any machine learning algorithms could be used to fit conditional means, for example, kernel regression models with <span class="math inline">\(L_1\)</span>-penaly, regression trees, or Bayesian Additive Regression Tree (BART, <span class="citation">Chipman et al. (<a href="#ref-chipman2010bart" role="doc-biblioref">2010</a>)</span>). This branch of methods seems reasonable, but actually suffer from the fact that minimizing the loss function of <span class="math inline">\(\mu_i(x)\)</span> does not guarantee the optimal estimation of <span class="math inline">\(\tau(x)\)</span>. The MSE of <span class="math inline">\(\hat\tau(X)\)</span> could be expanded as follows
+<span class="math display">\[\begin{align*}
+  E[\tau(X) - \hat\tau(X)]^2 &amp;= E[(\mu_1(X)-\hat\mu_1(X)) - (\mu_0(X) - \hat\mu_0(X))]^2 \\
+  &amp;= MSE(\mu_1) + MSE(\mu_0) - 2E[(\mu_1(X)-\hat\mu_1(X))(\mu_0(X) - \hat\mu_0(X))]
+\end{align*}\]</span>
+where <span class="math inline">\(\text{MSE}(\mu_k) = \mathbb{E}[(\mu_k(X)-\hat\mu_k(X))^2]\)</span>. Notice that minimize MSE(<span class="math inline">\(\mu_k\)</span>) is not equivalent to minimize <span class="math inline">\(\mathbb{E}[l(\hat\tau, \tau)]\)</span> and no matter how good we fit <span class="math inline">\(\mu_k(X)\)</span>, we still have no idea the goodness of <span class="math inline">\(\hat\tau(X)\)</span>.</p>
+</div>
+<div id="propensity-score-conditional-mean" class="section level5">
+<h5>Propensity Score + Conditional Mean</h5>
+<p>Most of the research works involve estimating both response surface/conditional mean and treatment assignment mechanism/propensity score for observational studies. For example, <span class="citation">Robins, Hernan, and Brumback (<a href="#ref-robins2000marginal" role="doc-biblioref">2000</a>)</span> propose a weighted least squares (WLS) regression estimator for modeling the conditional mean response and the weight is the inverse of propensity score. However, for these methods, if the model of <span class="math inline">\(\mu_k(\cdot)\)</span>, or <span class="math inline">\(\pi(\cdot)\)</span> is mis-specified, then the results are no longer consistent <span class="citation">(Kang, Schafer, and others <a href="#ref-kang2007demystifying" role="doc-biblioref">2007</a>; Freedman and Berk <a href="#ref-freedman2008weighting" role="doc-biblioref">2008</a>; Imai and Ratkovic <a href="#ref-imai2014covariate" role="doc-biblioref">2014</a>)</span>. So a double robust concept is proposed by <span class="citation">Bang and Robins (<a href="#ref-bang2005doubly" role="doc-biblioref">2005</a>)</span>, which involved both estimation of <span class="math inline">\(\mu_i(\cdot)\)</span> and <span class="math inline">\(\pi(\cdot)\)</span>, and as long as one of the models is correctly specified, the double robust estimator is still consistent. That means people have two chances of guessing the true model and the odds of obtaining consistent estimator increases accordingly. The expression of doubly robust (DR) estimator of <span class="math inline">\(\tau\)</span> is actually a combination of equation <a href="#eq:ATE1">(4)</a> and <a href="#eq:ATE2">(5)</a>
+<span class="math display" id="eq:DR">\[\begin{equation}
+\tau_{DR}(X) = \mu_1(X) - \mu_0(X) + \frac{T(Y-\mu_1(X))}{\pi(X)} - \frac{(1 - T)(Y-\mu_0(X))}{1 - \pi(X)}. \tag{12} 
+\end{equation}\]</span>
+<span class="math inline">\(\hat\tau_{DR}(X)\)</span> is obtainable by plugging in pre-estimated <span class="math inline">\(\hat\mu_i(X)\)</span> and <span class="math inline">\(\hat\pi(X)\)</span>. However, the biggest problem is once both models are not correctly specified, the DR results could be even worse then other comparable methods <span class="citation">(Kang, Schafer, and others <a href="#ref-kang2007demystifying" role="doc-biblioref">2007</a>; Imai and Ratkovic <a href="#ref-imai2014covariate" role="doc-biblioref">2014</a>)</span>.</p>
+</div>
+<div id="individual-treatment-rule-itr-based-methods" class="section level5">
+<h5>Individual Treatment Rule (ITR) Based Methods</h5>
+<p>In many applications, an accurate treatment effect estimation may not be the prior interest and people only want to know which treatment is the best for an individual. This leads to a different idea that not estimating treatment effect directly but seeking the optimal treatment assignment. The individual treatment rule (ITR) based methods pursue the best overall outcomes. If larger <span class="math inline">\(Y\)</span> the preferred, then the objective function is
+<span class="math display">\[
+\arg\max_g V(g),
+\]</span>
+where
+<span class="math display">\[
+V(g) = E_g[Y] = \left\{
+        \begin{array}{ll}
+            E[\mu_1(X)]g(X) + E[\mu_0(X)](1-g(X)) &amp; \quad \text{Plain Version} \\
+            E\left[ \frac{1[T = g(X)]}{\pi^c(X) }Y\right] &amp; \quad \text{IPW Version} \\
+            E\left[ \frac{1[T = g(X)]}{\pi^c(X)}Y - \frac{1[T = g(X)]-\pi^c(X)}{\pi^c(X)}\{\mu_1g(X)+\mu_0(1-g(X))\}\right] &amp; \quad \text{DR Version}
+        \end{array}
+    \right.
+\]</span>
+and <span class="math inline">\(\pi^c(X) = W\pi(X) + (1-W)/2\)</span>, where <span class="math inline">\(W = 2T-1 \in \{-1,1\}\)</span>.</p>
+<p>Apparently, one challenge in IRT based methods is the optimization of non-convex and non-continuous objective function. Usually it is not easy to be solved by many off-the-shelf algorithms. Besides, the estimators for CATE is not readily obtained as a by-product which might be its drawback if people want CATE as well. In <span class="citation">Qian and Murphy (<a href="#ref-qian2011performance" role="doc-biblioref">2011</a>)</span>, they use the plain version, and avoid computing issue by first figuring out conditional mean estimators, and then determine the optimal region <span class="math inline">\(g(\cdot)\)</span>. The error will accumulate during the two-step estimation procedure and final regime might be sensitive to the <span class="math inline">\(\hat\mu(X)\)</span>. <span class="citation">Zhang et al. (<a href="#ref-zhang2012robust" role="doc-biblioref">2012</a>)</span> worked on IPW (inverse probability weighting) and DR (doubly robust) version and provide two approaches to solve the objective function, one is grid search, which is almost impossible in high dimensional cases, the other is a generic algorithm by Goldberg (1989) with R package <strong>rgenoud</strong> (Mebane and Skehon, 2011). <span class="citation">Zhao et al. (<a href="#ref-zhao2012estimating" role="doc-biblioref">2012</a>)</span> transformed the objective function a little bit and put it into the framework of SVM and successfully solve it. But SVM suffers from multilevel classification, that is, this method could not be easily extended to multiple treatment studies. Furthermore, SVM could not handle imbalanced allocation well and also weak in <span class="math inline">\(p \gg n\)</span> cases. <span class="citation">Chen et al. (<a href="#ref-chen2017general" role="doc-biblioref">2017</a>)</span> provided a general framework to this set of problems which could also quantify the treatment effect (not just the regime). What they did is actually figuring out a way to connect optimal regime finding to the direct loss function calculation (will be discussed in next subsection) which put a closure to this pipeline.</p>
+</div>
+</div>
+<div id="direct-loss-function-approximation" class="section level4">
+<h4>Direct Loss Function Approximation</h4>
+<p>The main idea is that even though we cannot observe <span class="math inline">\(\tau(X)\)</span> directly, we could replace the unknown <span class="math inline">\(\tau(X)\)</span> in equation <a href="#eq:Loss">(11)</a> by some available proxies with the property that minimizing this new loss function is equivalent to minimizing the target loss function <a href="#eq:Loss">(11)</a>. Most methods to discuss in this subsection are in the category of modified variate methods (MVM), which consists of modified outcome methods (MOM) and modified covariate method (MCM).</p>
+<div id="modified-outcome-methods-mom" class="section level5">
+<h5>Modified Outcome Methods (MOM)</h5>
+<p>Suppose there exists <span class="math inline">\(\tau(X) = E[Y^* \mid X]\)</span>, where <span class="math inline">\(Y^* = c Y\)</span>, we are able to show that minimizing the proxy loss function
+<span class="math display">\[
+E[l(\hat\tau, Y^*)] = E[\{\hat\tau(X) - Y^*\}^2] = E[\{\hat\tau(X) - \tau(X) + \tau(X) - Y^*\}^2] = E[\{\hat\tau(X) - \tau(X) \}^2] + Var(Y^*)
+\]</span>
+is equivalent to minimizing <span class="math inline">\(E[l(\hat\tau, \tau)]\)</span> since <span class="math inline">\(Var(Y^*)\)</span> is a constant. As the modification is made upon the outcome <span class="math inline">\(Y\)</span> to <span class="math inline">\(Y^*\)</span>, it gets the name modified outcome method.</p>
+<p><span class="citation">Signorovitch (<a href="#ref-signorovitch2007identifying" role="doc-biblioref">2007</a>)</span> first explores this idea in his PHD dissertation based on the relationship <span class="math inline">\(\tau(X) = E[2WY \mid X]\)</span>. The objective is then to minimize the loss function
+<span class="math display" id="eq:MOMraw">\[\begin{equation}
+E\left[ \{\hat\tau(X)-2WY \}^2 \right]. \tag{13}
+\end{equation}\]</span>
+If further assuming the linear structure of CATE, that is <span class="math inline">\(\tau(X) = X^T\beta\)</span>, then the minimization task can be simply done by fitting a linear model
+<span class="math display">\[\begin{equation}
+2WY = X^T\beta + \varepsilon 
+\end{equation}\]</span>
+if the outcome <span class="math inline">\(Y\)</span> is continuous. But <span class="math inline">\(\tau(X) = E[2WT]\)</span> holds only in 1:1 randomized experiments, an IPW version of MOM is designed for observational studies. Based on equation <a href="#eq:CATE2">(7)</a>, the loss function for IPW version MOM is very straightforward
+<span class="math display" id="eq:MOMipw">\[\begin{equation}
+E[l(\hat\tau, \tau)] = E\left[ \left\{ \hat\tau(X)- \frac{T - \pi(X)}{\pi(X)(1-\pi(X))}Y \right\}^2 \right], \tag{14}
+\end{equation}\]</span>
+where <span class="math inline">\(\pi(X)\)</span> is usually pre-estimated separately. Just as other IPW based methods, the results are sensitive to propensity score and no longer consistent when the model of <span class="math inline">\(\pi(\cdot)\)</span> is mis-specified <span class="citation">(Knaus, Lechner, and Strittmatter <a href="#ref-knaus2018machine" role="doc-biblioref">2018</a>)</span>.</p>
+<p>Similarly, adopting equation <a href="#eq:DR">(12)</a>, we can develop the DR version of MOM. We do not further explore the possible proxies here. The main issue for MOM is that the outcome is required to be continuous and cannot be extended to a various type of outcomes. Therefore, MCM methods are proposed to fix this issue.</p>
+</div>
+<div id="modified-covariate-methods-mcm" class="section level5">
+<h5>Modified Covariate Methods (MCM)</h5>
+<p>MCM is first developed in <span class="citation">Tian et al. (<a href="#ref-tian2014simple" role="doc-biblioref">2014</a>)</span> who modified MOM methods by adjusting the proxy loss function a little bit
+<span class="math display">\[
+E[\{\hat\tau(X) - Y^*\}^2] = E[c^2\{\hat\tau(X)/c - Y\}^2]
+\]</span>
+and then minimizing the right-hand-size, which is the loss function for MCM, targeting on <span class="math inline">\(\hat\tau(X)\)</span> directly as well. This branch of methods are fundamentally similar to MOM but do not make modification on the outcome, resulting in no restriction on <span class="math inline">\(Y\)</span>. If under the linear assumption of <span class="math inline">\(\hat\tau(X) = X^T\beta\)</span>, the original covariates <span class="math inline">\(X\)</span> is then turned to be <span class="math inline">\(X/c\)</span>, and this is where the name modified covariate comes from. Furthermore, the CATE can be easily obtained using weighted least square methods, where <span class="math inline">\(c^2\)</span> is the weights.</p>
+<p>For example, the MCM version of the loss function <a href="#eq:MOMraw">(13)</a> is thus
+<span class="math display">\[
+E\left[ \{\hat\tau(X)\cdot W/2-Y \}^2 \right].
+\]</span>
+For MOM-IPW version, with some modification on <a href="#eq:MOMipw">(14)</a>, the loss function for MCM-IPW version is derived as
+<span class="math display">\[
+E\left[ \left\{ \hat\tau(X) \cdot [(W+1)/2 - \pi(X)]- Y \right\}^2  \right]
+\]</span>
+and with further adjustment, it turns out to be
+<span class="math display">\[
+E\left[ \frac{\left\{ \hat\tau(X)\cdot W- Y \right\}^2}{W\pi(X) + (1-W)/2} \right].
+\]</span>
+These two loss functions are actually the two methods proposed by <span class="citation">Chen et al. (<a href="#ref-chen2017general" role="doc-biblioref">2017</a>)</span> after generalizing the ITR method.</p>
+<p>Note that only the linear structure on <span class="math inline">\(\hat\tau(X)\)</span> in MVM based methods <span class="citation">(Tian et al. <a href="#ref-tian2014simple" role="doc-biblioref">2014</a>; Nie and Wager <a href="#ref-nie2017quasi" role="doc-biblioref">2017</a>; Knaus, Lechner, and Strittmatter <a href="#ref-knaus2018machine" role="doc-biblioref">2018</a>)</span> has been studied in the literatures due to the simplicity and ease in computation, though it is limited in scope. For more complicated proposed structure of <span class="math inline">\(\hat\tau(X)\)</span>, general optimization algorithms could be directly applied on these loss functions.</p>
+</div>
+<div id="r-learner" class="section level5">
+<h5>R-learner</h5>
+<p>R-learner <span class="citation">(Nie and Wager <a href="#ref-nie2017quasi" role="doc-biblioref">2017</a>)</span> is the only method that does not directly rely on equation <a href="#eq:ATE1">(4)</a> - <a href="#eq:CATE3">(9)</a>. Technically, however R-learner can still be regarded as a MOM based method. We highlight it here because it is different from previous methods and more importantly, it builds the techinical foundation of our proposed method. R-learner method mainly bases on Robinson’s <span class="citation">(Robinson <a href="#ref-robinson1988root" role="doc-biblioref">1988</a>)</span> transformation
+<span class="math display">\[
+Y - m(X) = \{T - \pi(X)\}\tau(X) + \varepsilon,
+\]</span>
+where the marginal mean function <span class="math inline">\(m(X) = E[Y \mid X]\)</span>. Then the loss function is aiming to minimize
+<span class="math display">\[
+\arg\min_\tau E[\varepsilon^2(\tau)]=\arg\min_\tau E[\left\{Y - m(X) - (T - \pi(X))\tau(X)\right\}^2].
+\]</span>
+After some algebra, it is equivalent to
+<span class="math display">\[
+\arg\min_\beta E\left[(T - \pi(X))^2\left\{ \hat\tau(X;\beta) - \frac{Y - m(X)}{T - \pi(X)}\right\}^2 \right]
+\]</span>
+which is a typical form of MOM loss function. In Nie’s work, they assume a linear structure of <span class="math inline">\(\hat\tau(X)\)</span> as well and estimate it with a two-step procedure by first calculate <span class="math inline">\(\hat{m}(X)\)</span> and <span class="math inline">\(\hat\pi(X)\)</span>.</p>
+<p>Overall, the direct loss function based methods are usually more popular as it directly measures the loss of <span class="math inline">\(\hat\tau(x)\)</span>. On the other hand, comparing to indirect loss functions, the requirement of additional assumptions to model <span class="math inline">\(\tau\)</span> could be a serious drawback for this set of methods. Many methods, and almost all the direct loss functions based methods involve a two-step procedures, i.e. first estimate <span class="math inline">\(\hat\mu_k(\cdot)\)</span>, <span class="math inline">\(\hat\pi(\cdot)\)</span>, or <span class="math inline">\(\hat{m}(\cdot)\)</span>, and then plug into the final loss functions to obtain <span class="math inline">\(\hat\tau(\cdot)\)</span>. So the accuracy of these nuisance estimators is critical to the consitency of treatment effect estimation.</p>
+</div>
+</div>
+</div>
+<div id="sec3.2.2" class="section level3">
+<h3>2.2 Estimation Algorithm</h3>
+<p>Construction of objective loss function transforms the causal inference problem in observational studies into a mathematical optimization problem. So the next step is to figure out the estimators that appear in the loss function, they are <span class="math inline">\(\hat\mu_k(x)\)</span>, <span class="math inline">\(\hat\pi(x)\)</span>, <span class="math inline">\(\hat{m}(X)\)</span>, and <span class="math inline">\(\hat\tau(x)\)</span>. The forthcoming discussion will focus on parametric methods, kernel-based methods, and machine learning algorithms, mainly tree-based algorithms.</p>
+<div id="parametric-methods" class="section level4">
+<h4>Parametric Methods</h4>
+<p>The estimation is generally carried out by working with generalized linear model (GLM). For instance, it is very common to estimate propensity score by a logistic regression
+<span class="math display">\[
+logit(\pi) = X^T\beta.
+\]</span>
+In many indirect loss metric methods, people often estimate CATE <span class="math inline">\(\tau(X)\)</span> by a linear model <span class="math inline">\(\tau(X) = X^T\beta\)</span> along with LASSO to accomplish variable selection for all direct loss metric. But it is not very often to see people directly use linear model in estimation of conditional means. Parametric models enjoy the benefits of simplicity in both theoretical proof and computation, but are overly restricted to the specified models.</p>
+</div>
+<div id="kernel-based-methods" class="section level4">
+<h4>Kernel-based Methods</h4>
+<p>As one of the most popular non-parametric methods, the kernel-based model is readily used for estimating the propensity socre, for example,
+<span class="math display">\[
+\hat\pi(x) =\frac{\sum_{i = 1}^n T_iK\left(\frac{X_i - x}{h} \right) /nh^k}{\sum_{i = 1}^n K\left(\frac{X_i - x}{h} \right)/nh^k}
+\]</span>
+in <span class="citation">Abrevaya, Hsu, and Lieli (<a href="#ref-abrevaya2015estimating" role="doc-biblioref">2015</a>)</span>. Then they plug this estimator into equation <a href="#eq:CATE2">(7)</a>, <span class="math inline">\(\hat\tau(x)\)</span> can be obtained by locally weighted approach. For direct loss metric, <span class="citation">Chen et al. (<a href="#ref-chen2017general" role="doc-biblioref">2017</a>)</span> adopted B-spline based additive model to estimate <span class="math inline">\(\hat\tau(x)\)</span>. <span class="math inline">\(L_1\)</span> penalty is also commonly used in kernel based methods to control the complexity of the models.</p>
+</div>
+<div id="tree-based-methods" class="section level4">
+<h4>Tree-based Methods</h4>
+<p><span class="citation">Athey and Imbens (<a href="#ref-athey2015machine" role="doc-biblioref">2015</a>)</span>, <span class="citation">Athey and Imbens (<a href="#ref-athey2016recursive" role="doc-biblioref">2016</a>)</span>, <span class="citation">Wager and Athey (<a href="#ref-wager2018estimation" role="doc-biblioref">2018</a>)</span>, <span class="citation">Athey et al. (<a href="#ref-athey2019generalized" role="doc-biblioref">2019</a>)</span>, provided a very comprehensive view of incorporating tree-related algorithm (CART, <span class="citation">Breiman (<a href="#ref-breiman2017classification" role="doc-biblioref">2017</a>)</span>; bagging, <span class="citation">Breiman (<a href="#ref-breiman1996bagging" role="doc-biblioref">1996</a>)</span>; boosting, <span class="citation">Freund, Schapire, and others (<a href="#ref-freund1996experiments" role="doc-biblioref">1996</a>)</span>; gradient boosting, <span class="citation">Friedman (<a href="#ref-friedman2001greedy" role="doc-biblioref">2001</a>)</span>) into the estimation of CATE. These methods could also be further split into two branches: regression trees, and causal trees. In our framework, regression trees are deemed as using indirect loss metric during tree construction, while causal trees adopt direct loss metric.</p>
+<p>The regression trees based methods follow the idea of estimating <span class="math inline">\(\mu_k(x)\)</span> by CART or random forests. The idea is no different than using kernel based methods to estimate conditional means but different learning algorithms. For tree-related algorithms, it is more or less to conduct subclassification so that each leaf represents homogeneous subjects and the outcome could be estimated by leaf mean. People could build up two trees and each one aims at one treatment group corresponding to T-learner, or a single tree, following S-learner idea, that treatment indicator can be used to split trees. These methods provide a non-parametric estimator of conditional mean response <span class="math inline">\(\hat\mu_k(x)\)</span>, and the estimated treatment effect is simply <span class="math inline">\(\hat\tau(x) = \hat\mu_1(x) - \hat\mu_0(x)\)</span>.</p>
+<p>Aside from estimating conditional means by traditional regression tree methods, Bayesian Additive Regression Trees (BART) method was also adopted in <span class="citation">Hill (<a href="#ref-hill2011bayesian" role="doc-biblioref">2011</a>)</span>. BART <span class="citation">(Chipman, George, and McCulloch <a href="#ref-chipman1998bayesian" role="doc-biblioref">1998</a>, <a href="#ref-chipman2002bayesian" role="doc-biblioref">2002</a>; Chipman et al. <a href="#ref-chipman2010bart" role="doc-biblioref">2010</a>)</span> has a similar structure to boosting tree <span class="citation">(Freund, Schapire, and others <a href="#ref-freund1996experiments" role="doc-biblioref">1996</a>)</span> but each tree is considered as a function of mapping covariates to the outcomes. So each tree is a model and tree structures, including depth of the tree, the mean value at final leaves, are the model parameters. With the assumption that units in the same leaf is normally distributed, the likelihood for a set of trees could be written out and with proper prior assumption for the parameters, posterior distribution is calculated via an iterative Bayesian backfitting MCMC algorithm. Even though this method adopts T-learner, an indirect loss metric, it is one of the top performers (based on bias and RMSE) among 15 black-box algorithms in estimation of CATE across 20 data sets, according to <span class="citation">Dorie et al. (<a href="#ref-dorie2019automated" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Causal trees, on the other hand, are no longer targeting at homogeneous outcomes during the tree construction but looking into the causal effect. Therefore, the loss functions to get minimized at each step are the direct loss metrics. For instance, considering MOM-IPW case <span class="citation">(Athey and Imbens <a href="#ref-athey2015machine" role="doc-biblioref">2015</a>; Powers et al. <a href="#ref-powers2018some" role="doc-biblioref">2018</a>)</span>,
+<span class="math display">\[
+Y^* \leftarrow \frac{T - \tilde\pi(X)}{\tilde\pi(X)(1 - \tilde\pi(X))}Y 
+\]</span>
+where <span class="math inline">\(\tilde\pi(X)\)</span> usually needs to be estimated separately. If directly build up a tree for this transformed outcome <span class="math inline">\(Y^*\)</span>, and adopt MSE as split rule, then the loss function at each step is
+<span class="math display">\[
+\sum_{l=1}^L \sum_{i \in \mathcal{S}_l} \left( Y_i^* -  \bar{Y}_i^*\right)^2 = \sum_{i} \left( Y_i^* -  \hat{\tau}(X_i)\right)^2, 
+\]</span>
+where <span class="math inline">\(\mathcal{S}_l\)</span> represents the set of units in node <span class="math inline">\(l\)</span>, and <span class="math inline">\(\bar{Y}^*\)</span> is the mean of <span class="math inline">\(Y^*\)</span> within each node
+<span class="math display">\[
+ \bar{Y}_i^* = \frac{1}{|S_l|}\sum_{i \in\mathcal{S}_l}Y^*_i = \hat{\tau}(X_i).
+\]</span>
+As we have already seen in previous section, this loss function leads to the target of minimizing the loss of <span class="math inline">\(\hat\tau(X)\)</span>.</p>
+<p>This direct application is very straightforward theoretically, but may involve some bias if directly plug in the pre-estimated propensity score to adjust for the outcomes of a subpopulation in a single leaf. So a weighted average way of estimating <span class="math inline">\(\hat\tau(x)\)</span> is proposed in <span class="citation">Athey and Imbens (<a href="#ref-athey2015machine" role="doc-biblioref">2015</a>)</span>. In the same paper, they also formally named a tree based algorithm <strong>causal tree</strong> which uses transformed outcome as outcome and maximizes the total treatment effect as objective function. Hence the loss function can be set as
+<span class="math display">\[
+Loss = -\sum_i \hat\tau(X_i)^2.
+\]</span></p>
+<p>Notice that the above estimation methods could be used simultaneously to solve a single objective function. For example, in Nie’s work, they used a logistic regression with LASSO in estimation of propensity score and a linear model for <span class="math inline">\(\tau(X)\)</span>, but kernel-based methods in other parameters. In <span class="citation">Athey and Imbens (<a href="#ref-athey2015machine" role="doc-biblioref">2015</a>)</span>, they first estimated propensity scores from logistic models and then plug the estimators in the tree based algorithms.</p>
+</div>
+<div id="support-vector-machine-svm" class="section level4">
+<h4>Support Vector Machine (SVM)</h4>
+<p>SVM is only used in solving ITR problem due to its strength in handling discontinuous loss function <span class="citation">(Zhao et al. <a href="#ref-zhao2012estimating" role="doc-biblioref">2012</a>; Imai, Ratkovic, and others <a href="#ref-imai2013estimating" role="doc-biblioref">2013</a>)</span>. But SVM usually is hard to extend to multiple treatment scenarios. So we will not explore further on SVM considering our target is the recommendation of the optimal treatment from a number of alternatives.</p>
+</div>
+</div>
+</div>
+<div id="sec3.3" class="section level2">
+<h2>3 Proposed Method</h2>
+<p>The current methods mainly discuss the scenario of two arms, treatment versus control. Even though in many literature, authors claim that their methods could be extended to multiple treatment cases, none of them really implemented it. Our proposed method is tailored for such complicated scenario and at the same time provide an alternative approach to the existing methods. Following the structure in <a href="#sec3.2">Section 2</a>, the proposed method will also be explored in two parts: loss metric and estimation algorithm.</p>
+<p>Following the notation in <a href="#sec3.1">Section 1</a>, assuming there are a total of <span class="math inline">\(K+1\)</span> treatments, <span class="math inline">\(T\in\{0,1,2,...,K\}\)</span> and denote <span class="math inline">\(T=0\)</span> the standard therapy or placebo. The covariate-specific causal effect for the <span class="math inline">\(k^{th}\)</span> treatment against standard therapy is
+<span class="math display">\[
+\tau^{(k)}(X) = E[Y^{(k)} - Y^{(0)}|X],
+\]</span>
+and our goal is to recommend a therapy based on covariates <span class="math inline">\(X\)</span> that could maximize the treatment effect
+<span class="math display">\[
+\text{Recommended Treatment } T^* = \arg\max_k \tau^{(k)}(X).
+\]</span></p>
+<div id="sec3.3.1" class="section level3">
+<h3>3.1 Proposed Loss Metric</h3>
+<p>We extended the R-learner <span class="citation">(Nie and Wager <a href="#ref-nie2017quasi" role="doc-biblioref">2017</a>)</span> into multiple treatments scenario following the Robinson’s decomposition <span class="citation">(Robinson <a href="#ref-robinson1988root" role="doc-biblioref">1988</a>)</span>. The reason we adopt this loss metric is 1) this loss metric targets directly at minimizing the estimation error of <span class="math inline">\(\tau(x)\)</span>; 2) it holds for any outcome distribution, including binary outcomes, so that we do not need any extra modification like MVM metric; 3) the propensity scores do not appear on the denominators which avoid potential computing issues as well as additional variability.</p>
+<p>Under Assumption 1,<br />
+<span class="math display">\[
+\begin{aligned}
+E[Y \mid T, X] &amp;= E\left[ \sum_{k=1}^{K} 1[T=k]Y^{(k)} \;\middle|\; T, X \right] 
+= \sum_{k=1}^{K} 1[T=k] E\left[ Y^{(k)} \mid T, X \right] \\
+&amp;= \sum_{k=1}^{K} 1[T=k] \left(\tau^{(k)}(X) + E[Y^{(0)} \mid X] \right) \\
+&amp;= E[Y^{(0)}\mid X]  + \sum_{k=1}^{K} 1[T=k] \tau^{(k)}(X)
+\end{aligned}
+\]</span>
+and we could re-write this term by plugging in the conditional mean outcome
+<span class="math display">\[
+m(X) = E[Y \mid X] = E\left[ \sum_{k=1}^{K} 1[T=k]Y^{(k)} \;\middle|\; X \right] = E[Y^{(0)}\mid X]  + \sum_{k=1}^{K} \pi^{(k)}(X) \tau^{(k)}(X), 
+\]</span>
+which follows that
+<span class="math display">\[
+E[Y \mid T, X] = m(X) + \sum_{k=1}^{K} \left(1[T=k] - \pi^{(k)}(X)\right) \tau^{(k)}(X),
+\]</span>
+where the propensity score for the <span class="math inline">\(k^{th}\)</span> treatment is denoted as <span class="math inline">\(\pi^{(k)}(X) = E[1[T = k] \mid X] = \Pr[T = k \mid X]\)</span>. Hence, the estimator of <span class="math inline">\(\hat\tau^{(\cdot)}(\cdot)\)</span> could be obtained by minimizing the following loss function
+<span class="math display" id="eq:Rloss">\[\begin{equation}
+\arg\min_\tau \left\{ E\left[ \left(Y - m(X) - \sum_{k=1}^{K} \left(1[T=k] - \pi^{(k)}(X)\right) \tau^{(k)}(X) \right)^2 \right] \right\}. \tag{15}
+\end{equation}\]</span></p>
+</div>
+<div id="sec3.3.2" class="section level3">
+<h3>3.2 Proposed Estimation Algorithm</h3>
+<p>To accomplish the optimization, we adopt a two-step estimation process according to the shape of the loss function. First we need to estimate <span class="math inline">\(m(X)\)</span> and <span class="math inline">\(\pi^{(\cdot)}(X)\)</span>, and then plug the estimators into equation <a href="#eq:Rloss">(15)</a>. Besides, we need to propose a set of functions for the causal effects <span class="math inline">\(\hat\tau^{(\cdot)}(X)\)</span>.</p>
+<p>In order to handle the potential high dimension structure of the data, we adopt Generalized Additive Model (GAM) along with B-spline basis for the estimation of both conditional mean and propensity score. For the modeling of causal treatment effect, we combine the GAM with tree based learning algorithm to utilize the strength of both methods.</p>
+<div id="estimation-of-conditional-mean-outcome-mx" class="section level4">
+<h4>Estimation of Conditional Mean Outcome <span class="math inline">\(m(X)\)</span></h4>
+<p>Suppose there are <span class="math inline">\(P\)</span> covariates, then the conditional mean outcome could be modelled by
+<span class="math display">\[
+m(X) = \alpha + f_1(X_1) + f_2(X_2) + \cdots + f_P(X_P)
+\]</span>
+where
+<span class="math display">\[
+f_p(x) = \sum_{l=1}^{q_n} a_{lp}B_l(x).
+\]</span></p>
+</div>
+<div id="estimation-of-propensity-score-picdotx" class="section level4">
+<h4>Estimation of Propensity Score <span class="math inline">\(\pi^{(\cdot)}(X)\)</span></h4>
+<p>For each propensity score, due to the binary outcomes, we adopt the logit link function
+<span class="math display">\[
+\log \frac{\pi^{(k)}(X)}{1 - \pi^{(k)}(X)} = \beta^{(k)} + g^{(k)}_1(X_1) + g^{(k)}_2(X_2) + \cdots + g^{(k)}_P(X_P)
+\]</span>
+where
+<span class="math display">\[
+g^{(k)}_p(x) = \sum_{l=1}^{q_n} b^{(k)}_{lp}B_l(x).
+\]</span></p>
+</div>
+<div id="proposed-models-for-causal-treatment-effects-taucdotx" class="section level4">
+<h4>Proposed Models for Causal Treatment Effects <span class="math inline">\(\tau^{(\cdot)}(X)\)</span></h4>
+<p>In Nie’s work, they simply assume a linear structure of <span class="math inline">\(\tau(X)\)</span> for the simplicity in proof. For a better fit and free from any model restrictions, we adopt GAM to model causal treatment effects
+<span class="math display">\[
+\tau^{(k)}(X) = \gamma^{(k)} + h^{(k)}_1(X_1) + h^{(k)}_2(X_2) + \cdots h^{(k)}_P(X_P)
+\]</span>
+where
+<span class="math display">\[
+h^{(k)}_p(x) = \sum_{l=1}^{q_n} c^{(k)}_{lp}B_l(x).
+\]</span></p>
+<p>In the two-step estimation procedure, after obtaining <span class="math inline">\(\hat{m}(X)\)</span> and <span class="math inline">\(\hat\pi^{(\cdot)}(X)\)</span> in the first step, minimizing the loss function yield the estimates of <span class="math inline">\((\underline\gamma, \underline c)\)</span>
+<span class="math display" id="eq:opt">\[\begin{equation}
+(\underline{\hat{\gamma}}, \underline{\hat{c}}) = \arg\min_{\underline\gamma, \underline c} \sum_{i=1}^n  \left(Y_i - \hat{m}(X_i) - \sum_{k=1}^{K} \left(1[T_i=k] - \hat\pi^{(k)}(X_i)\right) \tau^{(k)}(X_i;\underline\gamma, \underline c) \right)^2 . \tag{16}
+\end{equation}\]</span>
+The estimates of covariate-specific causal effects are then given by
+<span class="math display" id="eq:tau">\[\begin{equation}
+\hat\tau^{(k)}(X) = \hat\gamma^{(k)} + \sum_{p = 1}^P\left(\sum_{l=1}^{q_n}\hat{c}^{(k)}_{lp}B_l(X_p)\right). \tag{17}
+\end{equation}\]</span></p>
+<p>Instead of direct optimizing the loss function <a href="#eq:opt">(16)</a> with LASSO algorithm just as in Nie’s work, we adopt a tree-based recursive partition algorithm to figure out the optimal causal treatment effect. The idea is to recursively split the node to grow a tree which could achieve the homogeneous leaves after completion and within each node, we estimate the treatment effects by equation <a href="#eq:tau">(17)</a>. The details of generating trees will be further demonstrated in Section <a href="#sec3.3.3">3.3</a>.</p>
+<p>The main reason to adopt tree-based algorithm is the natural feature of tree-based algorithm that generate homogeneous leaves and assign heterogeneous units to different leaves perfectly matches our requirement of seeking heterogeneous treatment effects. Our ultimate goal is to find out the optimal covariate specific treatment, rather than figuring out the most accurate estimation of treatment effects, which is almost impossible. So we prefer not to directly solve equation <a href="#eq:opt">(16)</a> by LASSO but to subclassify homogeneous patients.</p>
+<p>Our proposed method also differs from the current existing tree based algorithms. Causal tree based algorithms split the node according to the estimation of <span class="math inline">\(\tau(X)\)</span> in each node under the assumption of homogeneity. However, at the earlier stage of tree generation, the homogeneity assumption always invalid which lead to the bias in the <span class="math inline">\(\hat\tau(X)\)</span> and undermine the final estimators. In our methods, we estimate the treatment effect using GAM at each node without the need of homogeneity to avoid such issue. Besides, we propose an adaptive approach, which estimates the nuisance parameters <span class="math inline">\(m(X)\)</span> and <span class="math inline">\(\pi^{(\cdot)}(X)\)</span> within each node, that is very different from most current literatures who obtain the estimators based on the whole data set <span class="citation">(Athey and Imbens <a href="#ref-athey2015machine" role="doc-biblioref">2015</a>; Powers et al. <a href="#ref-powers2018some" role="doc-biblioref">2018</a>; Wager and Athey <a href="#ref-wager2018estimation" role="doc-biblioref">2018</a>)</span>. Our method also is model free comparing to <span class="citation">Su et al. (<a href="#ref-su2009subgroup" role="doc-biblioref">2009</a>)</span>, who split the tree by the statistics that testing the interaction effect between treatments and covariates in the linear model.</p>
+<p>Aside from those advantages comparing to the existing methods, adopting a tree structure helps to alleviate the potential problems of GAM. GAM is known for its great flexibility but has several limitations: 1) it is an additive structure which is not able to account for interaction effects; 2) GAM with B-splines regression is prone to overfit. For the first issue, tree structure, however, could capture the non-linearity even <span class="math inline">\(\tau^{(\cdot)}(X)\)</span> is estimated linearly in each leaf. A common way to solve overfitting issue is by adding penalty terms in the loss function, but it could be computationally very expensive in our case. Here we adopt the idea of random forest to subsample the covariates during the growth of each single tree to mitigate overfitting and simplify the optimization calculation as well.</p>
+</div>
+</div>
+<div id="sec3.3.3" class="section level3">
+<h3>3.3 Estimation Process</h3>
+<p>Denote <span class="math inline">\(\underline\tau = (\tau^{(1)}, \tau^{(2)}, ..., \tau^{(K)})\)</span> and the estimated individual treatment effect from all treatment arms for the <span class="math inline">\(i^{th}\)</span> subject is <span class="math inline">\(\underline{\hat\tau_i} = \left(\hat\tau^{(1)}(X_i), \hat\tau^{(2)}(X_i), ..., \hat\tau^{(K)}(X_i) \right)\)</span>. We propose the following algorithm to generate a single tree</p>
+<ul>
+<li><p><strong>Step 1:</strong> Split the current node into two parts, left subnode and right subnode, at a given value of one covariate. The samples in left and right subnode is denoted by set <span class="math inline">\(\mathcal{S}_L\)</span> and <span class="math inline">\(\mathcal{S}_R\)</span> respectively, each with size <span class="math inline">\(N_L\)</span> and <span class="math inline">\(N_R\)</span>. At each subnode, we first fit <span class="math inline">\(\hat{m}(X)\)</span> and <span class="math inline">\(\hat\pi^{(k)}(X), k = 1, 2, ..., K\)</span> and further obtain the model parameters <span class="math inline">\((\underline{\hat{\gamma}}, \underline{\hat{c}})\)</span> by solving equation <a href="#eq:opt">(16)</a>. Then the estimation of the individual treatment effect <span class="math inline">\(\underline{\hat\tau_i}\)</span> is accessible by equation <a href="#eq:tau">(17)</a> which is called ‘pseudo’ causal effects, since they are mainly used for facilitating the tree build-up. Denote the obtained <span class="math inline">\(N_L\)</span> ‘pseudo’ outcomes in left subnode,
+<span class="math display">\[
+\hat\tau_L = \{\underline{\hat\tau_i} : i \in \mathcal{S}_L\}
+\]</span>
+and for the right subnode,
+<span class="math display">\[
+\hat\tau_R = \{\underline{\hat\tau_i} : i \in \mathcal{S}_R\}.
+\]</span></p></li>
+<li><p><strong>Step 2:</strong> Then we calculate two-sample Hotelling’s T-Square statistic to test the null hypothesis that the average treatment effect is the same in left and right subnode, that is <span class="math inline">\(H_0: \tau_L = \tau_R\)</span>. This T-Square statistic is
+<span class="math display">\[
+T_H^2 = (\bar{\hat\tau}_L - \bar{\hat\tau}_R)^T \left\{S_p \left( \frac{1}{N_L} + \frac{1}{N_R} \right) \right\}^{-1} (\bar{\hat\tau}_L - \bar{\hat\tau}_R) 
+\]</span>
+where
+<span class="math display">\[
+\begin{aligned}
+\bar{\hat\tau}_L &amp;= \frac{1}{N_L}\sum_{i \in \mathcal{S}_L} \underline{\hat\tau_i}, \\
+\bar{\hat\tau}_R &amp;= \frac{1}{N_R}\sum_{i \in \mathcal{S}_R} \underline{\hat\tau_i}, \\
+S_p &amp;= \frac{(N_L - 1)S_L + (N_R -1)S_R}{N_L + N_R - 2}
+\end{aligned}
+\]</span>
+with
+<span class="math display">\[
+\begin{aligned}
+S_L &amp;= \frac{1}{N_L} \sum_{i \in \mathcal{S}_L} \left( \underline{\hat\tau_i} - \bar{\hat\tau}_L \right)\left( \underline{\hat\tau_i} - \bar{\hat\tau}_L \right)^T, \\
+S_R &amp;= \frac{1}{N_R} \sum_{i \in \mathcal{S}_R} \left( \underline{\hat\tau_i} - \bar{\hat\tau}_R \right)\left( \underline{\hat\tau_i} - \bar{\hat\tau}_R \right)^T.
+\end{aligned}
+\]</span>
+Since Hotelling’s two-sample t-squared statistic is related to F-distribution
+<span class="math display">\[
+\frac{N_L+N_R-K-1}{(N_L+N_R-2)K} T_H^2 \sim F(K, N_L+N_R-K-1),
+\]</span>
+the p-value of the test is computed accordingly, denoted by <span class="math inline">\(p_{val}\)</span>. However, a simple comparison of p-value at all possible split values is not fair unless adjusting for the total number of distinct values in the covariate <span class="math inline">\(m\)</span> (to handle multiple comparison), and the depth of the node <span class="math inline">\(d\)</span> (to pursue balanced tree and avoid overfitting). We recommend to use the adjusted logworth, that is
+<span class="math display">\[
+a.logworth = -\log_{10}(2^d\cdot m\cdot p_{val}).
+\]</span>
+After going through all the potential split points, the one provides the largest <span class="math inline">\(a.logworth\)</span> will be adopted to be the next split.</p></li>
+<li><p><strong>Step 3:</strong> Repeat Step 1 and 2 until no further split could be made, or a certain stopping rule is met.</p></li>
+<li><p><strong>Step 4:</strong> After completing the growth of the tree, we need to prune the tree to the right size to avoid overfitting. Pruning and cross-validation can be a burden when statistical tests are used for splitting <span class="citation">(Zeileis, Hothorn, and Hornik <a href="#ref-zeileis2008model" role="doc-biblioref">2008</a>; Athey and Imbens <a href="#ref-athey2016recursive" role="doc-biblioref">2016</a>)</span>. In our work, we propose to apply a different criterion in validation and pruning so that to achieve ‘honest’ trees as proposed by <span class="citation">Athey and Imbens (<a href="#ref-athey2016recursive" role="doc-biblioref">2016</a>)</span>. Other than T-Square statistics, we adopt a direct measure of treatment effect
+<span class="math display">\[
+\sum_{i \in \{\mathcal{S}_L, \mathcal{S}_R\}} \max\{\underline{\hat\tau_i}\}^2
+\]</span>
+to evaluate whether a split could help to maximize the overall benefits. The splits that could not improve the treatment effects in validation set will be removed.</p></li>
+<li><p><strong>Step 5:</strong> For the final tree, each terminal node defines a homogeneous sub-population for treatment effects. Thus, the covariate specific treatment effects among all <span class="math inline">\(K\)</span> treatments could be treated as constants instead of modeling by GAM, and estimated by minimizing the loss function
+<span class="math display">\[
+\underline{\hat\tau}(X) = \arg\min_\tau \sum_{i \in \{\mathcal{S}:X\in \mathcal{S}\}}  \left(Y_i - \hat{m}(X_i) - \sum_{k=1}^{K} \left(1[T_i=k] - \hat\pi^{(k)}(X_i)\right) \tau^{(k)} \right)^2.
+\]</span></p></li>
+</ul>
+<p>To reduce the variability of estimators from a single tree, we repeat Step 1 - 5 to generate a total of <span class="math inline">\(B\)</span> trees where the samples and covariates used for each tree is subsampled from the whole set. The final treatment effect for the <span class="math inline">\(i^{th}\)</span> subject is thus the average of the outcomes from <span class="math inline">\(B\)</span> single trees
+<span class="math display">\[
+\underline{\bar{\hat{\tau}}_i} = (\bar{\hat\tau}_i^{(1)}, \bar{\hat\tau}_i^{(2)}, ..., \bar{\hat\tau}_i^{(K)})
+\]</span>
+and the recommended treatment is the one that provides the optimal effect: <span class="math inline">\(T^* = \{k: \bar{\hat\tau}_i^{(k)} = \max(\bar{\hat\tau}_i^{(1)}, \bar{\hat\tau}_i^{(2)}, ..., \bar{\hat\tau}_i^{(K)})\}\)</span>.</p>
+</div>
+</div>
+<div id="application" class="section level2">
+<h2>4 Application</h2>
+<p>In this section, I will introduce the application of proposed method on seeking the optimal antihypertensive therapies. Nowadays, hundreds of different type of antihypertensives are available in the market. The benefit of the antihypertensives varies across people due to different personal characteristics. To make things worse, for some person, only a combination of several antihypertensive drugs, which we call it an antihypertensive therapy, make effect. Our target is to find out the best antihypertensive therapy according to patient’s characteristics by our proposed method. In the following sessions, we will introduce our data system, definition of cohort, and the potential problems when applying our method to the real observational data.</p>
+<div id="data-scource" class="section level3">
+<h3>4.1 Data Scource</h3>
+<p>Our electronic medical record (EMR) data is collected from clinical records stored in the Indiana Network for Patient Care (INPC). The INPC includes most of the Regenstrief Medical Record System (RMRS) clinical data from Wishard Health Services, Indiana University (IU) hospitals, and Methodist Hospital. RMRS is one of the nation’s first electronic medical record systems and the keystone of many activities at Regenstrief Institute. The data in the RMRS have been used previously for health care research and management purposes.</p>
+<p>INPC is a 17-year-old health information exchange operated in Indiana. Regenstrief Institute made a pioneering commitment to standards, interoperability, and the interchange of clinical data for clinical, public health, and research purposes. Investigators at the Regenstrief Institute created the Indianapolis Network for Patient Care (INPC) in 1995 with the goal of providing clinical information at the point of care for the treatment of patients. The INPC includes clinical data from over 80 hospitals, the public health departments, local laboratories and imaging centers, and a few large-group practices closely tied to hospital systems, and plans are to expand these efforts.</p>
+<p>The INPC repository now carries 660 million discrete observations; 14.5 million text reports; 45 million radiology images; and 450,000 EKG tracings. These are now growing at the respective rates of 88 million, 2 million, 25 million, and 80,000 per year.</p>
+<p>The Regenstrief data system standardizes all clinical data, and laboratory test results are mapped to a set of common test codes (LOINC) with standard units of measure for patient care, public health, and research purposes. Each institution has the same file structure in the Regenstrief system and shares the same term dictionary, which contains the codes, names (and other attributes) for tests, drugs, coded answers, etc.</p>
+</div>
+<div id="cohort-definition" class="section level3">
+<h3>4.2 Cohort Definition</h3>
+<p>We will identify the cohort from medical records stored in INPC. We will use ICD9 code to identify cases of hypertension. To alleviate the concern about underdiagnoses of hypertension, we also examined recorded blood pressure in the medical records. An individual is considered to be hypertensive if his/her blood pressure meets the criteria for hypertension set forth by the <em>Seventh Report of the Joint National Committee on Prevention, Detection, Evaluation, and Treatment of High Blood Pressure</em> (JNC 7).</p>
+<p>To meet the Standards for Privacy of Individually Identifiable Health Information (“Privacy Rules”) set by the Health Insurance Portability and Accountability Act of 1996, we sought and obtained permission from Indiana University Institutional Review Board to use de-identified data in this research. To comply with the privacy rules, we removed all identifiable information from the study data, including names, addresses, telephone numbers, social-security numbers, hospital identification numbers, etc. We also removed all calendar dates from the medical records and only kept calendar years of the recorded events such as medication prescriptions and dispensing, laboratory tests, outpatient and inpatient visits. To maintain the temporal sequence of recorded events, we designate the date of the initial diagnosis as the index date for that patient, i.e., time zero. All other record dates are indicated by the number of calendar days from the index date. We recognize that the determination of time of “initial” diagnosis is not foolproof as it is conceivable that the patient could have been diagnosed earlier than our medical records showed.</p>
+<p>Our cohort for hypertension patients was extracted for a five year time period between 2004 to 2012. A total of 812,571 patients were identified as hypertension. But considering the fact of incompleteness, the total data available for use will be far less than this number, which may around 20k to 30k.</p>
+<!-- \begin{table}[] -->
+<!-- \caption{ICD-9 Code for Hypertension used in data extraction} -->
+<!-- \label{tab:ICD9} -->
+<!-- \resizebox{\textwidth}{!}{% -->
+<!-- \begin{tabular}{p{1.2cm}|p{14cm}} -->
+<!-- 401.9 & Unspecified essential hypertension (hypertension occurring without preexisting renal disease or known organic cause) \\ -->
+<!-- 401.1 & Benign essential hypertension \\ -->
+<!-- 401.0 & Malignant essential hypertension \\ -->
+<!-- 255.10 & Hyperaldosteronism, unspecified (abnormality of electrolyte function caused by excessive secretion of aldosterone by the adrenal cortex) \\ -->
+<!-- 405.0 & Malignant secondary hypertension \\ -->
+<!-- 405.9 & Unspecified secondary hypertension -->
+<!-- \end{tabular}% -->
+<!-- } -->
+<!-- \end{table} -->
+</div>
+<div id="potential-problems-of-emr-data-application" class="section level3">
+<h3>4.2 Potential Problems of EMR Data Application</h3>
+<ul>
+<li><p><strong>Missing Data</strong>. Mssing data is always an issue in observational studies, and it is even more severe for EMR data. Many variables, for example, the record of whether patient have had antibiotic recently, only a small portion (&lt;1%) has the answer ‘yes’, but a large portion is missed. We need to make a proper assumption that those missed data are actually ‘no’.</p></li>
+<li><p><strong>Drug Adherence</strong>. In observational studies, we have no idea of whether patients take medicine regularly as required or not. So we adopt two frequently used adherence measures: medication possession ratio (MRP) and proportion of days covered (PDC). Both MPR and PDC are validated adherence measures accepted by the International Society for Pharmacoeconomics and Outcomes Research (ISPOR). We calculated MPR and PDC using medication transaction and/or pharmacy claim data stored in the electronic records of the INPC.</p>
+<p>The drug level adherence may be used as the covariate in estimation of propensity score. For patient level drug adherence, it may not make a lot of sense to use as a personal characteristics since we would not want to find some therapies that works for patients who do not adhere to the prescription, but rather we may use it to stratify the cohort and only focus on the sub-cohort with appropriate level of drug adherence.</p></li>
+<li><p><strong>Treatment Duration</strong>. The strict definition of causal effect is to measure the difference of potential outcomes for the same person, at the same time point after treatment. To accomplish the estimation, we already loose the constraint to compare the potential outcomes from different patients. But for observational studies, we lose the control for the treatment duration as well. This may raise some criticism but considering the immediate effect of antihypertensives, the outcomes may not change a lot with the duration which could alleviate the issue.</p></li>
+</ul>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div id="App" class="section level1">
+<h1>Appendix</h1>
+<p>Proof of Equation <a href="#eq:ATE1">(4)</a>:
+<span class="math display">\[
+\begin{aligned}
+\tau &amp;\equiv E[Y^{(1)}] - E[Y^{(0)}] \\
+&amp;= E_X\{ E[Y^{(1)}|X] - E[Y^{(0)}|X]\} \\
+&amp;= E_X\{ E[Y^{(1)}|T = 1, X] - E[Y^{(0)}|T = 0, X]\} \ (Ignorability) \\
+&amp;= E_X\{ E[Y|T = 1, X] - E[Y|T = 0, X]\} \ (Consistency)
+\end{aligned}
+\]</span>
+Proof of Equation <a href="#eq:ATE2">(5)</a>:
+<span class="math display">\[
+\begin{aligned}
+\tau 
+&amp;= E_X\{ E[Y|T = 1, X] - E[Y|T = 0, X]\} \\
+&amp;= E_X\left\{ \frac{E[Y|T = 1, X]\cdot E[T = 1|X]}{E[T = 1|X]} \right\} - E_X\left\{ \frac{E[Y|T = 0, X]\cdot E[T = 0|X]}{E[T = 0|X]} \right\} \\
+&amp;= E_X \left\{ E \left[\frac{TY}{\pi(X)}|X\right] \right\} - E_X \left\{ E \left[\frac{(1-T)Y}{1-\pi(X)}|X\right] \right\} \\ 
+&amp;= E \left[\frac{TY}{\pi(X)} \right] - E \left[\frac{(1 - T)Y}{1-\pi(X)} \right] .
+\end{aligned}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+
+<p></p>
+<div id="refs" class="references">
+<div id="ref-abrevaya2015estimating">
+<p>Abrevaya, Jason, Yu-Chin Hsu, and Robert P Lieli. 2015. “Estimating Conditional Average Treatment Effects.” <em>Journal of Business &amp; Economic Statistics</em> 33 (4): 485–505.</p>
+</div>
+<div id="ref-athey2016recursive">
+<p>Athey, Susan, and Guido Imbens. 2016. “Recursive Partitioning for Heterogeneous Causal Effects.” <em>Proceedings of the National Academy of Sciences</em> 113 (27): 7353–60.</p>
+</div>
+<div id="ref-athey2015machine">
+<p>Athey, Susan, and Guido W Imbens. 2015. “Machine Learning Methods for Estimating Heterogeneous Causal Effects.” <em>Stat</em> 1050 (5): 1–26.</p>
+</div>
+<div id="ref-athey2019generalized">
+<p>Athey, Susan, Julie Tibshirani, Stefan Wager, and others. 2019. “Generalized Random Forests.” <em>The Annals of Statistics</em> 47 (2): 1148–78.</p>
+</div>
+<div id="ref-bang2005doubly">
+<p>Bang, Heejung, and James M Robins. 2005. “Doubly Robust Estimation in Missing Data and Causal Inference Models.” <em>Biometrics</em> 61 (4): 962–73.</p>
+</div>
+<div id="ref-breiman1996bagging">
+<p>Breiman, Leo. 1996. “Bagging Predictors.” <em>Machine Learning</em> 24 (2): 123–40.</p>
+</div>
+<div id="ref-breiman2017classification">
+<p>———. 2017. <em>Classification and Regression Trees</em>. Routledge.</p>
+</div>
+<div id="ref-chen2017general">
+<p>Chen, Shuai, Lu Tian, Tianxi Cai, and Menggang Yu. 2017. “A General Statistical Framework for Subgroup Identification and Comparative Treatment Scoring.” <em>Biometrics</em> 73 (4): 1199–1209.</p>
+</div>
+<div id="ref-chipman1998bayesian">
+<p>Chipman, Hugh A, Edward I George, and Robert E McCulloch. 1998. “Bayesian Cart Model Search.” <em>Journal of the American Statistical Association</em> 93 (443): 935–48.</p>
+</div>
+<div id="ref-chipman2002bayesian">
+<p>———. 2002. “Bayesian Treed Models.” <em>Machine Learning</em> 48 (1-3): 299–320.</p>
+</div>
+<div id="ref-chipman2010bart">
+<p>Chipman, Hugh A, Edward I George, Robert E McCulloch, and others. 2010. “BART: Bayesian Additive Regression Trees.” <em>The Annals of Applied Statistics</em> 4 (1): 266–98.</p>
+</div>
+<div id="ref-dorie2019automated">
+<p>Dorie, Vincent, Jennifer Hill, Uri Shalit, Marc Scott, Dan Cervone, and others. 2019. “Automated Versus Do-It-Yourself Methods for Causal Inference: Lessons Learned from a Data Analysis Competition.” <em>Statistical Science</em> 34 (1): 43–68.</p>
+</div>
+<div id="ref-freedman2008weighting">
+<p>Freedman, David A, and Richard A Berk. 2008. “Weighting Regressions by Propensity Scores.” <em>Evaluation Review</em> 32 (4): 392–409.</p>
+</div>
+<div id="ref-freund1996experiments">
+<p>Freund, Yoav, Robert E Schapire, and others. 1996. “Experiments with a New Boosting Algorithm.” In <em>Icml</em>, 96:148–56. Citeseer.</p>
+</div>
+<div id="ref-friedman2001greedy">
+<p>Friedman, Jerome H. 2001. “Greedy Function Approximation: A Gradient Boosting Machine.” <em>Annals of Statistics</em>, 1189–1232.</p>
+</div>
+<div id="ref-hill2011bayesian">
+<p>Hill, Jennifer L. 2011. “Bayesian Nonparametric Modeling for Causal Inference.” <em>Journal of Computational and Graphical Statistics</em> 20 (1): 217–40.</p>
+</div>
+<div id="ref-hirano2003efficient">
+<p>Hirano, Keisuke, Guido W Imbens, and Geert Ridder. 2003. “Efficient Estimation of Average Treatment Effects Using the Estimated Propensity Score.” <em>Econometrica</em> 71 (4): 1161–89.</p>
+</div>
+<div id="ref-imai2014covariate">
+<p>Imai, Kosuke, and Marc Ratkovic. 2014. “Covariate Balancing Propensity Score.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 76 (1): 243–63.</p>
+</div>
+<div id="ref-imai2013estimating">
+<p>Imai, Kosuke, Marc Ratkovic, and others. 2013. “Estimating Treatment Effect Heterogeneity in Randomized Program Evaluation.” <em>The Annals of Applied Statistics</em> 7 (1): 443–70.</p>
+</div>
+<div id="ref-imbens2015causal">
+<p>Imbens, Guido W, and Donald B Rubin. 2015. <em>Causal Inference in Statistics, Social, and Biomedical Sciences</em>. Cambridge University Press.</p>
+</div>
+<div id="ref-kang2007demystifying">
+<p>Kang, Joseph DY, Joseph L Schafer, and others. 2007. “Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data.” <em>Statistical Science</em> 22 (4): 523–39.</p>
+</div>
+<div id="ref-knaus2018machine">
+<p>Knaus, Michael, Michael Lechner, and Anthony Strittmatter. 2018. “Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence.”</p>
+</div>
+<div id="ref-kunzel2019metalearners">
+<p>Künzel, Sören R, Jasjeet S Sekhon, Peter J Bickel, and Bin Yu. 2019. “Metalearners for Estimating Heterogeneous Treatment Effects Using Machine Learning.” <em>Proceedings of the National Academy of Sciences</em> 116 (10): 4156–65.</p>
+</div>
+<div id="ref-neyman1923application">
+<p>Neyman, Jerzy S. 1923. “On the Application of Probability Theory to Agricultural Experiments. Essay on Principles. Section 9.(tlanslated and Edited by Dm Dabrowska and Tp Speed, Statistical Science (1990), 5, 465-480).” <em>Annals of Agricultural Sciences</em> 10: 1–51.</p>
+</div>
+<div id="ref-nie2017quasi">
+<p>Nie, Xinkun, and Stefan Wager. 2017. “Quasi-Oracle Estimation of Heterogeneous Treatment Effects.” <em>arXiv Preprint arXiv:1712.04912</em>.</p>
+</div>
+<div id="ref-powers2018some">
+<p>Powers, Scott, Junyang Qian, Kenneth Jung, Alejandro Schuler, Nigam H Shah, Trevor Hastie, and Robert Tibshirani. 2018. “Some Methods for Heterogeneous Treatment Effect Estimation in High Dimensions.” <em>Statistics in Medicine</em> 37 (11): 1767–87.</p>
+</div>
+<div id="ref-qian2011performance">
+<p>Qian, Min, and Susan A Murphy. 2011. “Performance Guarantees for Individualized Treatment Rules.” <em>Annals of Statistics</em> 39 (2): 1180.</p>
+</div>
+<div id="ref-robins2000marginal">
+<p>Robins, James M, Miguel Angel Hernan, and Babette Brumback. 2000. “Marginal Structural Models and Causal Inference in Epidemiology.” LWW.</p>
+</div>
+<div id="ref-robinson1988root">
+<p>Robinson, Peter M. 1988. “Root-N-Consistent Semiparametric Regression.” <em>Econometrica: Journal of the Econometric Society</em>, 931–54.</p>
+</div>
+<div id="ref-rosenbaum1983central">
+<p>Rosenbaum, Paul R, and Donald B Rubin. 1983. “The Central Role of the Propensity Score in Observational Studies for Causal Effects.” <em>Biometrika</em> 70 (1): 41–55.</p>
+</div>
+<div id="ref-rubin1974estimating">
+<p>Rubin, Donald B. 1974. “Estimating Causal Effects of Treatments in Randomized and Nonrandomized Studies.” <em>Journal of Educational Psychology</em> 66 (5): 688.</p>
+</div>
+<div id="ref-rubin1980randomization">
+<p>———. 1980. “Randomization Analysis of Experimental Data: The Fisher Randomization Test Comment.” <em>Journal of the American Statistical Association</em> 75 (371): 591–93.</p>
+</div>
+<div id="ref-signorovitch2007identifying">
+<p>Signorovitch, James Edward. 2007. “Identifying Informative Biological Markers in High-Dimensional Genomic Data and Clinical Trials.” PhD thesis, Harvard University.</p>
+</div>
+<div id="ref-su2009subgroup">
+<p>Su, Xiaogang, Chih-Ling Tsai, Hansheng Wang, David M Nickerson, and Bogong Li. 2009. “Subgroup Analysis via Recursive Partitioning.” <em>Journal of Machine Learning Research</em> 10 (Feb): 141–58.</p>
+</div>
+<div id="ref-tian2014simple">
+<p>Tian, Lu, Ash A Alizadeh, Andrew J Gentles, and Robert Tibshirani. 2014. “A Simple Method for Estimating Interactions Between a Treatment and a Large Number of Covariates.” <em>Journal of the American Statistical Association</em> 109 (508): 1517–32.</p>
+</div>
+<div id="ref-wager2018estimation">
+<p>Wager, Stefan, and Susan Athey. 2018. “Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests.” <em>Journal of the American Statistical Association</em> 113 (523): 1228–42.</p>
+</div>
+<div id="ref-zeileis2008model">
+<p>Zeileis, Achim, Torsten Hothorn, and Kurt Hornik. 2008. “Model-Based Recursive Partitioning.” <em>Journal of Computational and Graphical Statistics</em> 17 (2): 492–514.</p>
+</div>
+<div id="ref-zhang2012robust">
+<p>Zhang, Baqun, Anastasios A Tsiatis, Eric B Laber, and Marie Davidian. 2012. “A Robust Method for Estimating Optimal Treatment Regimes.” <em>Biometrics</em> 68 (4): 1010–8.</p>
+</div>
+<div id="ref-zhao2012estimating">
+<p>Zhao, Yingqi, Donglin Zeng, A John Rush, and Michael R Kosorok. 2012. “Estimating Individualized Treatment Rules Using Outcome Weighted Learning.” <em>Journal of the American Statistical Association</em> 107 (499): 1106–18.</p>
+</div>
+</div>
+</div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+        ©
+        
+          2020 -
+        
+        2021
+         周君逸 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+        
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+      
+      <script src="/js/coder.min.235666b114443867d43eeb5799d51f6252965e5163f338285e113fa381d3d27e.js" integrity="sha256-I1ZmsRREOGfUPutXmdUfYlKWXlFj8zgoXhE/o4HT0n4="></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+  </body>
+
+</html>

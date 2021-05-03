@@ -44,6 +44,24 @@
     </item>
     
     <item>
+      <title>EM algorithm</title>
+      <link>/tags/em-algorithm/</link>
+      <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/em-algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PU learning</title>
+      <link>/tags/pu-learning/</link>
+      <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/pu-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Finance</title>
       <link>/tags/finance/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
@@ -67,15 +85,6 @@
       <pubDate>Tue, 05 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/causal-inference/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>EM algorithm</title>
-      <link>/tags/em-algorithm/</link>
-      <pubDate>Wed, 10 Apr 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/em-algorithm/</guid>
       <description></description>
     </item>
     

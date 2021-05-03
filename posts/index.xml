@@ -26,12 +26,21 @@
     </item>
     
     <item>
+      <title>Positive-and-Unlabeled Learning</title>
+      <link>/posts/pulearning/</link>
+      <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/pulearning/</guid>
+      <description>Introduction Positive and unlabeled learning, or positive-unlabeled (PU) learning, refers to the binary classification problem where only positive labels are observed and the rest are unlabeled. Since unlabeled part of data consists of both positive and negative instances, naively treating them as negative and performing a standard classification learning algorithm will underestimate the probability of being positive (Ward et al. 2009; Yang et al. 2012). Without providing negative instances in the training set, however, will prevent the direct use of well-developed supervised classification methods.</description>
+    </item>
+    
+    <item>
       <title>Connection between the Idea behind OptTrialDesign &amp; CAPM in Finance</title>
       <link>/posts/odt-capm/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/posts/odt-capm/</guid>
-      <description>Idea behind OptTrialDesign In Optimal Design Strategy, we propose a novel way to find the optimal trial design, in terms of maximizing the financial outcomes, i.e., Expected Net Revenue (ENR), but also under the regulatory requirements. We have to trade-off because in pharmaceutical companies’ position, a shorter study/trial duration leads to earlier market access which helps to maximize the profits before LOE (loss of exclusivity). On the other hand, regulatory agencies and health technology assessment (HTA) bodies wish to see a more guaranteed clinical results, which usually require longer study duration.</description>
+      <description>Idea behind OptTrialDesign In Optimal Design Strategy, we propose a novel way to find the optimal trial design, in terms of maximizing the financial outcomes, i.e., Expected Net Revenue (ENR), but also under the regulatory requirements. We have to trade-off because in pharmaceutical companies’ position, a shorter study/trial duration leads to earlier market access which helps to maximize the profits before LOE (loss of exclusivity). On the other hand, regulatory agencies and health technology assessment (HTA) bodies wish to see more guaranteed clinical results, which usually require longer study duration.</description>
     </item>
     
     <item>

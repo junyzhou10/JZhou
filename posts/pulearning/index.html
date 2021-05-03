@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="color-scheme" content="light dark">
+
+    
+
+    <meta name="author" content="Junyi Zhou">
+    <meta name="description" content="Positive-and-Unlabeled learning">
+    <meta name="keywords" content="personal, projects, apps">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Positive-and-Unlabeled Learning"/>
+<meta name="twitter:description" content="Positive-and-Unlabeled learning"/>
+
+    <meta property="og:title" content="Positive-and-Unlabeled Learning" />
+<meta property="og:description" content="Positive-and-Unlabeled learning" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/pulearning/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-05-28T00:00:00&#43;00:00" />
+
+
+
+    <title>
+  Positive-and-Unlabeled Learning · Junyi Zhou
+</title>
+
+    
+      <link rel="canonical" href="/posts/pulearning/">
+    
+
+    <link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.1.7" as="font" type="font/woff2" crossorigin>
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.406d0bb9b7e93dd1c4497ee4abb177af6bea8f6c16aea89ae05f2aef56ef44e5.css" integrity="sha256-QG0LubfpPdHESX7kq7F3r2vqj2wWrqia4F8q71bvROU=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.dde8a61eb31a32353b4baf3d9113f03c4ea2a8ca9bb736f59ca2d2b2cb664f0b.css" integrity="sha256-3eimHrMaMjU7S689kRPwPE6iqMqbtzb1nKLSsstmTws=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+
+    <meta name="generator" content="Hugo 0.83.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="preload-transitions colorscheme-auto"
+        onload=""
+  >
+    
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      Junyi Zhou
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/about/">About</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/posts/">Projects</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/publications/">Publications</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/contact/">Contact me</a>
+            </li>
+          
+        
+        
+          
+          
+          
+            
+              
+                <li class="navigation-item menu-separator">
+                  <span>|</span>
+                </li>
+                
+              
+              <li class="navigation-item">
+                <a href="/cn/posts/pulearning/">中文</a>
+              </li>
+            
+          
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="/posts/pulearning/">
+              Positive-and-Unlabeled Learning
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime='2020-05-28T00:00:00Z'>
+                May 28, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              12-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="/categories/thoughts/">Thoughts</a></div>
+
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <a href="/tags/em-algorithm/">EM algorithm</a>
+      <span class="separator">•</span>
+    <a href="/tags/pu-learning/">PU learning</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Positive and unlabeled learning, or positive-unlabeled (PU) learning, refers to the binary classification problem where only positive labels are observed and the rest are unlabeled. Since unlabeled part of data consists of both positive and negative instances, naively treating them as negative and performing a standard classification learning algorithm will underestimate the probability of being positive <span class="citation">(Ward et al. <a href="#ref-ward2009presence" role="doc-biblioref">2009</a>; Yang et al. <a href="#ref-yang2012positive" role="doc-biblioref">2012</a>)</span>. Without providing negative instances in the training set, however, will prevent the direct use of well-developed supervised classification methods. To break through this dilemma, dozens of PU learning algorithms have been proposed in the past two decades.</p>
+<p>One way to bypass the lack of negative instances is to disregard the unlabeled part and only learn from positive instances. Given this underlying idea is similar to one-class classification problem, which is designed do classification when the negative instances are absent, poorly sampled, or not well defined <span class="citation">(Khan and Madden <a href="#ref-khan2014one" role="doc-biblioref">2014</a>)</span>, many existing one-class learning algorithms could be easily formulated to PU learning <span class="citation">(Yang, Liu, and Yang <a href="#ref-yang2017positive" role="doc-biblioref">2017</a>)</span>, such as Positive Naive Bayesian (PNB) <span class="citation">(Wang et al. <a href="#ref-wang2006psol" role="doc-biblioref">2006</a>; Calvo, Larrañaga, and Lozano <a href="#ref-calvo2007learning" role="doc-biblioref">2007</a>)</span>, one-class SVM <span class="citation">(Joachims <a href="#ref-joachims1999transductive" role="doc-biblioref">1999</a>; De Bie et al. <a href="#ref-de2007kernel" role="doc-biblioref">2007</a>; Li, Guo, and Elkan <a href="#ref-li2010positive" role="doc-biblioref">2010</a>)</span>, and one-class KNN <span class="citation">(Munroe and Madden <a href="#ref-munroe2005multi" role="doc-biblioref">2005</a>)</span>. However, since unlabeled instances are not used during the training step, it may not be competitive to those algorithms which could effectively utilize information from both positive and unlabeled instances.</p>
+<p>To better utilize the unlabeled instances, one class of algorithms adopt a heuristic two-step strategy <span class="citation">(Manevitz and Yousef <a href="#ref-manevitz2001one" role="doc-biblioref">2001</a>; Yu, Han, and Chang <a href="#ref-yu2002pebl" role="doc-biblioref">2002</a>; Liu et al. <a href="#ref-liu2002partially" role="doc-biblioref">2002</a>, <a href="#ref-liu2003building" role="doc-biblioref">2003</a>; Li and Liu <a href="#ref-li2003learning" role="doc-biblioref">2003</a>; Yang et al. <a href="#ref-yang2012positive" role="doc-biblioref">2012</a>)</span>. In the first step, instances that are likely to have negative labels are identified by certain similarity, or distance metrics. In the second step, a classifier is developed based on the positive instances, quasi-negative instances detected in the first step, and remaining unlabeled instances. Alternatively, another branch of methods let positive and unlabeled instances share different weights in the loss function and/or classification model to account for the asymmetric nature of PU learning problem. Many existing classification algorithms that are able to incorporate weights have been studied, such as naive Bayes <span class="citation">(Nigam et al. <a href="#ref-nigam2000text" role="doc-biblioref">2000</a>)</span>, biased SVM <span class="citation">(Liu et al. <a href="#ref-liu2003building" role="doc-biblioref">2003</a>)</span>, and biased logistic model <span class="citation">(Lee and Liu <a href="#ref-lee2003learning" role="doc-biblioref">2003</a>)</span>. One potential drawback of the aforementioned methods is they either explicitly or implicitly rely on the assumption that data are generated from a mixture model <span class="citation">(Nigam et al. <a href="#ref-nigam2000text" role="doc-biblioref">2000</a>)</span>. Hence, they are more appropriate for deterministic scheme but not probabilistic scheme, following the nomenclature proposed by Song et al. <span class="citation">(Song and Raskutti <a href="#ref-song2019pulasso" role="doc-biblioref">2019</a>)</span>.</p>
+<!-- Besides, most of these methods relying on SVM, naive Bayesian, or decision tree are not able to provide well-calibrated probability as logistic models [@elkan2008learning]. -->
+<p>Meanwhile, a more theoretical viewpoint of PU learning has been developed by putting it into a case-control framework <span class="citation">(Ward et al. <a href="#ref-ward2009presence" role="doc-biblioref">2009</a>)</span>, given the fact that the way of sampling is not the same for positive set and unlabeled set. In positive set, only instances with positive true label are sampled, which are called cases. Unlabeled set, on the other hand, is a complete random sampling from the population, which serves as controls. Under this framework, Ward et al. are able to estimate the underlying positive-negative logistic model from observed positive-unlabeled data by expectation-maximization (EM) algorithm <span class="citation">(Dempster, Laird, and Rubin <a href="#ref-dempster1977maximum" role="doc-biblioref">1977</a>)</span>. Recently, Song et al. <span class="citation">(Song and Raskutti <a href="#ref-song2019pulasso" role="doc-biblioref">2019</a>)</span> extend this method with penalty terms to accomplish variable selection, and convergence is guaranteed. Denote <span class="math inline">\(x\)</span> as covariates, <span class="math inline">\(y\)</span> as unobserved true label, and <span class="math inline">\(z\)</span> as observed label where unlabeled instances are treated negative. The main flaw of this method is we need to know the population prevalence <span class="math inline">\(Pr(y=1)\)</span>, which is almost impossible in practical application, otherwise it is not identifiable with observed positive and unlabeled instances <span class="citation">(Ward et al. <a href="#ref-ward2009presence" role="doc-biblioref">2009</a>)</span>. Slightly different from case-control modeling, Elkan et al. and Scott et al. <span class="citation">(Elkan and Noto <a href="#ref-elkan2008learning" role="doc-biblioref">2008</a>; Scott and Blanchard <a href="#ref-scott2009novelty" role="doc-biblioref">2009</a>)</span> consider a single-training-set scenario that all instances are sampled from a joint distribution of <span class="math inline">\((x, y, z)\)</span> but only <span class="math inline">\((x, z)\)</span> is recorded. The estimation of population prevalence is obvious under this setting, but an unrealistic noiseless assumption <span class="math inline">\(P(y=1\mid x)=1\)</span> is required. Therefore, they provide a weighting approach that could get rid of this assumption. However, this approach can be viewed as a one-step iteration of Ward’s EM algorithm <span class="citation">(Song and Raskutti <a href="#ref-song2019pulasso" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Recently, researchers incorporate bagging <span class="citation">(Breiman <a href="#ref-breiman1996bagging" role="doc-biblioref">1996</a>)</span> idea into the PU learning to generate final classifier by ensembling multiple PU classifiers estimated from bootstrap sampling <span class="citation">(Mordelet and Vert <a href="#ref-mordelet2011prodige" role="doc-biblioref">2011</a>, <a href="#ref-mordelet2014bagging" role="doc-biblioref">2014</a>; Claesen et al. <a href="#ref-claesen2015robust" role="doc-biblioref">2015</a>; Yang et al. <a href="#ref-yang2016positive" role="doc-biblioref">2016</a>)</span>. This approach takes advantage of bagging feature to reduce noise from modeling directly with unlabeled instances and obtain more stable predictions. Rather than using unanimous probability to sample, AdaSample <span class="citation">(Yang et al. <a href="#ref-yang2018adasampling" role="doc-biblioref">2018</a>)</span>, a more boosting-like algorithm, applies different sampling probability at each step, and the probability is calculated from PU model estimated in the previous iteration. The performance of the adopted PU classifier for the bootstrap sample is of great importance to the success of this set of methods.</p>
+</div>
+<div id="method-simplified-version" class="section level2">
+<h2>Method (simplified version)</h2>
+<p>In positive-only data scene, there are two fundamental setup: </p>
+<ul>
+<li>Condition 1. Positive instances are completely random selection from positive population; </li>
+<li>Condition 2. The unlabeled instances are a random sampling from the populatio. </li>
+</ul>
+<p>As the observed dataset is not a random sample from the population but a random sample for either the positive or the unlabeled, it satisfies the case-control framework. But among the unlabeled, there is a mixture of ture positive and negative instances which makes it hard to directly adopt traditional methods upon this case-control problem.</p>
+<p>Since only part of <span class="math inline">\(y\)</span> is observed, PU problem can be viewed as a missing data problem and one commonly used method for the missing data problem is EM algorithm <span class="citation">(Dempster, Laird, and Rubin <a href="#ref-dempster1977maximum" role="doc-biblioref">1977</a>)</span>. In the following sections, we will first introduce existing EM algorithm designed for PU problem as well as the basic idea of PUwrapper.</p>
+<ul>
+<li><p>Observed likelihoood:
+<span class="math display">\[
+L^{obs}(\theta \mid x, z, s =1) = \prod_i P_\theta(z_i =1\mid s_i = 1,x_i)^{z_i}(1-P_\theta(z_i =1\mid s_i = 1, x_i))^{1-z_i}
+\]</span>
+which relevant to <span class="math inline">\(P_\theta(z_i =1\mid s_i = 1,x_i)\)</span> but not the desired one <span class="math inline">\(P_\theta(y_i =1\mid x_i)\)</span>. An adjustment could be make upon the observed likelihood function to target on <span class="math inline">\(P_\theta(y_i =1\mid x_i)\)</span> but that is hard to solve <span class="citation">(Ward et al. <a href="#ref-ward2009presence" role="doc-biblioref">2009</a>)</span>. Hence, an EM algorithm is proposed because it is a simple missing label problem and could be easier to work with full likelihood.</p></li>
+<li><p>Full likelihood:
+<span class="math display">\[
+L^{full}(\theta \mid x, y,z, s =1) \propto \prod_i P_\theta(y_i=1 \mid s_i = 1, x_i)^{y_i}P_\theta(y_i=0 \mid s_i = 1, x_i)^{1-y_i}
+\]</span></p></li>
+<li><p>EM algorithm (adjusted): maximize the observed likelihood by iteratively maximize the full likelihood conditioning on the observed data and estimated parameters. Here let
+<span class="math display">\[
+\begin{aligned}
+f^*_\theta(x) &amp;:= P_\theta(y=1 \mid x,s=1); \\
+f_{\theta}(x) &amp;:= P_{\theta}(y = 1 \mid x).
+\end{aligned}
+\]</span></p></li>
+<li><p><strong>E-step</strong>:
+<span class="math display">\[
+\begin{aligned}
+Q(\theta \mid \theta^{(k)}) &amp;= E[\ell^{full}(\theta \mid x, y,z,s=1) \mid x, z, s=1, \theta^{(k)}] \\
+&amp;= \sum_i \left\{E[y_i \mid z_i, x_i, s_i=1,\theta^{(k)}] \log{f^*_\theta(x_i)} + (1-E[y_i \mid z_i, x_i, s_i=1,\theta^{(k)}])\log{(1-f^*_\theta(x_i))} \right\}
+\end{aligned}
+\]</span>
+where <span class="math inline">\(E[y_i \mid z_i, x_i, s_i=1,\theta^{(k)}] = f_{\theta^{(k)}}(x_i)^{(1-z_i)}\)</span>.</p></li>
+<li><p><strong>M-step</strong>:
+In M-step, we maximize the expectation of full log-likelihood described in E-step
+<span class="math display">\[
+\theta^{(k+1)} = \arg\max_\theta \quad  Q(\theta \mid \theta^{(k)}).
+\]</span></p></li>
+<li><p><strong>Mapping</strong>: We add an additional step here to make it work like a wrapper that are free of the specification of functional structure of <span class="math inline">\(f^*_\theta(x)\)</span> and <span class="math inline">\(f_{\theta}(x)\)</span>. After optimizing in M-step, we will obtain <span class="math inline">\(\hat\theta^{(k+1)}\)</span> as well as <span class="math inline">\(f^*_{\hat\theta^{(k+1)}}(x)\)</span>, but if using <span class="math inline">\(\hat\theta^{(k+1)}\)</span> means we need to know the functional structure of <span class="math inline">\(f_{\theta}(x)\)</span>. Instead, we could directly find the relationship between <span class="math inline">\(f_{\theta}(x)\)</span> and <span class="math inline">\(f^*_{\theta}(x)\)</span>:
+<span class="math display">\[
+f_\theta(x) = \frac{(c-1)f^*_\theta(x)}{c - f^*_\theta(x)}
+\]</span>
+where
+<span class="math display">\[
+c = \frac{Pr(y=1 \mid s=1)}{Pr(z=1\mid s=1)}.
+\]</span></p></li>
+<li><p>How to achieve c? 
+In formula <span class="math inline">\(c = \frac{Pr(y=1 \mid s=1)}{Pr(z=1\mid s=1)}\)</span>, <span class="math inline">\(Pr(z=1\mid s=1)\)</span> is observed but <span class="math inline">\(Pr(y=1 \mid s=1)\)</span> is relevant to population prevelance <span class="math inline">\(\pi = P(y=1)\)</span> which is unknown. In most literatures, <span class="math inline">\(\pi\)</span> is assumed to be known. But in real application, <span class="math inline">\(\pi\)</span> is always infeasible, and thus hinter the application of their methods. However, noticing that
+<span class="math display">\[
+\begin{aligned}
+E(y \mid s=1) &amp;= E_x[E(y \mid s=1, x)] \\
+&amp;=\frac{1}{n}\sum_i Pr(y_i=1 \mid s_i=1, x_i) \\
+&amp;= \frac{1}{n}\sum_i f^*_{\theta}(x_i),
+\end{aligned}
+\]</span>
+we could replace the unknown <span class="math inline">\(E(y \mid s=1)\)</span> by the empirical value. That is
+<span class="math display">\[
+f_{\theta^{(k+1)}}(x) = \frac{(\frac{1}{n}\sum_i f^*_{\hat\theta^{(k+1)}}(x_i)-1) f^*_{\hat\theta^{(k+1)}}(x_i)}{\frac{1}{n}\sum_i f^*_{\hat\theta^{(k+1)}}(x_i) - f^*_{\hat\theta^{(k+1)}}(x_i)}.
+\]</span></p></li>
+<li><p>How to do variable selection during EM 
+If we want to accomplish variable selection during the EM algorithm, the objective function at M-step is adjusted to the following
+<span class="math display">\[
+\theta^{(k+1)} = \arg\max_\theta \quad  Q(\theta \mid \theta^{(k)}) + \lambda J(\theta).
+\]</span>
+Imputation-regularized optimization (IRO) developed by <span class="citation">Liang et al. (<a href="#ref-liang2018imputation" role="doc-biblioref">2018</a>)</span> propose a general idea of handling missing data (in variables not outcomes) in high dimensional data. PULasso <span class="citation">(Song and Raskutti <a href="#ref-song2019pulasso" role="doc-biblioref">2019</a>)</span> adopts quadratic majorization for M-step (QM-EM) which mainly targets on computational efficacy. 
+Basically, as a wrapper, we do not need to know specific value of <span class="math inline">\(\theta^{(k+1)}\)</span>. Instead, what a wrapper needs is simply <span class="math inline">\(f^*_{\theta}(x_i)\)</span>. So variable selection, if necessary, should be embedded in the wrapped algorithm. For example, PLR or Reinforced Learning Tree (RLT) if wrapped, are able to select important variables.
+<!-- This problem could be considered as imputation-regularized optimization (IRO) developed by Liang (2018). As pointed out in their paper, EM is not suitable for high dimensional data, due to the identifiable issue. PULasso adopts quadratic majorization for M-step (QM-EM) which mainly targets on computational efficacy. Some other methods are also problem specific. There is no general solution to this problem. --></p></li>
+<li><p>Unbalanced scenarios (observation unbalancedness and population unbalancedness) 
+This is not something we are interested for a wrapper. If necessary, we could start with rewriting c as
+<span class="math display">\[
+c =1+Pr(y=1 \mid z=0, s=1)\frac{Pr(z= 0 \mid s = 1)}{ Pr(z=1\mid s=1)}
+\]</span>
+and the unbalancedness is explicitly expressed in second term. Specifically, population unbalancedness is expressed by <span class="math inline">\(Pr(y=1 \mid z=0, s=1)\)</span>, since <span class="math inline">\(Pr(y=1 \mid z=0, s=1) = Pr(y=1)\)</span> under Condition 2, and <span class="math inline">\(\frac{P(z= 0 \mid s = 1)}{ P(z=1\mid s=1)}\)</span> is a measure of observation unbalancedness.</p></li>
+<li><p>How to find out the optimal cutoff without knowing the true <span class="math inline">\(\pi\)</span> 
+We are able to generate a sequence of estimated probability for each unlabeled instance, even though the probability itself is biased, the order is maintained (shown by ROC curve). For application purpose, sometimes we need to provide a clear category for instances which could be a problem when true <span class="math inline">\(\pi\)</span> is not provided. One way is to estimate <span class="math inline">\(\pi\)</span> from estimated c, which is obtained at convergence of the algorithm. However, we should also be aware of the potential biasness of such estimator, since <span class="math inline">\(\pi\)</span> is not identifiable.</p></li>
+</ul>
+<p>In the following simulation studies, we would like to compare the outcomes from knowing true <span class="math inline">\(\pi\)</span> to using simulated <span class="math inline">\(\pi\)</span>.</p>
+<div class="figure"><span id="fig:SimpleTest"></span>
+<img src="/posts/PUlearning_files/figure-html/SimpleTest-1.png" alt="Simple examples of Wald's method and the proposed improved method with estimated c. Panel (a) and (b): univariate model $logit(y) = 1.2X$; Panel (c) and (d): multivariate model $logit(Pr(y=1)) = -1+2X_1+4X_2-X_3-2X_4+X_5$, and we know the true model during fitting." width="768" />
+<p class="caption">
+Figure 1: Simple examples of Wald’s method and the proposed improved method with estimated c. Panel (a) and (b): univariate model <span class="math inline">\(logit(y) = 1.2X\)</span>; Panel (c) and (d): multivariate model <span class="math inline">\(logit(Pr(y=1)) = -1+2X_1+4X_2-X_3-2X_4+X_5\)</span>, and we know the true model during fitting.
+</p>
+</div>
+<div class="figure"><span id="fig:VarSelect"></span>
+<img src="/posts/PUlearning_files/figure-html/VarSelect-1.png" alt="Simple examples of PUwrapper. Panel (a) and (b): Random Forests; Panel (c) and (d): Penalized Logistic Regression. The baseline model is $logit(Pr(y=1)) = -1+2X_1+4X_2-X_3-2X_4+X_5$ with a total of 100 variables simulated. The size of simulated sample is 1600 and 600 of them are labeled as 1." width="768" />
+<p class="caption">
+Figure 2: Simple examples of PUwrapper. Panel (a) and (b): Random Forests; Panel (c) and (d): Penalized Logistic Regression. The baseline model is <span class="math inline">\(logit(Pr(y=1)) = -1+2X_1+4X_2-X_3-2X_4+X_5\)</span> with a total of 100 variables simulated. The size of simulated sample is 1600 and 600 of them are labeled as 1.
+</p>
+</div>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-breiman1996bagging">
+<p>Breiman, Leo. 1996. “Bagging Predictors.” <em>Machine Learning</em> 24 (2): 123–40.</p>
+</div>
+<div id="ref-calvo2007learning">
+<p>Calvo, Borja, Pedro Larrañaga, and José A Lozano. 2007. “Learning Bayesian Classifiers from Positive and Unlabeled Examples.” <em>Pattern Recognition Letters</em> 28 (16): 2375–84.</p>
+</div>
+<div id="ref-claesen2015robust">
+<p>Claesen, Marc, Frank De Smet, Johan AK Suykens, and Bart De Moor. 2015. “A Robust Ensemble Approach to Learn from Positive and Unlabeled Data Using Svm Base Models.” <em>Neurocomputing</em> 160: 73–84.</p>
+</div>
+<div id="ref-de2007kernel">
+<p>De Bie, Tijl, Léon-Charles Tranchevent, Liesbeth MM Van Oeffelen, and Yves Moreau. 2007. “Kernel-Based Data Fusion for Gene Prioritization.” <em>Bioinformatics</em> 23 (13): i125–i132.</p>
+</div>
+<div id="ref-dempster1977maximum">
+<p>Dempster, Arthur P, Nan M Laird, and Donald B Rubin. 1977. “Maximum Likelihood from Incomplete Data via the Em Algorithm.” <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 39 (1): 1–22.</p>
+</div>
+<div id="ref-elkan2008learning">
+<p>Elkan, Charles, and Keith Noto. 2008. “Learning Classifiers from Only Positive and Unlabeled Data.” In <em>Proceedings of the 14th Acm Sigkdd International Conference on Knowledge Discovery and Data Mining</em>, 213–20.</p>
+</div>
+<div id="ref-joachims1999transductive">
+<p>Joachims, Thorsten. 1999. “Transductive Inference for Text Classification Using Support Vector Machines.” In <em>Icml</em>, 99:200–209.</p>
+</div>
+<div id="ref-khan2014one">
+<p>Khan, Shehroz S, and Michael G Madden. 2014. “One-Class Classification: Taxonomy of Study and Review of Techniques.” <em>The Knowledge Engineering Review</em> 29 (3): 345–74.</p>
+</div>
+<div id="ref-lee2003learning">
+<p>Lee, Wee Sun, and Bing Liu. 2003. “Learning with Positive and Unlabeled Examples Using Weighted Logistic Regression.” In <em>ICML</em>, 3:448–55.</p>
+</div>
+<div id="ref-li2010positive">
+<p>Li, Wenkai, Qinghua Guo, and Charles Elkan. 2010. “A Positive and Unlabeled Learning Algorithm for One-Class Classification of Remote-Sensing Data.” <em>IEEE Transactions on Geoscience and Remote Sensing</em> 49 (2): 717–25.</p>
+</div>
+<div id="ref-li2003learning">
+<p>Li, Xiaoli, and Bing Liu. 2003. “Learning to Classify Texts Using Positive and Unlabeled Data.” In <em>IJCAI</em>, 3:587–92. 2003.</p>
+</div>
+<div id="ref-liang2018imputation">
+<p>Liang, Faming, Bochao Jia, Jingnan Xue, Qizhai Li, and Ye Luo. 2018. “An Imputation–Regularized Optimization Algorithm for High Dimensional Missing Data Problems and Beyond.” <em>Journal of the Royal Statistical Society. Series B, Statistical Methodology</em> 80 (5): 899.</p>
+</div>
+<div id="ref-liu2003building">
+<p>Liu, Bing, Yang Dai, Xiaoli Li, Wee Sun Lee, and Philip S Yu. 2003. “Building Text Classifiers Using Positive and Unlabeled Examples.” In <em>Third Ieee International Conference on Data Mining</em>, 179–86. IEEE.</p>
+</div>
+<div id="ref-liu2002partially">
+<p>Liu, Bing, Wee Sun Lee, Philip S Yu, and Xiaoli Li. 2002. “Partially Supervised Classification of Text Documents.” In <em>ICML</em>, 2:387–94. Citeseer.</p>
+</div>
+<div id="ref-manevitz2001one">
+<p>Manevitz, Larry M, and Malik Yousef. 2001. “One-Class Svms for Document Classification.” <em>Journal of Machine Learning Research</em> 2 (Dec): 139–54.</p>
+</div>
+<div id="ref-mordelet2011prodige">
+<p>Mordelet, Fantine, and Jean-Philippe Vert. 2011. “ProDiGe: Prioritization of Disease Genes with Multitask Machine Learning from Positive and Unlabeled Examples.” <em>BMC Bioinformatics</em> 12 (1): 389.</p>
+</div>
+<div id="ref-mordelet2014bagging">
+<p>Mordelet, Fantine, and J-P Vert. 2014. “A Bagging Svm to Learn from Positive and Unlabeled Examples.” <em>Pattern Recognition Letters</em> 37: 201–9.</p>
+</div>
+<div id="ref-munroe2005multi">
+<p>Munroe, Daniel T, and Michael G Madden. 2005. “Multi-Class and Single-Class Classification Approaches to Vehicle Model Recognition from Images.” <em>Proc. AICS</em>, 1–11.</p>
+</div>
+<div id="ref-nigam2000text">
+<p>Nigam, Kamal, Andrew Kachites McCallum, Sebastian Thrun, and Tom Mitchell. 2000. “Text Classification from Labeled and Unlabeled Documents Using Em.” <em>Machine Learning</em> 39 (2-3): 103–34.</p>
+</div>
+<div id="ref-scott2009novelty">
+<p>Scott, Clayton, and Gilles Blanchard. 2009. “Novelty Detection: Unlabeled Data Definitely Help.” In <em>Artificial Intelligence and Statistics</em>, 464–71.</p>
+</div>
+<div id="ref-song2019pulasso">
+<p>Song, Hyebin, and Garvesh Raskutti. 2019. “PULasso: High-Dimensional Variable Selection with Presence-Only Data.” <em>Journal of the American Statistical Association</em>, 1–30.</p>
+</div>
+<div id="ref-wang2006psol">
+<p>Wang, Chunlin, Chris Ding, Richard F Meraz, and Stephen R Holbrook. 2006. “PSoL: A Positive Sample Only Learning Algorithm for Finding Non-Coding Rna Genes.” <em>Bioinformatics</em> 22 (21): 2590–6.</p>
+</div>
+<div id="ref-ward2009presence">
+<p>Ward, Gill, Trevor Hastie, Simon Barry, Jane Elith, and John R Leathwick. 2009. “Presence-Only Data and the Em Algorithm.” <em>Biometrics</em> 65 (2): 554–63.</p>
+</div>
+<div id="ref-yang2012positive">
+<p>Yang, Peng, Xiao-Li Li, Jian-Ping Mei, Chee-Keong Kwoh, and See-Kiong Ng. 2012. “Positive-Unlabeled Learning for Disease Gene Identification.” <em>Bioinformatics</em> 28 (20): 2640–7.</p>
+</div>
+<div id="ref-yang2016positive">
+<p>Yang, Pengyi, Sean J Humphrey, David E James, Yee Hwa Yang, and Raja Jothi. 2016. “Positive-Unlabeled Ensemble Learning for Kinase Substrate Prediction from Dynamic Phosphoproteomics Data.” <em>Bioinformatics</em> 32 (2): 252–59.</p>
+</div>
+<div id="ref-yang2017positive">
+<p>Yang, Pengyi, Wei Liu, and Jean Yang. 2017. “Positive Unlabeled Learning via Wrapper-Based Adaptive Sampling.” In <em>IJCAI</em>, 3273–9.</p>
+</div>
+<div id="ref-yang2018adasampling">
+<p>Yang, Pengyi, John T Ormerod, Wei Liu, Chendong Ma, Albert Y Zomaya, and Jean YH Yang. 2018. “AdaSampling for Positive-Unlabeled and Label Noise Learning with Bioinformatics Applications.” <em>IEEE Transactions on Cybernetics</em> 49 (5): 1932–43.</p>
+</div>
+<div id="ref-yu2002pebl">
+<p>Yu, Hwanjo, Jiawei Han, and Kevin Chen-Chuan Chang. 2002. “PEBL: Positive Example Based Learning for Web Page Classification Using Svm.” In <em>Proceedings of the Eighth Acm Sigkdd International Conference on Knowledge Discovery and Data Mining</em>, 239–48.</p>
+</div>
+</div>
+</div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+        ©
+        
+          2020 -
+        
+        2021
+         Junyi Zhou 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+        
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+      
+      <script src="/js/coder.min.235666b114443867d43eeb5799d51f6252965e5163f338285e113fa381d3d27e.js" integrity="sha256-I1ZmsRREOGfUPutXmdUfYlKWXlFj8zgoXhE/o4HT0n4="></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+  </body>
+
+</html>

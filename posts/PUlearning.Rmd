@@ -1,0 +1,519 @@
+---
+author: Junyi Zhou
+date: "2020-05-28"
+description: Positive-and-Unlabeled learning
+categories:
+- Thoughts
+tags:
+- EM algorithm
+- PU learning
+title: Positive-and-Unlabeled Learning
+
+fontsize: 12pt
+
+header-includes:
+- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+- \usepackage{setspace}\doublespacing
+- \usepackage{array}
+- \usepackage{booktabs}
+- \usepackage{multirow}
+- \usepackage{threeparttable}
+- \usepackage{graphicx}
+- \usepackage{mathtools}
+
+indent: true
+
+bibliography: references.bib
+
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(glmnet)
+require(pROC)
+require(ranger)
+require(RLT)
+```
+
+
+## Introduction
+Positive and unlabeled learning, or positive-unlabeled (PU) learning, refers to the binary classification problem where only positive labels are observed and the rest are unlabeled. Since unlabeled part of data consists of both positive and negative instances, naively treating them as negative and performing a standard classification learning algorithm will underestimate the probability of being positive [@ward2009presence; @yang2012positive]. Without providing negative instances in the training set, however, will prevent the direct use of well-developed supervised classification methods. To break through this dilemma, dozens of PU learning algorithms have been proposed in the past two decades. 
+
+One way to bypass the lack of negative instances is to disregard the unlabeled part and only learn from positive instances. Given this underlying idea is similar to one-class classification problem, which is designed do classification when the negative instances are absent, poorly sampled, or not well defined [@khan2014one], many existing one-class learning algorithms could be easily formulated to PU learning [@yang2017positive], such as Positive Naive Bayesian (PNB) [@wang2006psol; @calvo2007learning], one-class SVM [@joachims1999transductive; @de2007kernel; @li2010positive], and one-class KNN [@munroe2005multi]. However, since unlabeled instances are not used during the training step, it may not be competitive to those algorithms which could effectively utilize information from both positive and unlabeled instances.
+
+
+To better utilize the unlabeled instances, one class of algorithms adopt a heuristic two-step strategy [@manevitz2001one;@yu2002pebl; @liu2002partially; @liu2003building; @li2003learning; @yang2012positive]. In the first step, instances that are likely to have negative labels are identified by certain similarity, or distance metrics. In the second step, a classifier is developed based on the positive instances, quasi-negative instances detected in the first step, and remaining unlabeled instances. Alternatively, another branch of methods let positive and unlabeled instances share different weights in the loss function and/or classification model to account for the asymmetric nature of PU learning problem. Many existing classification algorithms that are able to incorporate weights have been studied, such as naive Bayes [@nigam2000text], biased SVM [@liu2003building], and biased logistic model [@lee2003learning]. One potential drawback of the aforementioned methods is they either explicitly or implicitly rely on the assumption that data are generated from a mixture model [@nigam2000text]. Hence, they are more appropriate for deterministic scheme but not probabilistic scheme, following the nomenclature proposed by Song et al. [@song2019pulasso].
+
+<!-- Besides, most of these methods relying on SVM, naive Bayesian, or decision tree are not able to provide well-calibrated probability as logistic models [@elkan2008learning]. -->
+
+Meanwhile, a more theoretical viewpoint of PU learning has been developed by putting it into a case-control framework [@ward2009presence], given the fact that the way of sampling is not the same for positive set and unlabeled set. In positive set, only instances with positive true label are sampled, which are called cases. Unlabeled set, on the other hand, is a complete random sampling from the population, which serves as controls. Under this framework, Ward et al. are able to estimate the underlying positive-negative logistic model from observed positive-unlabeled data by expectation-maximization (EM) algorithm [@dempster1977maximum]. Recently, Song et al. [@song2019pulasso] extend this method with penalty terms to accomplish variable selection, and convergence is guaranteed. Denote $x$ as covariates, $y$ as unobserved true label, and $z$ as observed label where unlabeled instances are treated negative. The main flaw of this method is we need to know the population prevalence $Pr(y=1)$, which is almost impossible in practical application, otherwise it is not identifiable with observed positive and unlabeled instances [@ward2009presence]. Slightly different from case-control modeling, Elkan et al. and Scott et al. [@elkan2008learning; @scott2009novelty] consider a single-training-set scenario that all instances are sampled from a joint distribution of $(x, y, z)$ but only $(x, z)$ is recorded. The estimation of population prevalence is obvious under this setting, but an unrealistic noiseless assumption $P(y=1\mid x)=1$ is required. Therefore, they provide a weighting approach that could get rid of this assumption. However, this approach can be viewed as a one-step iteration of Ward's EM algorithm [@song2019pulasso].
+
+
+Recently, researchers incorporate bagging [@breiman1996bagging] idea into the PU learning to generate final classifier by ensembling multiple PU classifiers estimated from bootstrap sampling [@mordelet2011prodige; @mordelet2014bagging; @claesen2015robust; @yang2016positive]. This approach takes advantage of bagging feature to reduce noise from modeling directly with unlabeled instances and obtain more stable predictions. Rather than using unanimous probability to sample, AdaSample [@yang2018adasampling], a more boosting-like algorithm, applies different sampling probability at each step, and the probability is calculated from PU model estimated in the previous iteration. The performance of the adopted PU classifier for the bootstrap sample is of great importance to the success of this set of methods.
+
+
+
+## Method (simplified version)
+In positive-only data scene, there are two fundamental setup: \newline
+
+- Condition 1. Positive instances are completely random selection from positive population; \newline
+- Condition 2. The unlabeled instances are a random sampling from the populatio. \newline
+
+As the observed dataset is not a random sample from the population but a random sample for either the positive or the unlabeled, it satisfies the case-control framework. But among the unlabeled, there is a mixture of ture positive and negative instances which makes it hard to directly adopt traditional methods upon this case-control problem. 
+
+Since only part of $y$ is observed, PU problem can be viewed as a missing data problem and one commonly used method for the missing data problem is EM algorithm [@dempster1977maximum]. In the following sections, we will first introduce existing EM algorithm designed for PU problem as well as the basic idea of PUwrapper.
+
+- Observed likelihoood: 
+$$
+L^{obs}(\theta \mid x, z, s =1) = \prod_i P_\theta(z_i =1\mid s_i = 1,x_i)^{z_i}(1-P_\theta(z_i =1\mid s_i = 1, x_i))^{1-z_i}
+$$
+which relevant to $P_\theta(z_i =1\mid s_i = 1,x_i)$ but not the desired one $P_\theta(y_i =1\mid x_i)$. An adjustment could be make upon the observed likelihood function to target on $P_\theta(y_i =1\mid x_i)$ but that is hard to solve [@ward2009presence]. Hence, an EM algorithm is proposed because it is a simple missing label problem and could be easier to work with full likelihood. 
+- Full likelihood:
+$$
+L^{full}(\theta \mid x, y,z, s =1) \propto \prod_i P_\theta(y_i=1 \mid s_i = 1, x_i)^{y_i}P_\theta(y_i=0 \mid s_i = 1, x_i)^{1-y_i}
+$$
+- EM algorithm (adjusted): maximize the observed likelihood by iteratively maximize the full likelihood conditioning on the observed data and estimated parameters. Here let
+$$
+\begin{aligned}
+f^*_\theta(x) &:= P_\theta(y=1 \mid x,s=1); \\
+f_{\theta}(x) &:= P_{\theta}(y = 1 \mid x).
+\end{aligned}
+$$
+- **E-step**:
+$$
+\begin{aligned}
+Q(\theta \mid \theta^{(k)}) &= E[\ell^{full}(\theta \mid x, y,z,s=1) \mid x, z, s=1, \theta^{(k)}] \\
+&= \sum_i \left\{E[y_i \mid z_i, x_i, s_i=1,\theta^{(k)}] \log{f^*_\theta(x_i)} + (1-E[y_i \mid z_i, x_i, s_i=1,\theta^{(k)}])\log{(1-f^*_\theta(x_i))} \right\}
+\end{aligned}
+$$
+where $E[y_i \mid z_i, x_i, s_i=1,\theta^{(k)}] = f_{\theta^{(k)}}(x_i)^{(1-z_i)}$.
+
+- **M-step**:
+In M-step, we maximize the expectation of full log-likelihood described in E-step
+$$
+\theta^{(k+1)} = \arg\max_\theta \quad  Q(\theta \mid \theta^{(k)}).
+$$
+
+- **Mapping**: We add an additional step here to make it work like a wrapper that are free of the specification of functional structure of $f^*_\theta(x)$ and $f_{\theta}(x)$. After optimizing in M-step, we will obtain $\hat\theta^{(k+1)}$ as well as $f^*_{\hat\theta^{(k+1)}}(x)$, but if using $\hat\theta^{(k+1)}$ means we need to know the functional structure of $f_{\theta}(x)$. Instead, we could directly find the relationship between $f_{\theta}(x)$ and $f^*_{\theta}(x)$:
+$$
+f_\theta(x) = \frac{(c-1)f^*_\theta(x)}{c - f^*_\theta(x)}
+$$
+where
+$$
+c = \frac{Pr(y=1 \mid s=1)}{Pr(z=1\mid s=1)}.
+$$
+
+- How to achieve c? \newline
+In formula $c = \frac{Pr(y=1 \mid s=1)}{Pr(z=1\mid s=1)}$, $Pr(z=1\mid s=1)$ is observed but $Pr(y=1 \mid s=1)$ is relevant to population prevelance $\pi = P(y=1)$ which is unknown. In most literatures, $\pi$ is assumed to be known. But in real application, $\pi$ is always infeasible, and thus hinter the application of their methods. However, noticing that 
+$$
+\begin{aligned}
+E(y \mid s=1) &= E_x[E(y \mid s=1, x)] \\
+&=\frac{1}{n}\sum_i Pr(y_i=1 \mid s_i=1, x_i) \\
+&= \frac{1}{n}\sum_i f^*_{\theta}(x_i),
+\end{aligned}
+$$
+we could replace the unknown $E(y \mid s=1)$ by the empirical value. That is 
+$$
+f_{\theta^{(k+1)}}(x) = \frac{(\frac{1}{n}\sum_i f^*_{\hat\theta^{(k+1)}}(x_i)-1) f^*_{\hat\theta^{(k+1)}}(x_i)}{\frac{1}{n}\sum_i f^*_{\hat\theta^{(k+1)}}(x_i) - f^*_{\hat\theta^{(k+1)}}(x_i)}.
+$$ 
+
+- How to do variable selection during EM \newline
+If we want to accomplish variable selection during the EM algorithm, the objective function at M-step is adjusted to the following
+$$
+\theta^{(k+1)} = \arg\max_\theta \quad  Q(\theta \mid \theta^{(k)}) + \lambda J(\theta).
+$$
+Imputation-regularized optimization (IRO) developed by @liang2018imputation propose a general idea of handling missing data (in variables not outcomes) in high dimensional data. PULasso [@song2019pulasso] adopts quadratic majorization for M-step (QM-EM) which mainly targets on computational efficacy. \newline
+Basically, as a wrapper, we do not need to know specific value of $\theta^{(k+1)}$. Instead, what a wrapper needs is simply $f^*_{\theta}(x_i)$. So variable selection, if necessary, should be embedded in the wrapped algorithm. For example, PLR or Reinforced Learning Tree (RLT) if wrapped, are able to select important variables.
+<!-- This problem could be considered as imputation-regularized optimization (IRO) developed by Liang (2018). As pointed out in their paper, EM is not suitable for high dimensional data, due to the identifiable issue. PULasso adopts quadratic majorization for M-step (QM-EM) which mainly targets on computational efficacy. Some other methods are also problem specific. There is no general solution to this problem. -->
+
+- Unbalanced scenarios (observation unbalancedness and population unbalancedness) \newline
+This is not something we are interested for a wrapper. If necessary, we could start with rewriting c as
+$$
+c =1+Pr(y=1 \mid z=0, s=1)\frac{Pr(z= 0 \mid s = 1)}{ Pr(z=1\mid s=1)}
+$$
+and the unbalancedness is explicitly expressed in second term. Specifically, population unbalancedness is expressed by $Pr(y=1 \mid z=0, s=1)$, since $Pr(y=1 \mid z=0, s=1) = Pr(y=1)$ under Condition 2, and $\frac{P(z= 0 \mid s = 1)}{ P(z=1\mid s=1)}$ is a measure of observation unbalancedness.
+
+- How to find out the optimal cutoff without knowing the true $\pi$ \newline
+We are able to generate a sequence of estimated probability for each unlabeled instance, even though the probability itself is biased, the order is maintained (shown by ROC curve). For application purpose, sometimes we need to provide a clear category for instances which could be a problem when true $\pi$ is not provided. One way is to estimate $\pi$ from estimated c, which is obtained at convergence of the algorithm. However, we should also be aware of the potential biasness of such estimator, since $\pi$ is not identifiable.
+
+
+
+In the following simulation studies, we would like to compare the outcomes from knowing true $\pi$ to using simulated $\pi$. 
+
+
+```{r SimpleTest, echo=F, fig.width=8, fig.height=7, fig.cap="Simple examples of Wald's method and the proposed improved method with estimated c. Panel (a) and (b): univariate model $logit(y) = 1.2X$; Panel (c) and (d): multivariate model $logit(Pr(y=1)) = -1+2X_1+4X_2-X_3-2X_4+X_5$, and we know the true model during fitting."}
+set.seed(20200610)
+N = 500000
+p = 1
+X.all = matrix(rnorm(N * p, 0, 2), ncol = p, nrow = N)
+Lx = 1.2*X.all
+pr = 1/(1+exp(-Lx))
+Y.all = rbinom(N, 1, pr)
+sample.size = 2000
+z1.size = 400
+z = c(rep(1,z1.size), rep(0,sample.size-z1.size))
+id.z0 = sample(seq(N), sample.size-z1.size)
+id.z1 = sample(seq(N)[-id.z0][Y.all[-id.z0] == 1], z1.size)
+id = c(id.z1, id.z0)
+
+y = Y.all[id]; X = X.all[id]
+n_u = sum(z==0)
+n_p = sum(z==1)
+
+pi.true = sum(Y.all==1)/N
+c0 = sum(y==1) / sum(z==1)
+
+x.order = order(X)
+y = y[x.order]; X = X[x.order]; z = z[x.order]
+
+vanilla <- function(pi.true, c, z, X) {
+  no.iter = 1
+  f0 = rep(pi.true, length(z))
+  f0.prev = f0
+  while (TRUE) {
+    fs = f0^(1 - z)
+    fit.star = suppressWarnings(glm(fs~X, family = binomial(link = "logit")))
+    fit.star = fit.star$fitted.values
+    # LL.full = sum(f0*log(fit.star) + (1 - f0)*log(1-fit.star));print(LL.full)
+    f0 = (c - 1)*fit.star / (c - fit.star)
+    
+    delta = sqrt(sum((f0.prev-f0)^2))
+    # print(delta)
+    if (delta < 1e-3) {
+      break
+    }
+    f0.prev = f0
+    no.iter = no.iter + 1
+  }
+  return(list(f0=f0, no.iter=no.iter))
+}
+
+########## FIGURES ################
+layout(matrix(seq(4), nrow = 2, byrow = T))
+
+# true model
+plot(X, 1/(1+exp(-1.2*X)), type = "l", ylim = c(0,1), xlim = range(X), xlab = "X", ylab = "Probability", main = "(a) Plug True C Approach", lty = 2, lwd = 2)
+
+# true c
+f0 = vanilla(pi.true, c=c0, z, X)$f0
+lines(X, f0, type = "l", lty = 1, lwd = 2, col = "darkred")
+
+# print(round(f0[seq(1, sample.size, by = 100)],3))
+
+# c = 1.5
+f0 = vanilla(pi.true, c=1.5, z, X)$f0
+lines(X, f0, type = "l", lty = 1, lwd = 2, col = "darkblue")
+
+# c = 5
+f0 = vanilla(pi.true, c=5, z, X)$f0
+lines(X, f0, type = "l", lty = 1, lwd = 2, col = "darkgreen")
+
+# Oracle model
+# fit.oracle = glm(y~X, family = binomial(link = "logit"))
+# lines(x.range, predict(fit.oracle, newdata = data.frame(X=x.range), type = "response"), lty = 1, lwd = 2, col = "orange")
+
+legend("topleft", c(paste0("c = ", round(c0,2), "(Truth)"), "c = 1.5", "c = 5", "True Model"), col = c("darkred", "darkblue","darkgreen","black"), lty = c(1, 1, 1, 2), lwd = rep(2,4), cex = 0.75)
+
+
+
+##################### Estimate C ##############################
+estimate.c <- function(pi.init, z, X) {
+  sample.size = length(z)
+  f0 = rep(pi.init, sample.size)
+  f0.prev = f0
+  no.iter = 0
+  while (TRUE) {
+    fs = f0^(1 - z)
+    fit.star = suppressWarnings(glm(fs~X, family = binomial(link = "logit")))
+    fit.star = fit.star$fitted.values
+    est.c = mean(fit.star) / (sum(z==1)/sample.size)
+    # est.c = 1 + mean(fit.star[z==0]) * sum(z==0)/sum(z==1)
+    # LL.full = sum(f0*log(fit.star) + (1 - f0)*log(1-fit.star));print(LL.full)
+    f0 = (est.c - 1)*fit.star / (est.c - fit.star)
+    
+    delta = sqrt(sum((f0.prev-f0)^2))
+    # print(delta)
+    if (delta < 1e-3) {
+      break
+    }
+    f0.prev = f0
+    no.iter = no.iter + 1
+  }
+  return(list(f0=f0, no.iter=no.iter, est.c = est.c))
+}
+
+
+plot(X, 1/(1+exp(-1.2*X)), type = "l", ylim = c(0,1), xlim = range(X), xlab = "X", ylab = "Probability", main = "(b) Estimate C Approach", lty = 2, lwd = 2)
+
+# 0.5
+f0 = estimate.c(pi.init = 0.5, z, X)$f0
+lines(X, f0, type = "l", lty = 1, lwd = 2, col = "darkred")
+# print(round(f0[seq(1, sample.size, by = 100)],3))
+
+# 0.9
+f0 = estimate.c(pi.init = 0.9, z, X)$f0
+lines(X, f0, type = "l", lty = 1, lwd = 2, col = "darkblue")
+
+# 0.1
+f0 = estimate.c(pi.init = 0.1, z, X)$f0
+lines(X, f0, type = "l", lty = 1, lwd = 2, col = "darkgreen")
+
+legend("bottomright", c("Initial Prob = 0.5 (Truth)", "Initial Prob = 0.9", "Initial Prob = 0.1", "True Model"), col = c("darkred", "darkblue","darkgreen","black"), lty = c(1, 1, 1, 2), lwd = rep(2,4), cex = 0.75)
+
+
+#####################################################################
+##                                                                 ##
+##  multivariate scenarios: we assume to observe the true model    ##
+##                                                                 ##
+#####################################################################
+set.seed(202006)
+N = 50000
+p = 5
+X.all = matrix(rnorm(N * p, 0, 1), ncol = p, nrow = N)
+# Lx = 2*X.all[,1] + 4*X.all[,2]*X.all[,3] - 3*sin(X.all[,4] + X.all[,5]) - 0.5*X.all[,6]^4 # noisy balanced allocation
+Lx = -1 + 2*X.all[,1] + 4*X.all[,2] - X.all[,3] - 2*X.all[,4] + X.all[,5]
+pr = 1/(1+exp(-Lx))
+Y.all = rbinom(N, 1, pr)
+sample.size = 2000
+z1.size = 400
+z = c(rep(1,z1.size), rep(0,sample.size-z1.size))
+id.z0 = sample(seq(N), sample.size-z1.size)
+id.z1 = sample(seq(N)[-id.z0][Y.all[-id.z0] == 1], z1.size)
+id = c(id.z1, id.z0)
+
+y = Y.all[id]; X = X.all[id,]; true.prob = pr[id]
+n_u = sum(z==0)
+n_p = sum(z==1)
+
+pi.true = sum(Y.all==1)/N
+c0 = sum(y==1) / sum(z==1)
+
+f0 = vanilla(pi.true, c=c0, z, X)
+plot(true.prob, f0$f0, pch = 20, cex = 0.7, col = "darkred", xlab = "True Prob.", ylab = "Est. Prob.", main = "(c) Plug True C Approach")
+abline(a=0, b= 1, lwd = 2, col = "grey")
+text(x=0.22, y=0.94, paste0("No. of Iterations: ", f0$no.iter))
+
+f0 = estimate.c(pi.init = 0.5, z, X)
+plot(true.prob, f0$f0, pch = 20, cex = 0.7, col = "darkblue", xlab = "True Prob.", ylab = "Est. Prob.", main = "(d) Estimate C Approach")
+text(x=0.22, y=0.94, paste0("No. of Iterations: ", f0$no.iter))
+abline(a=0, b= 1, lwd = 2, col = "grey")
+
+```
+
+
+
+```{r VarSelect, echo=FALSE, fig.width=8, fig.height=10, fig.cap="Simple examples of PUwrapper. Panel (a) and (b): Random Forests; Panel (c) and (d): Penalized Logistic Regression. The baseline model is $logit(Pr(y=1)) = -1+2X_1+4X_2-X_3-2X_4+X_5$ with a total of 100 variables simulated. The size of simulated sample is 1600 and 600 of them are labeled as 1."}
+########################################################################
+##                                                                    ##
+##  With a lot noise variables: based on wrapped algorithm: RF, PLR   ##
+##                                                                    ##
+########################################################################
+set.seed(20200610)
+N = 50000
+p = 100
+X.all = matrix(rnorm(N * p, 0, 1), ncol = p, nrow = N)
+# Lx = 2*X.all[,1] + 4*X.all[,2]*X.all[,3] - 3*sin(X.all[,4] + X.all[,5]) - 0.5*X.all[,6]^4 # noisy balanced allocation
+Lx = -1 + 2*X.all[,1] + 4*X.all[,2] - X.all[,3] - 2*X.all[,4] + X.all[,5]
+pr = 1/(1+exp(-Lx))
+Y.all = rbinom(N, 1, pr)
+sample.size = 1600
+z1.size = 600
+z = c(rep(1,z1.size), rep(0,sample.size-z1.size))
+id.z0 = sample(seq(N), sample.size-z1.size)
+id.z1 = sample(seq(N)[-id.z0][Y.all[-id.z0] == 1], z1.size)
+id = c(id.z1, id.z0)
+
+y = Y.all[id]; X = X.all[id,]; true.prob = pr[id]
+n_u = sum(z==0)
+n_p = sum(z==1)
+
+pi.true = sum(Y.all==1)/N
+c0 = sum(y==1) / sum(z==1)
+
+
+# if wrapped alrogithm contains Parallel computing, use their parallel;
+# but we need to provide Parallel option anyway
+PUwrapper <- function(X,              # covariates (training data)
+                      y = NULL,       # unobserved outcome, used for AUC/ROC plot, and/or validation
+                      X.test = NULL,  # covariates (test data)
+                      z,              # observed outcome
+                      pi.true = NULL, # true prevalence, if input, c is calculated accordingly, otherwise, algorithm could estimate it
+                      family,         # character. One of "RF" (random forest by ranger), "RLT" (reinforced learning tree by RLT), "PLR" (penalized logistic regression by glmnet), and "penalizedSVM" (penalized SVM)
+                      n.resample = 50,# scaler, number of resample times 
+                      maxIter = 100,  # max iteration 
+                      ...             # other variables input for wrapped algorithm. E.g. num.trees = 100 in RF; use.cores = 5, ntrees = 50, combsplit = 3, embed.ntrees = 15 in RLT
+) {
+  if (!is.null(pi.true)) {
+    c0 = 1 + pi.true * sum(z==0)/sum(z==1)
+    f0 = rep(pi.true, length(z))
+  } else {
+    c0 = NULL
+    # f0 = rep(0, length(z))
+    f0 = ifelse(runif(length(z))>=0.5,1,0)
+  }
+  f0.prev = f0
+  no.iter = 1; LL.prev = -Inf; count = 0
+  
+  # run until converge, which means stationary in the algorithm
+  while (TRUE) {
+    fs = f0^(1 - z)
+    fit.table = NULL; ii = 0
+    # parallel is used to assign this task of loop into multiple work stations
+    while (ii < n.resample) {
+      impute.y = rbinom(length(fs), 1, fs)
+      if (family == "PLR") {
+        fit.star = cv.glmnet(x=X, y=impute.y,family = "binomial")
+        fit.table = cbind(fit.table, predict(fit.star, newx = X, s = "lambda.min", type = 'response',...))
+      } else if (family == "RF") {
+        tree.REvar = ranger(Y ~ ., data = data.frame(Y = impute.y, X = X), probability = T,...)
+        fit.table = cbind(fit.table, tree.REvar$predictions[,"1"])
+      } else if (family == "RLT") {
+        RLT.fit = RLT(X, as.factor(impute.y), model = "classification", 
+                      importance = TRUE, reinforcement = TRUE, ...)
+        fit.table = cbind(fit.table, predict(RLT.fit, X)$ProbPrediction[,which(RLT.fit$ylevels == "1")])
+      } else if (family == "penalizedSVM") {
+        impute.y[impute.y == 0] = -1  #inputs have to be {-1,1}
+        fit.svm = svmfs(x=X, y=impute.y, verbose = F, show="none", ...)
+        pred.svm = predict(fit.svm, X)$fitted
+        pred.svm[pred.svm>=0] = pred.svm[pred.svm>=0]/max(pred.svm)
+        pred.svm[pred.svm <0] = pred.svm[pred.svm<0]/abs(min(pred.svm))
+        fit.table = cbind(fit.table, (pred.svm + 1)/2)
+      } else if (family == "Logistic") {
+        fit.star = glm(impute.y~X, family = "binomial")
+        fit.table = cbind(fit.table, predict(fit.star, newdata = as.data.frame(X), type = 'response',...))
+      } 
+      ii = ii + 1
+    }
+    
+    fit.star = rowMeans(fit.table)
+    # likelihood/loss
+    ll.subj = f0*log(fit.star) + (1 - f0)*log(1-fit.star)
+    ll.subj[is.nan(ll.subj)] = 0; ll.subj[is.infinite(ll.subj)] = 0 # mainly need for SVM
+    LL.full = sum(ll.subj)
+    # for mapping, first need to figure out c
+    if (!is.null(c0)) {
+      est.c = c0
+    } else {
+      est.c1 = mean(fit.star) / (sum(z==1)/sample.size)
+      est.c2 = 1 + mean(fit.star[z==0]) * sum(z==0)/sum(z==1)
+      est.c = (est.c1 + est.c2)/2
+      # if (family == "PLR") {
+      #   est.c = est.c2
+      # } else {
+      #   est.c = (est.c1 + est.c2)/2
+      # }
+    }
+    f0 = (est.c - 1)*fit.star / (est.c - fit.star)
+    
+    
+    # print(c(sum(fs*log(fit.star) + (1-fs)*log(1-fit.star), na.rm = T), LL.full)) 
+    
+    # stopping criterion
+    delta.ll = LL.full - LL.prev
+    # delta = sqrt(sum((f0.prev-f0)^2));print(delta);print(LL.full); print(est.c)
+    if (abs(delta.ll) < 0.5) {
+      count = count + 1
+    }
+    if (count>=3 | no.iter > maxIter) {
+      break
+    }
+    
+    f0.prev = f0
+    LL.prev = LL.full
+    no.iter = no.iter + 1
+  }
+  
+  if (!is.null(y)) {
+    rr = roc(y, f0, direction = "<", levels = c(0,1))
+  } else {
+    rr = "Not Available"
+  }
+  
+  # estimate y for training data
+  if (!is.null(y)){
+    thres = rr$thresholds[which.min((1-rr$sensitivities)^2+(1-rr$specificities)^2)]
+    pred.y = ifelse(f0 >= thres, 1, 0)
+  } else {
+    pr.y = est.c*sum(z==1)/length(z)
+    total.y1 = round(pr.y*length(z)) # total # of y; so first this much in f0 assigned to 1
+    pred.y = ifelse(f0 >= sort(f0, decreasing = T)[total.y1],1,0)
+  }
+  
+  if (family == "PLR") {
+    model.fit = cv.glmnet(x=X, y=pred.y, family = "binomial")
+  } else if (family == "RF") {
+    model.fit = ranger(Y ~ ., data = data.frame(Y = pred.y, X = X), probability = T, importance = "impurity_corrected",...)
+  } else if (family == "RLT") {
+    model.fit = RLT(X, as.factor(pred.y), model = "classification", 
+                    importance = TRUE, reinforcement = TRUE, ...)
+  } else if (family == "pernalizedSVM") {
+    pred.y[pred.y == 0] = -1
+    model.fit = svmfs(x=X, y=pred.y, verbose = F, show="none", ...)
+  } else if (family == "Logistic") {
+    model.fit = glm(pred.y ~ X, family = "binomial")
+  }
+  
+  # predict pr/y for test data (this part I haven't test yet, please check)
+  if (!is.null(X.test)) {
+    if (family == "PLR") {
+      pred.pr = predict(model.fit, newx = X.test, s = "lambda.min", type = 'response',...)
+    } else if (family == "RF") {
+      pred.pr = predict(model.fit, data = data.frame(X = X.test))$predictions
+    } else if (family == "RLT") {
+      pred.pr = predict(model.fit, X.test)$ProbPrediction[,which(model.fit$ylevels == "1")]
+    } else if (family == "pernalizedSVM") {
+      pred.pr = predict(model.fit, X.test)$fitted # it is a distance to superplane not a probability. Larger than 0 is automatically 1, and vice versa
+    }  else if (family == "Logistic") {
+      pred.pr = predict(model.fit, newdata = as.data.frame(X.test), type = 'response',...)
+    }
+  } else {
+    pred.pr = "Not Available"
+  }
+  
+  return(list(est.pr.train = f0, # main output, the estimated probability for training data, including z=1 part
+              est.pr.test = pred.pr,
+              no.iter = no.iter, # number of final iterations
+              roc.out = rr, # roc/auc related outputs
+              est.c = est.c, # estimated c
+              model.fit = model.fit # fitted model
+  ))
+}
+
+fit.RF = PUwrapper(X=X,y=y,z=z,family = "RF", n.resample = 30, num.trees = 100)
+fit.PLR = PUwrapper(X=X,y=y,z=z,family = "PLR", n.resample = 30)
+# fit.RLT = PUwrapper(X=X,y=y,z=z,family = "RLT", n.resample = 30, use.cores = 5, ntrees = 50, combsplit = 3, embed.ntrees = 15)
+# fit.SVM = PUwrapper(X=X,y=y,z=z,family = "pernalizedSVM", n.resample = 30, fs.method = c("scad"), grid.search=c("interval"),inner.val.method = "cv")
+
+
+layout(matrix(seq(6), nrow = 3, byrow = F))
+# RF:
+plot(true.prob, fit.RF$est.pr.train, pch = 20, cex = 0.7, col = "darkblue", xlab = "True Prob.", ylab = "Est. Prob.", main = "(a) RF: Estimations")
+plot(fit.RF$roc.out,  main = "(b) RF: ROC")
+text(x=0.55, y=0.7, paste0("AUC: ", round(fit.RF$roc.out$auc,3)))
+text(x=0.55, y=0.63, paste0("Est. c: ", round(fit.RF$est.c, 3)))
+text(x=0.55, y=0.56, paste0("True c: ", round(1 + pi.true * sum(z==0)/sum(z==1), 3)))
+barplot(fit.RF$model.fit$variable.importance, main = "(c) RF: Variable Importance")
+# PLR:
+plot(true.prob, fit.PLR$est.pr.train, pch = 20, cex = 0.7, col = "darkblue", xlab = "True Prob.", ylab = "Est. Prob.", main = "(d) PLR: Estimations")
+plot(fit.PLR$roc.out,  main = "(e) PLR: ROC")
+text(x=0.55, y=0.7, paste0("AUC: ", round(fit.PLR$roc.out$auc,3)))
+text(x=0.55, y=0.63, paste0("Est. c: ", round(fit.PLR$est.c, 3)))
+text(x=0.55, y=0.56, paste0("True c: ", round(1 + pi.true * sum(z==0)/sum(z==1), 3)))
+barplot(fit.PLR$model.fit$glmnet.fit$beta[,which(fit.PLR$model.fit$lambda == fit.PLR$model.fit$lambda.min)], main = "(f) PLR: Selected Variables")
+
+
+```
+
+
+## References
+
+
+
+
+
+
+
+
+
