@@ -135,6 +135,38 @@
                 href="/cn/categories/r-package/"
                 />
   </url><url>
+    <loc>/cn/tags/em%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2020-05-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/cn/tags/pu%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2020-05-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/cn/categories/thoughts/</loc>
+    <lastmod>2020-05-28T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/categories/thoughts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/categories/thoughts/"
+                />
+  </url><url>
+    <loc>/cn/posts/pulearning/</loc>
+    <lastmod>2020-05-28T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/posts/pulearning/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/posts/pulearning/"
+                />
+  </url><url>
     <loc>/cn/posts/odt-capm/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -148,50 +180,11 @@
                 href="/cn/posts/odt-capm/"
                 />
   </url><url>
-    <loc>/cn/categories/thoughts/</loc>
-    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/categories/thoughts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="cn"
-                href="/cn/categories/thoughts/"
-                />
-  </url><url>
     <loc>/cn/tags/%E4%BC%98%E5%8C%96/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/cn/tags/%E9%87%91%E8%9E%8D/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/cn/tags/causal-inference/</loc>
-    <lastmod>2019-11-05T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/tags/causal-inference/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="cn"
-                href="/cn/tags/causal-inference/"
-                />
-  </url><url>
-    <loc>/cn/posts/pulearning/</loc>
-    <lastmod>2019-11-05T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/posts/pulearning/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="cn"
-                href="/cn/posts/pulearning/"
-                />
   </url><url>
     <loc>/cn/posts/opttrialdesignapp/</loc>
     <lastmod>2019-08-28T00:00:00+00:00</lastmod>
@@ -218,9 +211,6 @@
                 hreflang="cn"
                 href="/cn/posts/opttrialdesignpackage/"
                 />
-  </url><url>
-    <loc>/cn/tags/em%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2019-04-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/cn/tags/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B/</loc>
     <lastmod>2019-04-10T00:00:00+00:00</lastmod>

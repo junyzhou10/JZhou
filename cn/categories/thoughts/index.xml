@@ -6,7 +6,20 @@
     <description>Recent content in Thoughts on 周君逸</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="/cn/categories/thoughts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 28 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="/cn/categories/thoughts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>阳性-无标记学习（Positive-and-Unlabeled Learning）</title>
+      <link>/cn/posts/pulearning/</link>
+      <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/cn/posts/pulearning/</guid>
+      <description> 阳性-无标记学习，是指仅观察到阳性标记（记作1）而其余未标记的二元分类问题。 由于未标记的数据部分同时包含0和1，因此如果将无标记部分天真地视为0并执行传统监督学习算法将低估了正例的可能性(Ward et al. 2009; Yang et al. 2012)。但是，如果简单排除这些无标记数据，即在训练集中只有结果为1，却没有结果为0的样本，则无法直接使用已经非常成熟的监督学习方法。 为了克服这一难题，我们将在此讨论PU学习算法。
+因为术语过多，请参考英文版。
+参考文献 Ward, Gill, Trevor Hastie, Simon Barry, Jane Elith, and John R Leathwick. 2009. “Presence-Only Data and the Em Algorithm.” Biometrics 65 (2): 554–63.
+ Yang, Peng, Xiao-Li Li, Jian-Ping Mei, Chee-Keong Kwoh, and See-Kiong Ng. 2012. “Positive-Unlabeled Learning for Disease Gene Identification.” Bioinformatics 28 (20): 2640–7.
+   </description>
+    </item>
+    
     <item>
       <title>OptTrialDesign的逻辑与金融里CAPM的联系</title>
       <link>/cn/posts/odt-capm/</link>
