@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="cn">
+    <meta name="color-scheme" content="light dark">
+
+    
+
+    <meta name="author" content="周君逸">
+    <meta name="description" content="OptTrialDesign的逻辑与金融里CAPM的联系">
+    <meta name="keywords" content="个人，项目，应用">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OptTrialDesign的逻辑与金融里CAPM的联系"/>
+<meta name="twitter:description" content="OptTrialDesign的逻辑与金融里CAPM的联系"/>
+
+    <meta property="og:title" content="OptTrialDesign的逻辑与金融里CAPM的联系" />
+<meta property="og:description" content="OptTrialDesign的逻辑与金融里CAPM的联系" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/cn/posts/odt-capm/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-01-01T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-01-01T00:00:00&#43;00:00" /><meta property="og:site_name" content="周君逸" />
+
+
+
+    <title>
+  OptTrialDesign的逻辑与金融里CAPM的联系 · 周君逸
+</title>
+
+    
+      <link rel="canonical" href="/cn/posts/odt-capm/">
+    
+
+    <link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.1.7" as="font" type="font/woff2" crossorigin>
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.406d0bb9b7e93dd1c4497ee4abb177af6bea8f6c16aea89ae05f2aef56ef44e5.css" integrity="sha256-QG0LubfpPdHESX7kq7F3r2vqj2wWrqia4F8q71bvROU=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.dde8a61eb31a32353b4baf3d9113f03c4ea2a8ca9bb736f59ca2d2b2cb664f0b.css" integrity="sha256-3eimHrMaMjU7S689kRPwPE6iqMqbtzb1nKLSsstmTws=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+
+    <meta name="generator" content="Hugo 0.83.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="preload-transitions colorscheme-auto"
+        onload=""
+  >
+    
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/cn">
+      周君逸
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/cn/about/">关于</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/cn/posts/">项目</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/cn/publications/">刊物</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/cn/contact/">联系</a>
+            </li>
+          
+        
+        
+          
+          
+          
+            
+              
+                <li class="navigation-item menu-separator">
+                  <span>|</span>
+                </li>
+                
+              
+              <li class="navigation-item">
+                <a href="/posts/odt-capm/">English</a>
+              </li>
+            
+          
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="/cn/posts/odt-capm/">
+              OptTrialDesign的逻辑与金融里CAPM的联系
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime='2020-01-01T00:00:00Z'>
+                January 1, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="/cn/categories/thoughts/">Thoughts</a></div>
+
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <a href="/cn/tags/%E9%87%91%E8%9E%8D/">金融</a>
+      <span class="separator">•</span>
+    <a href="/cn/tags/%E4%BC%98%E5%8C%96/">优化</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+<div id="opttrialdesign背后的想法" class="section level4">
+<h4>OptTrialDesign背后的想法</h4>
+<p>在<a href="Dgn_stgy_Junyi_Nektar.pdf">最优（临床）试验设计</a>中，我们提出了一种寻找最佳实验设计的新颖方法，既可以最大限度地提高财务收益（即预期净收入，ENR），又可以符合监管要求。我们必须在两者中权衡。因为从制药公角度出发，较短的研究期限导致更早的市场准入，这有助于在LOE（排他性损失）之前最大化利润。但另一方面，监管机构和卫生技术评估（HTA）机构希望看到更加有保证的临床结果，这通常需要更长的研究时间。这两者之间存在一定冲突。</p>
+<p>在具有time-to-event endpoint的实验中，给定target number of events，临床试验设计仍未完全确定。通常有三个参数，样本量（<span class="math inline">\(N\)</span>），研究持续时间（<span class="math inline">\(S\)</span>）和招人速度（<span class="math inline">\(r_a\)</span>）（或招人时间，如果假设uniform <span class="math inline">\(r_a\)</span>，在此我们不考虑，也不考虑对于具有中期分析的试验，可以按照类似的想法进行扩展），并且这三者存在无限的组合，从而形成了无数满足条件的试验设计。实际上，<span class="math inline">\(r_a\)</span>不能取任意数字，因为它受到疾病发病率，类型和场所能力的限制。假设研究人员能够提供大致的<span class="math inline">\(r_a\)</span>，甚至是一个范围，试验设计的自由度就会从3减少到2，并且我们能够在<span class="math inline">\(2×2\)</span>平面中展示可行的设计集（如下图所示）。值得注意的是，研究持续时间与样本量之间需要权衡取舍。较大的样本量有助于加快试验，反之亦然。</p>
+<p><img src="/images/Opt_constr.jpg" /></p>
+</div>
+<div id="金融中的capm模型" class="section level4">
+<h4>金融中的CAPM模型</h4>
+<p>我们休息一会儿，转向资本资产定价模型（CAPM）。CAPM因其在分析投资组合定价方面的贡献而赢得了<a href="https://en.wikipedia.org/wiki/Capital_asset_pricing_model">1990 年诺贝尔经济学奖</a>，并因其简单性和实用价值而闻名。</p>
+<p>在CAPM中，资产或投资组合的预期收益(<span class="math inline">\(ER_i\)</span>)可以通过以下方式计算,
+<span class="math display">\[
+ER_i = R_f + \beta_i(ER_m - R_f)
+\]</span>
+其中<span class="math inline">\(R_f\)</span>是无风险收益率（例如<a href="https://www.cnbc.com/quotes/US10Y">10年期国债收益率</a>）; <span class="math inline">\(\beta_i\)</span> 代表基于市场风险的个人风险; 以及<span class="math inline">\(ER_m - R_f\)</span>是市场风险溢价。基本上，这意味着在理想情况下，资产的风险越高，预期的回报就越高。</p>
+<p>换句话说，我们可以说为了找到最佳资产，我们实际上需要最大化以下目标函数
+<span class="math display">\[
+\max_i R_f + \beta_i(ER_m - R_f) \text{ for } i \in \text{可行集}
+\]</span>
+那么，什么是可行集？我们知道预期收益会随着资产的预期风险而增加，但是由于<a href="https://en.wikipedia.org/wiki/Marginal_utility">边际效用递减</a>，预期收益应该有上限（不能达到无穷大），以及预期风险有下限（不能达到0）。通常，人们认为可行的集合是下图中抛物线所包围的区域。该抛物线（蓝色曲线）称为<a href="https://en.wikipedia.org/wiki/Efficient_frontier">有效边界</a>，它表示在给定风险下最大和最小的预期收益（注意预期风险和收益的限制）。不在有效边界上资产/投资组合（蓝色圆圈点；请注意，由于有效边界是假设性的，在实践中可能会被违反）是无效区域，因为总是可以在有效边界上找到具有相同预期收益的另一个风险资产，但预期收益更高。</p>
+<p><img src="https://www.investopedia.com/thmb/5OGwx-OvJwZ4c0Q8kU45TkI0yS4=/1787x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/CapitalAssetPricingModelCAPM1_2-e6be6eb7968d4719872fe0bcdc9b8685.png" title="Figure 2. CAPM illustration" /></p>
+<p>让我们以优化问题的形式重写问题
+<span class="math display">\[
+\begin{aligned}
+\max_i &amp; \quad R_f + \beta_i(ER_m - R_f)  \\
+\text{s.t.} &amp; \quad i \in \text{Efficient Frontier}
+\end{aligned}
+\]</span>
+其中，目标函数<span class="math inline">\(R_f + \beta_i(ER_m-R_f)\)</span>实际上是资本市场线（capital market line, 图中的黑色直线）。 因此，最佳解决方案是切点（绿点）。</p>
+</div>
+<div id="回到-optimal-trial-design" class="section level4">
+<h4>回到 Optimal Trial Design</h4>
+<p>现在让我们回到最佳试验设计的问题上。 同样，我们要最大化ENR，可以表示为
+<span class="math display">\[
+ENR = c_0(L-S) - c_1S - c_2N = c_0L - (c_0+c_1)S-c_2N
+\]</span>
+其中<span class="math inline">\(c_0(L-S)\)</span>是预期销售额； <span class="math inline">\(L\)</span>约是排他性的持续时间； <span class="math inline">\(c_1S\)</span>是总维护成本； <span class="math inline">\(c_1S\)</span>是样本总费用。 如上所述，可行集的“有效边界”是图1中的灰线。有效边界之上的其他可行集不是最佳的，因为我们总是可以在边界上找到较小的<span class="math inline">\(N\)</span>或更小的<span class="math inline">\(S\)</span>，使得ENR更高。</p>
+<p>使用与CAPM完全相同的思想，可以将试设计问题转换为约束优化问题：
+<span class="math display">\[
+\begin{aligned}
+\max_i &amp; \quad c_0L - (c_0+c_1)S_i-c_2N_i  \\
+\text{s.t.} &amp; \quad i \in \text{有效边界}
+\end{aligned}
+\]</span>
+最优解也就是切点（红色点）。</p>
+<p>（文章大致为Google机器翻译，请多多包涵。想详细了解内容，请参阅英文版。）</p>
+</div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+        ©
+        
+          2020 -
+        
+        2021
+         周君逸 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+        
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+      
+      <script src="/js/coder.min.235666b114443867d43eeb5799d51f6252965e5163f338285e113fa381d3d27e.js" integrity="sha256-I1ZmsRREOGfUPutXmdUfYlKWXlFj8zgoXhE/o4HT0n4="></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+  </body>
+
+</html>

@@ -44,20 +44,29 @@
     </item>
     
     <item>
-      <title>Causal Inference</title>
-      <link>/tags/causal-inference/</link>
-      <pubDate>Tue, 05 Nov 2019 00:00:00 +0000</pubDate>
+      <title>Finance</title>
+      <link>/tags/finance/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/causal-inference/</guid>
+      <guid>/tags/finance/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Optimization</title>
       <link>/tags/optimization/</link>
-      <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/optimization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Causal Inference</title>
+      <link>/tags/causal-inference/</link>
+      <pubDate>Tue, 05 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/causal-inference/</guid>
       <description></description>
     </item>
     

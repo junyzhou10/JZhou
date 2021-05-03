@@ -138,6 +138,38 @@
                 href="/categories/r-package/"
                 />
   </url><url>
+    <loc>/posts/odt-capm/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/posts/odt-capm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/posts/odt-capm/"
+                />
+  </url><url>
+    <loc>/tags/finance/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/optimization/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/thoughts/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/categories/thoughts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/categories/thoughts/"
+                />
+  </url><url>
     <loc>/tags/causal-inference/</loc>
     <lastmod>2019-11-05T00:00:00+00:00</lastmod>
   </url><url>
@@ -156,9 +188,6 @@
                 hreflang="en"
                 href="/posts/opttrialdesignapp/"
                 />
-  </url><url>
-    <loc>/tags/optimization/</loc>
-    <lastmod>2019-08-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/opttrialdesignpackage/</loc>
     <lastmod>2019-08-26T00:00:00+00:00</lastmod>

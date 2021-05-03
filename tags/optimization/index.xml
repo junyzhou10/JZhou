@@ -6,7 +6,16 @@
     <description>Recent content in Optimization on Junyi Zhou</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 28 Aug 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/optimization/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/optimization/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Connection between the Idea behind OptTrialDesign &amp; CAPM in Finance</title>
+      <link>/posts/odt-capm/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/odt-capm/</guid>
+      <description>Idea behind OptTrialDesign In Optimal Design Strategy, we propose a novel way to find the optimal trial design, in terms of maximizing the financial outcomes, i.e., Expected Net Revenue (ENR), but also under the regulatory requirements. We have to trade-off because in pharmaceutical companies’ position, a shorter study/trial duration leads to earlier market access which helps to maximize the profits before LOE (loss of exclusivity). On the other hand, regulatory agencies and health technology assessment (HTA) bodies wish to see a more guaranteed clinical results, which usually require longer study duration.</description>
+    </item>
+    
     <item>
       <title>Optimal Trial Design (Online App)</title>
       <link>/posts/opttrialdesignapp/</link>
