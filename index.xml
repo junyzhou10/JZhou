@@ -8,6 +8,15 @@
     <language>en</language>
     <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>Junyi Zhou is currently a Ph.D. candidate in Biostatistics at Richard M. Fairbanks School of Public Health and School of Medicine, Indiana University. He is co-advised by Dr. Wanzhu Tu and Dr. Ying Zhang. His research focuses on data clustering methods especially for longitudinal data; causal inference in potential outcome framework when multiple treatments exist; positive and unlabeled data learning methods in the situation like cancer-metastasis that only positive cases are for sure, while the rest are unlabeled.</description>
+    </item>
+    
+    <item>
       <title>Clustering Longitudinal Data (Online App)</title>
       <link>/posts/clusterlongapp/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
@@ -77,15 +86,6 @@
       
       <guid>/posts/mc-opt-slides/</guid>
       <description>Optimization is the key component of the AI/ML algorithm. Whatever objective function is proposed, the final step is to optimize it. Convex optimization problems, either unconstrained or constrained, are well explored (see here). Even though, the efficiency or performance still largely depends on the shape of the surface of the objective function. For convex problems, the solution could be trapped at saddle points; or for local convex objective functions, the solution might reach to the local optima instead of global optima.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>Learn more and contribute on GitHub.</description>
     </item>
     
     <item>

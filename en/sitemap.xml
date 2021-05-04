@@ -2,6 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/about/</loc>
+    <lastmod>2021-05-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="/cn/about/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/about/"
+                />
+  </url><url>
     <loc>/tags/app/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -235,18 +248,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="/posts/mc-opt-slides/"
-                />
-  </url><url>
-    <loc>/about/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="cn"
-                href="/cn/about/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/about/"
                 />
   </url><url>
     <loc>/authors/</loc>
