@@ -51,21 +51,23 @@ To better utilize the unlabeled instances, one class of algorithms adopt a heuri
 Meanwhile, a more theoretical viewpoint of PU learning has been developed by putting it into a case-control framework [@ward2009presence], given the fact that the way of sampling is not the same for positive set and unlabeled set. In positive set, only instances with positive true label are sampled, which are called cases. Unlabeled set, on the other hand, is a complete random sampling from the population, which serves as controls. Under this framework, Ward et al. are able to estimate the underlying positive-negative logistic model from observed positive-unlabeled data by expectation-maximization (EM) algorithm [@dempster1977maximum]. Recently, Song et al. [@song2019pulasso] extend this method with penalty terms to accomplish variable selection, and convergence is guaranteed. Denote $x$ as covariates, $y$ as unobserved true label, and $z$ as observed label where unlabeled instances are treated negative. The main flaw of this method is we need to know the population prevalence $Pr(y=1)$, which is almost impossible in practical application, otherwise it is not identifiable with observed positive and unlabeled instances [@ward2009presence]. Slightly different from case-control modeling, Elkan et al. and Scott et al. [@elkan2008learning; @scott2009novelty] consider a single-training-set scenario that all instances are sampled from a joint distribution of $(x, y, z)$ but only $(x, z)$ is recorded. The estimation of population prevalence is obvious under this setting, but an unrealistic noiseless assumption $P(y=1\mid x)=1$ is required. Therefore, they provide a weighting approach that could get rid of this assumption. However, this approach can be viewed as a one-step iteration of Ward's EM algorithm [@song2019pulasso].
 
 
-Recently, researchers incorporate bagging [@breiman1996bagging] idea into the PU learning to generate final classifier by ensembling multiple PU classifiers estimated from bootstrap sampling [@mordelet2011prodige; @mordelet2014bagging; @claesen2015robust; @yang2016positive]. This approach takes advantage of bagging feature to reduce noise from modeling directly with unlabeled instances and obtain more stable predictions. Rather than using unanimous probability to sample, AdaSample [@yang2018adasampling], a more boosting-like algorithm, applies different sampling probability at each step, and the probability is calculated from PU model estimated in the previous iteration. The performance of the adopted PU classifier for the bootstrap sample is of great importance to the success of this set of methods.
+Recently, researchers incorporate bagging [@breiman1996bagging] idea into the PU learning to generate final classifier by assembling multiple PU classifiers estimated from bootstrap sampling [@mordelet2011prodige; @mordelet2014bagging; @claesen2015robust; @yang2016positive]. This approach takes advantage of bagging feature to reduce noise from modeling directly with unlabeled instances and obtain more stable predictions. Rather than using unanimous probability to sample, AdaSample [@yang2018adasampling], a more boosting-like algorithm, applies different sampling probability at each step, and the probability is calculated from PU model estimated in the previous iteration. The performance of the adopted PU classifier for the bootstrap sample is of great importance to the success of this set of methods.
 
 
 
-## Method (simplified version)
+## PUwrapper (basic idea)
+The PUwrapper provides a general framework that could apply to any traditional supervised learning algorithm but still make them work for the Positive-Unlabeled dataset.
+
 In positive-only data scene, there are two fundamental setup: \newline
 
 - Condition 1. Positive instances are completely random selection from positive population; \newline
-- Condition 2. The unlabeled instances are a random sampling from the populatio. \newline
+- Condition 2. The unlabeled instances are a random sampling from the population. \newline
 
-As the observed dataset is not a random sample from the population but a random sample for either the positive or the unlabeled, it satisfies the case-control framework. But among the unlabeled, there is a mixture of ture positive and negative instances which makes it hard to directly adopt traditional methods upon this case-control problem. 
+As the observed dataset is not a random sample from the population but a random sample for either the positive or the unlabeled, it satisfies the case-control framework. But among the unlabeled, there is a mixture of true positive and negative instances which makes it hard to directly adopt traditional methods upon this case-control problem. 
 
 Since only part of $y$ is observed, PU problem can be viewed as a missing data problem and one commonly used method for the missing data problem is EM algorithm [@dempster1977maximum]. In the following sections, we will first introduce existing EM algorithm designed for PU problem as well as the basic idea of PUwrapper.
 
-- Observed likelihoood: 
+- Observed likelihood: 
 $$
 L^{obs}(\theta \mid x, z, s =1) = \prod_i P_\theta(z_i =1\mid s_i = 1,x_i)^{z_i}(1-P_\theta(z_i =1\mid s_i = 1, x_i))^{1-z_i}
 $$
@@ -105,8 +107,9 @@ $$
 c = \frac{Pr(y=1 \mid s=1)}{Pr(z=1\mid s=1)}.
 $$
 
-- How to achieve c? \newline
-In formula $c = \frac{Pr(y=1 \mid s=1)}{Pr(z=1\mid s=1)}$, $Pr(z=1\mid s=1)$ is observed but $Pr(y=1 \mid s=1)$ is relevant to population prevelance $\pi = P(y=1)$ which is unknown. In most literatures, $\pi$ is assumed to be known. But in real application, $\pi$ is always infeasible, and thus hinter the application of their methods. However, noticing that 
+- How to achieve c? 
+
+In formula $c = \frac{Pr(y=1 \mid s=1)}{Pr(z=1\mid s=1)}$, $Pr(z=1\mid s=1)$ is observed but $Pr(y=1 \mid s=1)$ is relevant to population prevalence $\pi = P(y=1)$ which is unknown. In most literature, $\pi$ is assumed to be known. But in real application, $\pi$ is always infeasible, and thus hinter the application of their methods. However, noticing that 
 $$
 \begin{aligned}
 E(y \mid s=1) &= E_x[E(y \mid s=1, x)] \\
@@ -119,12 +122,14 @@ $$
 f_{\theta^{(k+1)}}(x) = \frac{(\frac{1}{n}\sum_i f^*_{\hat\theta^{(k+1)}}(x_i)-1) f^*_{\hat\theta^{(k+1)}}(x_i)}{\frac{1}{n}\sum_i f^*_{\hat\theta^{(k+1)}}(x_i) - f^*_{\hat\theta^{(k+1)}}(x_i)}.
 $$ 
 
-- How to do variable selection during EM \newline
+- How to do variable selection during EM 
+
 If we want to accomplish variable selection during the EM algorithm, the objective function at M-step is adjusted to the following
 $$
 \theta^{(k+1)} = \arg\max_\theta \quad  Q(\theta \mid \theta^{(k)}) + \lambda J(\theta).
 $$
-Imputation-regularized optimization (IRO) developed by @liang2018imputation propose a general idea of handling missing data (in variables not outcomes) in high dimensional data. PULasso [@song2019pulasso] adopts quadratic majorization for M-step (QM-EM) which mainly targets on computational efficacy. \newline
+Imputation-regularized optimization (IRO) developed by @liang2018imputation propose a general idea of handling missing data (in variables not outcomes) in high dimensional data. PULasso [@song2019pulasso] adopts quadratic majorization for M-step (QM-EM) which mainly targets on computational efficacy.
+
 Basically, as a wrapper, we do not need to know specific value of $\theta^{(k+1)}$. Instead, what a wrapper needs is simply $f^*_{\theta}(x_i)$. So variable selection, if necessary, should be embedded in the wrapped algorithm. For example, PLR or Reinforced Learning Tree (RLT) if wrapped, are able to select important variables.
 <!-- This problem could be considered as imputation-regularized optimization (IRO) developed by Liang (2018). As pointed out in their paper, EM is not suitable for high dimensional data, due to the identifiable issue. PULasso adopts quadratic majorization for M-step (QM-EM) which mainly targets on computational efficacy. Some other methods are also problem specific. There is no general solution to this problem. -->
 
@@ -135,15 +140,22 @@ c =1+Pr(y=1 \mid z=0, s=1)\frac{Pr(z= 0 \mid s = 1)}{ Pr(z=1\mid s=1)}
 $$
 and the unbalancedness is explicitly expressed in second term. Specifically, population unbalancedness is expressed by $Pr(y=1 \mid z=0, s=1)$, since $Pr(y=1 \mid z=0, s=1) = Pr(y=1)$ under Condition 2, and $\frac{P(z= 0 \mid s = 1)}{ P(z=1\mid s=1)}$ is a measure of observation unbalancedness.
 
-- How to find out the optimal cutoff without knowing the true $\pi$ \newline
+- How to find out the optimal cutoff without knowing the true $\pi$
+
 We are able to generate a sequence of estimated probability for each unlabeled instance, even though the probability itself is biased, the order is maintained (shown by ROC curve). For application purpose, sometimes we need to provide a clear category for instances which could be a problem when true $\pi$ is not provided. One way is to estimate $\pi$ from estimated c, which is obtained at convergence of the algorithm. However, we should also be aware of the potential biasness of such estimator, since $\pi$ is not identifiable.
 
+#### Illustration via Simple Simulation Studies
+In the first simulation study, we compare the outcomes from knowing true $\pi$ to those using estimated $\pi$ under a simplified setting, i.e., $logit(\Pr(y=1)) = 1.2X+\varepsilon$. We display the estimated probabilities against $X$ in Figure 1 (a), (b). 
+
+Based on the results, there are several comments:
+
+- Biased $\pi$ (equivalently, $c$) leads to biased estimations of probabilities
+- Using estimated $c$ seems to be a valid solution
+- Initial value to start EM algorithm does not matter a lot
+- True $c$ has better convergence rate than using estimated $c$ at each step
 
 
-In the following simulation studies, we would like to compare the outcomes from knowing true $\pi$ to using simulated $\pi$. 
-
-
-```{r SimpleTest, echo=F, fig.width=8, fig.height=7, fig.cap="Simple examples of Wald's method and the proposed improved method with estimated c. Panel (a) and (b): univariate model $logit(y) = 1.2X$; Panel (c) and (d): multivariate model $logit(Pr(y=1)) = -1+2X_1+4X_2-X_3-2X_4+X_5$, and we know the true model during fitting."}
+```{r SimpleTest, echo=F, fig.width=8, fig.height=7, fig.cap="Simple examples of Wald's method and the proposed improved method with estimated c. Panel (a) and (b): univariate model $logit(Pr(y=1)) = 1.2X$; Panel (c) and (d): multivariate model $logit(Pr(y=1)) = -1+2X_1+4X_2-X_3-2X_4+X_5$, and we know the true model during fitting."}
 set.seed(20200610)
 N = 500000
 p = 1
@@ -303,6 +315,7 @@ abline(a=0, b= 1, lwd = 2, col = "grey")
 ```
 
 
+In second simulation study, we wrap two basic supervised learning algorithms: random forests (RF) and penalized logistic regression (PLR). At the meantime, we would like to conduct variable selection during the process. For PLR, we adopt LASSO at each EM iteration, while for RF, we use variable importance score as the weights. We generate 100 variables where only 5 of them are related to the outcome. In other words, the rest of them are purely noise. In Figure 2, we display the results based on PUwrapper, and the selected variables, or variable importances are given in panel (c) and (f).
 
 ```{r VarSelect, echo=FALSE, fig.width=8, fig.height=10, fig.cap="Simple examples of PUwrapper. Panel (a) and (b): Random Forests; Panel (c) and (d): Penalized Logistic Regression. The baseline model is $logit(Pr(y=1)) = -1+2X_1+4X_2-X_3-2X_4+X_5$ with a total of 100 variables simulated. The size of simulated sample is 1600 and 600 of them are labeled as 1."}
 ########################################################################
