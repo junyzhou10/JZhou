@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>App on Junyi Zhou</title>
-    <link>/categories/app/</link>
+    <link>https://jzhou.org/categories/app/</link>
     <description>Recent content in App on Junyi Zhou</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/categories/app/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Clustering Longitudinal Data (Online App)</title>
-      <link>/posts/clusterlongapp/</link>
+      <link>https://jzhou.org/posts/clusterlongapp/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/posts/clusterlongapp/</guid>
+      <guid>https://jzhou.org/posts/clusterlongapp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Optimal Trial Design (Online App)</title>
-      <link>/posts/opttrialdesignapp/</link>
+      <link>https://jzhou.org/posts/opttrialdesignapp/</link>
       <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/posts/opttrialdesignapp/</guid>
+      <guid>https://jzhou.org/posts/opttrialdesignapp/</guid>
       <description></description>
     </item>
     

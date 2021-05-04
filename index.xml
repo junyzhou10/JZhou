@@ -2,109 +2,109 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Junyi Zhou</title>
-    <link>/</link>
+    <link>https://jzhou.org/</link>
     <description>Recent content on Junyi Zhou</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About</title>
-      <link>/about/</link>
+      <link>https://jzhou.org/about/</link>
       <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>https://jzhou.org/about/</guid>
       <description>Junyi Zhou is currently a Ph.D. candidate in Biostatistics at Richard M. Fairbanks School of Public Health and School of Medicine, Indiana University. He is co-advised by Dr. Wanzhu Tu and Dr. Ying Zhang. His research focuses on data clustering methods especially for longitudinal data; causal inference in potential outcome framework when multiple treatments exist; positive and unlabeled data learning methods in the situation like cancer-metastasis that only positive cases are for sure, while the rest are unlabeled.</description>
     </item>
     
     <item>
       <title>Clustering Longitudinal Data (Online App)</title>
-      <link>/posts/clusterlongapp/</link>
+      <link>https://jzhou.org/posts/clusterlongapp/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/posts/clusterlongapp/</guid>
+      <guid>https://jzhou.org/posts/clusterlongapp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ClusterLong: An R-package to Cluster Longitudinal Data</title>
-      <link>/posts/clusterlongpackage/</link>
+      <link>https://jzhou.org/posts/clusterlongpackage/</link>
       <pubDate>Fri, 16 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/posts/clusterlongpackage/</guid>
+      <guid>https://jzhou.org/posts/clusterlongpackage/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Positive-and-Unlabeled Learning</title>
-      <link>/posts/pulearning/</link>
+      <link>https://jzhou.org/posts/pulearning/</link>
       <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/posts/pulearning/</guid>
+      <guid>https://jzhou.org/posts/pulearning/</guid>
       <description>Introduction Positive and unlabeled learning, or positive-unlabeled (PU) learning, refers to the binary classification problem where only positive labels are observed and the rest are unlabeled. Since unlabeled part of data consists of both positive and negative instances, naively treating them as negative and performing a standard classification learning algorithm will underestimate the probability of being positive (Ward et al. 2009; Yang et al. 2012). Without providing negative instances in the training set, however, will prevent the direct use of well-developed supervised classification methods.</description>
     </item>
     
     <item>
       <title>Connection between the Idea behind OptTrialDesign &amp; CAPM in Finance</title>
-      <link>/posts/odt-capm/</link>
+      <link>https://jzhou.org/posts/odt-capm/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/posts/odt-capm/</guid>
+      <guid>https://jzhou.org/posts/odt-capm/</guid>
       <description>Idea behind OptTrialDesign In Optimal Design Strategy, we propose a novel way to find the optimal trial design, in terms of maximizing the financial outcomes, i.e., Expected Net Revenue (ENR), but also under the regulatory requirements. We have to trade-off because in pharmaceutical companies’ position, a shorter study/trial duration leads to earlier market access which helps to maximize the profits before LOE (loss of exclusivity). On the other hand, regulatory agencies and health technology assessment (HTA) bodies wish to see more guaranteed clinical results, which usually require longer study duration.</description>
     </item>
     
     <item>
       <title>Review of Causal Inference</title>
-      <link>/posts/proposal/</link>
+      <link>https://jzhou.org/posts/proposal/</link>
       <pubDate>Tue, 05 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>/posts/proposal/</guid>
+      <guid>https://jzhou.org/posts/proposal/</guid>
       <description>Heterogeneous Treatment Effect Estimation 1. Introduction The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. In this proposal, I examine the estimation of causal effects therapeutic treatments by using observational data in a population where the treatment effects vary by observed patient characteristics.</description>
     </item>
     
     <item>
       <title>Optimal Trial Design (Online App)</title>
-      <link>/posts/opttrialdesignapp/</link>
+      <link>https://jzhou.org/posts/opttrialdesignapp/</link>
       <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/posts/opttrialdesignapp/</guid>
+      <guid>https://jzhou.org/posts/opttrialdesignapp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>OptTrialDesign: An R-package for Optimal Trial Design--Balancing between Financial Outcomes and Regulatory Concerns</title>
-      <link>/posts/opttrialdesignpackage/</link>
+      <link>https://jzhou.org/posts/opttrialdesignpackage/</link>
       <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/posts/opttrialdesignpackage/</guid>
+      <guid>https://jzhou.org/posts/opttrialdesignpackage/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Monte Carlo Optimization</title>
-      <link>/posts/mc-opt-slides/</link>
+      <link>https://jzhou.org/posts/mc-opt-slides/</link>
       <pubDate>Wed, 10 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/posts/mc-opt-slides/</guid>
+      <guid>https://jzhou.org/posts/mc-opt-slides/</guid>
       <description>Optimization is the key component of the AI/ML algorithm. Whatever objective function is proposed, the final step is to optimize it. Convex optimization problems, either unconstrained or constrained, are well explored (see here). Even though, the efficiency or performance still largely depends on the shape of the surface of the objective function. For convex problems, the solution could be trapped at saddle points; or for local convex objective functions, the solution might reach to the local optima instead of global optima.</description>
     </item>
     
     <item>
       <title>Contact</title>
-      <link>/contact/</link>
+      <link>https://jzhou.org/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/contact/</guid>
+      <guid>https://jzhou.org/contact/</guid>
       <description>Welcome to chat. Topics including, but not limited to, physics, statistics, AI, ML, finance, economics, genomics, and medicine, are all of my interests.
-To send me an email, please go to the front page and click the envelope icon.
-I also use Wechat@junyzhou10</description>
+To send me an email, please go to the front page and click the envelope icon. Or just use the following message box:
+          Message    Send    </description>
     </item>
     
     <item>
       <title>Publications</title>
-      <link>/publications/</link>
+      <link>https://jzhou.org/publications/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/publications/</guid>
+      <guid>https://jzhou.org/publications/</guid>
       <description>Journal Publications      Wu Y, Zhang Y, Zhou J. A Spline-Based Nonparametric Analysis for Interval-Censored Bivariate Survival Data. Statistica Sinica, (in press) DOI: 10.5705/ss.202019.0296.
   Schoelwer, M. J., Tu, W., Zhou, J., &amp;amp; Eugster, E. A. (2017). Targeted Levothyroxine Therapy for Treatment of Congenital Hypothyroidism. Endocrine Practice, 23(9), 1067-1071.
   Working &amp;amp; Under-reviewing Papers      Junyi Zhou, Ying Zhang, “An Innovative Method to Cluster Sparse, Irregular, and Unbalanced Longitudinal Data with Multiple Outcomes, ” close to submission</description>

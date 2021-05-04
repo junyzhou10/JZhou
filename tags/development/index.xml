@@ -2,44 +2,44 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>development on Junyi Zhou</title>
-    <link>/tags/development/</link>
+    <link>https://jzhou.org/tags/development/</link>
     <description>Recent content in development on Junyi Zhou</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/development/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/tags/development/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Clustering Longitudinal Data (Online App)</title>
-      <link>/posts/clusterlongapp/</link>
+      <link>https://jzhou.org/posts/clusterlongapp/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/posts/clusterlongapp/</guid>
+      <guid>https://jzhou.org/posts/clusterlongapp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ClusterLong: An R-package to Cluster Longitudinal Data</title>
-      <link>/posts/clusterlongpackage/</link>
+      <link>https://jzhou.org/posts/clusterlongpackage/</link>
       <pubDate>Fri, 16 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/posts/clusterlongpackage/</guid>
+      <guid>https://jzhou.org/posts/clusterlongpackage/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Optimal Trial Design (Online App)</title>
-      <link>/posts/opttrialdesignapp/</link>
+      <link>https://jzhou.org/posts/opttrialdesignapp/</link>
       <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/posts/opttrialdesignapp/</guid>
+      <guid>https://jzhou.org/posts/opttrialdesignapp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>OptTrialDesign: An R-package for Optimal Trial Design--Balancing between Financial Outcomes and Regulatory Concerns</title>
-      <link>/posts/opttrialdesignpackage/</link>
+      <link>https://jzhou.org/posts/opttrialdesignpackage/</link>
       <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/posts/opttrialdesignpackage/</guid>
+      <guid>https://jzhou.org/posts/opttrialdesignpackage/</guid>
       <description></description>
     </item>
     

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Finance on Junyi Zhou</title>
-    <link>/tags/finance/</link>
+    <link>https://jzhou.org/tags/finance/</link>
     <description>Recent content in Finance on Junyi Zhou</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/finance/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/tags/finance/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Connection between the Idea behind OptTrialDesign &amp; CAPM in Finance</title>
-      <link>/posts/odt-capm/</link>
+      <link>https://jzhou.org/posts/odt-capm/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/posts/odt-capm/</guid>
+      <guid>https://jzhou.org/posts/odt-capm/</guid>
       <description>Idea behind OptTrialDesign In Optimal Design Strategy, we propose a novel way to find the optimal trial design, in terms of maximizing the financial outcomes, i.e., Expected Net Revenue (ENR), but also under the regulatory requirements. We have to trade-off because in pharmaceutical companies’ position, a shorter study/trial duration leads to earlier market access which helps to maximize the profits before LOE (loss of exclusivity). On the other hand, regulatory agencies and health technology assessment (HTA) bodies wish to see more guaranteed clinical results, which usually require longer study duration.</description>
     </item>
     

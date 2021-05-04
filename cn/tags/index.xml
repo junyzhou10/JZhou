@@ -2,80 +2,80 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 周君逸</title>
-    <link>/cn/tags/</link>
+    <link>https://jzhou.org/cn/tags/</link>
     <description>Recent content in Tags on 周君逸</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/cn/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/cn/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>App</title>
-      <link>/cn/tags/app/</link>
+      <link>https://jzhou.org/cn/tags/app/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/cn/tags/app/</guid>
+      <guid>https://jzhou.org/cn/tags/app/</guid>
       <description></description>
     </item>
     
     <item>
       <title>开发</title>
-      <link>/cn/tags/%E5%BC%80%E5%8F%91/</link>
+      <link>https://jzhou.org/cn/tags/%E5%BC%80%E5%8F%91/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/cn/tags/%E5%BC%80%E5%8F%91/</guid>
+      <guid>https://jzhou.org/cn/tags/%E5%BC%80%E5%8F%91/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>/cn/tags/r/</link>
+      <link>https://jzhou.org/cn/tags/r/</link>
       <pubDate>Fri, 16 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/cn/tags/r/</guid>
+      <guid>https://jzhou.org/cn/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>EM算法</title>
-      <link>/cn/tags/em%E7%AE%97%E6%B3%95/</link>
+      <link>https://jzhou.org/cn/tags/em%E7%AE%97%E6%B3%95/</link>
       <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/cn/tags/em%E7%AE%97%E6%B3%95/</guid>
+      <guid>https://jzhou.org/cn/tags/em%E7%AE%97%E6%B3%95/</guid>
       <description></description>
     </item>
     
     <item>
       <title>PU学习</title>
-      <link>/cn/tags/pu%E5%AD%A6%E4%B9%A0/</link>
+      <link>https://jzhou.org/cn/tags/pu%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/cn/tags/pu%E5%AD%A6%E4%B9%A0/</guid>
+      <guid>https://jzhou.org/cn/tags/pu%E5%AD%A6%E4%B9%A0/</guid>
       <description></description>
     </item>
     
     <item>
       <title>优化</title>
-      <link>/cn/tags/%E4%BC%98%E5%8C%96/</link>
+      <link>https://jzhou.org/cn/tags/%E4%BC%98%E5%8C%96/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/cn/tags/%E4%BC%98%E5%8C%96/</guid>
+      <guid>https://jzhou.org/cn/tags/%E4%BC%98%E5%8C%96/</guid>
       <description></description>
     </item>
     
     <item>
       <title>金融</title>
-      <link>/cn/tags/%E9%87%91%E8%9E%8D/</link>
+      <link>https://jzhou.org/cn/tags/%E9%87%91%E8%9E%8D/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/cn/tags/%E9%87%91%E8%9E%8D/</guid>
+      <guid>https://jzhou.org/cn/tags/%E9%87%91%E8%9E%8D/</guid>
       <description></description>
     </item>
     
     <item>
       <title>蒙特卡洛</title>
-      <link>/cn/tags/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B/</link>
+      <link>https://jzhou.org/cn/tags/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B/</link>
       <pubDate>Wed, 10 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/cn/tags/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B/</guid>
+      <guid>https://jzhou.org/cn/tags/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B/</guid>
       <description></description>
     </item>
     

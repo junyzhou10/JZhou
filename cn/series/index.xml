@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Series on 周君逸</title>
-    <link>/cn/series/</link>
+    <link>https://jzhou.org/cn/series/</link>
     <description>Recent content in Series on 周君逸</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language><atom:link href="/cn/series/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language><atom:link href="https://jzhou.org/cn/series/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
