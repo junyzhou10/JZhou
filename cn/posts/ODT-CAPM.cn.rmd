@@ -38,7 +38,7 @@ $$
 $$
 \max_i R_f + \beta_i(ER_m - R_f) \text{ for } i \in \text{可行集}
 $$
-那么，什么是可行集？我们知道预期收益会随着资产的预期风险而增加，但是由于[边际效用递减](https://en.wikipedia.org/wiki/Marginal_utility)，预期收益应该有上限（不能达到无穷大），以及预期风险有下限（不能达到0）。通常，人们认为可行的集合是下图中抛物线所包围的区域。该抛物线（蓝色曲线）称为[有效边界](https://en.wikipedia.org/wiki/Efficient_frontier)，它表示在给定风险下最大和最小的预期收益（注意预期风险和收益的限制）。不在有效边界上资产/投资组合（蓝色圆圈点；请注意，由于有效边界是假设性的，在实践中可能会被违反）是无效区域，因为总是可以在有效边界上找到具有相同预期收益的另一个风险资产，但预期收益更高。
+那么，什么是可行集？我们知道预期收益会随着资产的预期风险而增加，但是由于[边际效用递减](https://en.wikipedia.org/wiki/Marginal_utility)，预期收益应该有上限（不能达到无穷大），以及预期风险有下限（不能达到0）。通常，人们认为可行的集合是下图中抛物线所包围的区域。该抛物线（蓝色曲线）称为[有效边界](https://en.wikipedia.org/wiki/Efficient_frontier)，它表示在给定风险下最大（以及最小）的预期收益（注意预期风险和收益的上下限限制）。不在有效边界上资产/投资组合（蓝色圆圈点；请注意，由于有效边界是假设性的，在实践中可能会被违反）是无效区域，因为总是可以在有效边界上找到具有相同预期风险的另一个资产，但预期收益更高。
 
 ![](https://www.investopedia.com/thmb/5OGwx-OvJwZ4c0Q8kU45TkI0yS4=/1787x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/CapitalAssetPricingModelCAPM1_2-e6be6eb7968d4719872fe0bcdc9b8685.png "Figure 2. CAPM illustration")
 
