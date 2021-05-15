@@ -37,6 +37,7 @@ library(xtable)
 library(kableExtra)
 ```
 
+*Notice: the causal inference described here follows the idea of Potential Outcome Framework [@neyman1923application; @rubin1974estimating]. For another big camp of causal inference studies, i.e., Structural Causal Model (SCM) [@neuberg2003causality], please refer to this well-written paper [here](https://ftp.cs.ucla.edu/pub/stat_ser/r350.pdf).*
 
 # Heterogeneous Treatment Effect Estimation
 ## 1. Introduction {#sec3.1}
@@ -225,7 +226,7 @@ $$
 $$
 for S-learner, where $\mu(X, T=k;\beta) = \mu_k(X;\beta)$, and $\beta$ are the parameters for $\mu(\cdot,\cdot)$. Since both loss metric is not direct focusing on CATE, we categorize this method in indirect loss function branch. 
 
-Any machine learning algorithms could be used to fit conditional means, for example, kernel regression models with $L_1$-penaly, regression trees, or Bayesian Additive Regression Tree (BART, @chipman2010bart). This branch of methods seems reasonable, but actually suffer from the fact that minimizing the loss function of $\mu_i(x)$ does not guarantee the optimal estimation of $\tau(x)$. The MSE of $\hat\tau(X)$ could be expanded as follows
+Any machine learning algorithms could be used to fit conditional means, for example, kernel regression models with $L_1$-penalty, regression trees, or Bayesian Additive Regression Tree (BART, @chipman2010bart). This branch of methods seems reasonable, but actually suffer from the fact that minimizing the loss function of $\mu_i(x)$ does not guarantee the optimal estimation of $\tau(x)$. The MSE of $\hat\tau(X)$ could be expanded as follows
 \begin{align*}
   E[\tau(X) - \hat\tau(X)]^2 &= E[(\mu_1(X)-\hat\mu_1(X)) - (\mu_0(X) - \hat\mu_0(X))]^2 \\
   &= MSE(\mu_1) + MSE(\mu_0) - 2E[(\mu_1(X)-\hat\mu_1(X))(\mu_0(X) - \hat\mu_0(X))]
@@ -308,10 +309,10 @@ E\left[ \frac{\left\{ \hat\tau(X)\cdot W- Y \right\}^2}{W\pi(X) + (1-W)/2} \righ
 $$
 These two loss functions are actually the two methods proposed by @chen2017general after generalizing the ITR method.
 
-Note that only the linear structure on $\hat\tau(X)$ in MVM based methods [@tian2014simple; @nie2017quasi; @knaus2018machine] has been studied in the literatures due to the simplicity and ease in computation, though it is limited in scope. For more complicated proposed structure of $\hat\tau(X)$, general optimization algorithms could be directly applied on these loss functions. 
+Note that only the linear structure on $\hat\tau(X)$ in MVM based methods [@tian2014simple; @nie2017quasi; @knaus2018machine] has been studied in the literature due to the simplicity and ease in computation, though it is limited in scope. For more complicated proposed structure of $\hat\tau(X)$, general optimization algorithms could be directly applied on these loss functions. 
 
 ##### R-learner
-R-learner [@nie2017quasi] is the only method that does not directly rely on equation \@ref(eq:ATE1) - \@ref(eq:CATE3). Technically, however R-learner can still be regarded as a MOM based method. We highlight it here because it is different from previous methods and more importantly, it builds the techinical foundation of our proposed method. R-learner method mainly bases on Robinson's [@robinson1988root] transformation 
+R-learner [@nie2017quasi] is the only method that does not directly rely on equation \@ref(eq:ATE1) - \@ref(eq:CATE3). Technically, however R-learner can still be regarded as a MOM based method. We highlight it here because it is different from previous methods and more importantly, it builds the technical foundation of our proposed method. R-learner method mainly bases on Robinson's [@robinson1988root] transformation 
 $$
 Y - m(X) = \{T - \pi(X)\}\tau(X) + \varepsilon,
 $$
@@ -325,7 +326,7 @@ $$
 $$
 which is a typical form of MOM loss function. In Nie's work, they assume a linear structure of $\hat\tau(X)$ as well and estimate it with a two-step procedure by first calculate $\hat{m}(X)$ and $\hat\pi(X)$. 
 
-Overall, the direct loss function based methods are usually more popular as it directly measures the loss of $\hat\tau(x)$. On the other hand, comparing to indirect loss functions, the requirement of additional assumptions to model $\tau$ could be a serious drawback for this set of methods. Many methods, and almost all the direct loss functions based methods involve a two-step procedures, i.e. first estimate $\hat\mu_k(\cdot)$, $\hat\pi(\cdot)$, or $\hat{m}(\cdot)$, and then plug into the final loss functions to obtain $\hat\tau(\cdot)$. So the accuracy of these nuisance estimators is critical to the consitency of treatment effect estimation. 
+Overall, the direct loss function based methods are usually more popular as it directly measures the loss of $\hat\tau(x)$. On the other hand, comparing to indirect loss functions, the requirement of additional assumptions to model $\tau$ could be a serious drawback for this set of methods. Many methods, and almost all the direct loss functions based methods involve a two-step procedures, i.e. first estimate $\hat\mu_k(\cdot)$, $\hat\pi(\cdot)$, or $\hat{m}(\cdot)$, and then plug into the final loss functions to obtain $\hat\tau(\cdot)$. So the accuracy of these nuisance estimators is critical to the consistency of treatment effect estimation. 
 
 
 ### 2.2 Estimation Algorithm{#sec3.2.2}
@@ -340,7 +341,7 @@ In many indirect loss metric methods, people often estimate CATE $\tau(X)$ by a 
 
 
 #### Kernel-based Methods
-As one of the most popular non-parametric methods, the kernel-based model is readily used for estimating the propensity socre, for example,
+As one of the most popular non-parametric methods, the kernel-based model is readily used for estimating the propensity score, for example,
 $$
 \hat\pi(x) =\frac{\sum_{i = 1}^n T_iK\left(\frac{X_i - x}{h} \right) /nh^k}{\sum_{i = 1}^n K\left(\frac{X_i - x}{h} \right)/nh^k}
 $$
@@ -425,7 +426,7 @@ To accomplish the optimization, we adopt a two-step estimation process according
 In order to handle the potential high dimension structure of the data, we adopt Generalized Additive Model (GAM) along with B-spline basis for the estimation of both conditional mean and propensity score. For the modeling of causal treatment effect, we combine the GAM with tree based learning algorithm to utilize the strength of both methods. 
 
 #### Estimation of Conditional Mean Outcome $m(X)$
-Suppose there are $P$ covariates, then the conditional mean outcome could be modelled by
+Suppose there are $P$ covariates, then the conditional mean outcome could be modeled by
 $$
 m(X) = \alpha + f_1(X_1) + f_2(X_2) + \cdots + f_P(X_P)
 $$
@@ -467,7 +468,7 @@ Instead of direct optimizing the loss function \@ref(eq:opt) with LASSO algorith
 
 The main reason to adopt tree-based algorithm is the natural feature of tree-based algorithm that generate homogeneous leaves and assign heterogeneous units to different leaves perfectly matches our requirement of seeking heterogeneous treatment effects. Our ultimate goal is to find out the optimal covariate specific treatment, rather than figuring out the most accurate estimation of treatment effects, which is almost impossible. So we prefer not to directly solve equation \@ref(eq:opt) by LASSO but to subclassify homogeneous patients.
 
-Our proposed method also differs from the current existing tree based algorithms. Causal tree based algorithms split the node according to the estimation of $\tau(X)$ in each node under the assumption of homogeneity. However, at the earlier stage of tree generation, the homogeneity assumption always invalid which lead to the bias in the $\hat\tau(X)$ and undermine the final estimators. In our methods, we estimate the treatment effect using GAM at each node without the need of homogeneity to avoid such issue. Besides, we propose an adaptive approach, which estimates the nuisance parameters $m(X)$ and $\pi^{(\cdot)}(X)$ within each node, that is very different from most current literatures who obtain the estimators based on the whole data set [@athey2015machine; @powers2018some; @wager2018estimation]. Our method also is model free comparing to @su2009subgroup, who split the tree by the statistics that testing the interaction effect between treatments and covariates in the linear model. 
+Our proposed method also differs from the current existing tree based algorithms. Causal tree based algorithms split the node according to the estimation of $\tau(X)$ in each node under the assumption of homogeneity. However, at the earlier stage of tree generation, the homogeneity assumption always invalid which lead to the bias in the $\hat\tau(X)$ and undermine the final estimators. In our methods, we estimate the treatment effect using GAM at each node without the need of homogeneity to avoid such issue. Besides, we propose an adaptive approach, which estimates the nuisance parameters $m(X)$ and $\pi^{(\cdot)}(X)$ within each node, that is very different from most current literature who obtain the estimators based on the whole data set [@athey2015machine; @powers2018some; @wager2018estimation]. Our method also is model free comparing to @su2009subgroup, who split the tree by the statistics that testing the interaction effect between treatments and covariates in the linear model. 
 
 
 Aside from those advantages comparing to the existing methods, adopting a tree structure helps to alleviate the potential problems of GAM. GAM is known for its great flexibility but has several limitations: 1) it is an additive structure which is not able to account for interaction effects; 2) GAM with B-splines regression is prone to overfit. For the first issue, tree structure, however, could capture the non-linearity even $\tau^{(\cdot)}(X)$ is estimated linearly in each leaf. A common way to solve overfitting issue is by adding penalty terms in the loss function, but it could be computationally very expensive in our case. Here we adopt the idea of random forest to subsample the covariates during the growth of each single tree to mitigate overfitting and simplify the optimization calculation as well.
@@ -536,7 +537,7 @@ and the recommended treatment is the one that provides the optimal effect: $T^* 
 ## 4 Application
 In this section, I will introduce the application of proposed method on seeking the optimal antihypertensive therapies. Nowadays, hundreds of different type of antihypertensives are available in the market. The benefit of the antihypertensives varies across people due to different personal characteristics. To make things worse, for some person, only a combination of several antihypertensive drugs, which we call it an antihypertensive therapy, make effect. Our target is to find out the best antihypertensive therapy according to patient's characteristics by our proposed method. In the following sessions, we will introduce our data system, definition of cohort, and the potential problems when applying our method to the real observational data.
 
-### 4.1 Data Scource
+### 4.1 Data Source
 Our electronic medical record (EMR) data is collected from clinical records stored in the Indiana Network for Patient Care (INPC). The INPC includes most of the Regenstrief Medical Record System (RMRS) clinical data from Wishard Health Services, Indiana University (IU) hospitals, and Methodist Hospital. RMRS is one of the nation's first electronic medical record systems and the keystone of many activities at Regenstrief Institute. The data in the RMRS have been used previously for health care research and management purposes.
 
 INPC is a 17-year-old health information exchange operated in Indiana. Regenstrief Institute made a pioneering commitment to standards, interoperability, and the interchange of clinical data for clinical, public health, and research purposes. Investigators at the Regenstrief Institute created the Indianapolis Network for Patient Care (INPC) in 1995 with the goal of providing clinical information at the point of care for the treatment of patients. The INPC includes clinical data from over 80 hospitals, the public health departments, local laboratories and imaging centers, and a few large-group practices closely tied to hospital systems, and plans are to expand these efforts. 
@@ -569,7 +570,7 @@ Our cohort for hypertension patients was extracted for a five year time period b
 <!-- \end{table} -->
 
 ### 4.2 Potential Problems of EMR Data Application
-- **Missing Data**. Mssing data is always an issue in observational studies, and it is even more severe for EMR data. Many variables, for example, the record of whether patient have had antibiotic recently, only a small portion (<1%) has the answer 'yes', but a large portion is missed. We need to make a proper assumption that those missed data are actually 'no'. 
+- **Missing Data**. Ms sing data is always an issue in observational studies, and it is even more severe for EMR data. Many variables, for example, the record of whether patient have had antibiotic recently, only a small portion (<1%) has the answer 'yes', but a large portion is missed. We need to make a proper assumption that those missed data are actually 'no'. 
 
 - **Drug Adherence**. In observational studies, we have no idea of whether patients take medicine regularly as required or not. So we adopt two frequently used adherence measures: medication possession ratio (MRP) and proportion of days covered (PDC). Both MPR and PDC are validated adherence measures accepted by the International Society for Pharmacoeconomics and Outcomes Research (ISPOR).  We calculated MPR and PDC using medication transaction and/or pharmacy claim data stored in the electronic records of the INPC.
 
