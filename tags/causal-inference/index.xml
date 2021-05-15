@@ -13,7 +13,7 @@
       <pubDate>Tue, 05 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://jzhou.org/posts/proposal/</guid>
-      <description>Notice: the causal inference described here follows the idea of Potential Outcome Framework (Neyman 1923; Rubin 1974). For another big camp of causal inference studies, i.e., Structural Causal Model (SCM) (Neuberg 2003), please refer to this well-written paper here.
+      <description>Notice: the causal inference described here follows the idea of Potential Outcome Framework (Neyman 1923; Rubin 1974). For another big camp of causal inference studies, i.e., Structural Causal Model (SCM) (Pearl 2009), please refer to this well-written paper here.
 Heterogeneous Treatment Effect Estimation 1. Introduction The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy.</description>
     </item>
     

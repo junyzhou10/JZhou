@@ -37,7 +37,7 @@ library(xtable)
 library(kableExtra)
 ```
 
-*Notice: the causal inference described here follows the idea of Potential Outcome Framework [@neyman1923application; @rubin1974estimating]. For another big camp of causal inference studies, i.e., Structural Causal Model (SCM) [@neuberg2003causality], please refer to this well-written paper [here](https://ftp.cs.ucla.edu/pub/stat_ser/r350.pdf).*
+*Notice: the causal inference described here follows the idea of Potential Outcome Framework [@neyman1923application; @rubin1974estimating]. For another big camp of causal inference studies, i.e., Structural Causal Model (SCM) [@pearl2009causality], please refer to this well-written paper [here](https://ftp.cs.ucla.edu/pub/stat_ser/r350.pdf).*
 
 # Heterogeneous Treatment Effect Estimation
 ## 1. Introduction {#sec3.1}
