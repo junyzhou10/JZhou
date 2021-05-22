@@ -6,7 +6,16 @@
     <description>Recent content in Thoughts on Junyi Zhou</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 28 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/categories/thoughts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/categories/thoughts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Canonical Correlation Analysis (CCA)</title>
+      <link>https://jzhou.org/posts/cca/</link>
+      <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://jzhou.org/posts/cca/</guid>
+      <description>Motivation of canonical correlation analysis (CCA) The main motivation of CCA is to provide multi-view of the data, which usually consists of two sets of variables. Canonical correlation analysis determines a set of canonical variates, i.e., orthogonal linear combinations of the variables within each set that best explain the variability both within and between sets. So there could be multiple dimensions (canonical variables) that represent the association between two sets of variables.</description>
+    </item>
+    
     <item>
       <title>Positive-and-Unlabeled Learning</title>
       <link>https://jzhou.org/posts/pulearning/</link>

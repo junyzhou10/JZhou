@@ -1,0 +1,58 @@
+---
+author: Junyi Zhou
+date: "2021-05-21"
+description: Canonical Correlation Analysis (CCA) 
+categories:
+- Thoughts
+tags:
+- CCA
+- Unsupervised Learning
+title: Canonical Correlation Analysis (CCA) 
+
+header-includes:
+- \usepackage{graphicx}
+- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+---
+
+
+# Motivation of canonical correlation analysis (CCA)
+The main motivation of CCA is to provide multi-view of the data, which usually consists of two sets of variables. Canonical correlation analysis determines a set of canonical variates, i.e., orthogonal linear combinations of the variables within each set that best explain the variability both within and between sets. So there could be multiple dimensions (canonical variables) that represent the association between two sets of variables. That yields multiple aspects, aka, multi-view, for the data. 
+
+# Problem setup
+For $n$ observations, there are two sets of variables observed, denote as $X\in \mathbb R^{n\times p_1}$ and $Y\in \mathbb R^{n\times p_2}$. We hope to find out a combination of variables in $X$, denoted as $Xu$, and a combination of variables in $Y$, denoted as $Yv$ such that maximize their correlation. This $(Xu, Yv)$ is called the first canonical pair. The objective of CCA is thus
+$$
+\max_{u,v} \text{corr}(Xu, Yv)
+$$
+Assuming $X$ and $Y$ are centered, then the objective function can be written as
+\begin{equation}
+\max_{u,v} \frac{\text{Cov}(Xu, Yv)}{(\text{Var}(Xu)\text{Var}(Yv))^{-1/2}} = \frac{u^T\Sigma_{XY} v}{\sqrt{u^T\Sigma_Xuv^T\Sigma_Yv}} (\#eq:obj)
+\end{equation}
+where $\Sigma_{XY} = E(X^TY), \Sigma_{X}=E(X^TX), \Sigma_{Y}=E(Y^TY)$. 
+
+The objective \@ref(eq:obj) is equivalent to 
+$$
+\begin{aligned}
+\max_{u,v} & \quad u^T\Sigma_{XY} v \\
+\text{s.t. } & \quad u^T\Sigma_Xu=1 \\
+& \quad v^T\Sigma_Yv = 1
+\end{aligned}
+$$
+which is a very standard optimization problem.
+
+Here we propose a common strategy in solving optimization problem \@ref(eq:obj). Denote $\tilde{u} = \Sigma_X^{1/2} u$ and $\tilde{v} = \Sigma_Y^{1/2} v$, then we obtain
+\begin{equation}
+\max_{\tilde{u},\tilde{v}}  \frac{ \tilde{u}^T\Sigma_X^{-1/2}\Sigma_{XY} \Sigma_Y^{-1/2} v}{\sqrt{ \tilde{u}^T\tilde{u} \tilde{v}^T\tilde{v}}} (\#eq:obj2)
+\end{equation}
+Recall the objective function of PCA (for the principal component)
+$$
+\max_{u}  \frac{u^TX^TXu}{u^Tu}
+$$
+which shares the similar structure and could be solved by eigendecomposition. Following the same logic, as $u$ and $v$ are of different length, problem \@ref(eq:obj2) could be solved by SVD. Denote the SVD of $\Sigma_X^{-1/2}\Sigma_{XY} \Sigma_Y^{-1/2} = P\Lambda Q^T$, the solution of $(\tilde{u}, \tilde{v})$ is $(P_1, Q_1)$ corresponding to the largest sigular value. Thus, we obtain $(u,v) = (\Sigma_X^{-1/2}P_1, \Sigma_Y^{-1/2}Q_1)$. 
+
+Extending to multiple canonical pair $(u_i,v_i), i = 1,...,\min(p_1,p_2)$, denote them in the matrix form as $(U, V) \in (\mathbb R^{p_1 \times \min(p_1,p_2)}, \mathbb R^{p_2 \times \min(p_1,p_2)})$. The solution is, with the same logic, 
+$$
+(U,V) = (\Sigma_X^{-1/2}P, \Sigma_Y^{-1/2}Q)
+$$
+
+

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="color-scheme" content="light dark">
+
+    
+
+    <meta name="author" content="Junyi Zhou">
+    <meta name="description" content="Canonical Correlation Analysis (CCA)">
+    <meta name="keywords" content="personal, projects, apps">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Canonical Correlation Analysis (CCA)"/>
+<meta name="twitter:description" content="Canonical Correlation Analysis (CCA)"/>
+
+    <meta property="og:title" content="Canonical Correlation Analysis (CCA)" />
+<meta property="og:description" content="Canonical Correlation Analysis (CCA)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jzhou.org/posts/cca/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-05-21T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-21T00:00:00&#43;00:00" />
+
+
+
+    <title>
+  Canonical Correlation Analysis (CCA) · Junyi Zhou
+</title>
+
+    
+      <link rel="canonical" href="https://jzhou.org/posts/cca/">
+    
+
+    <link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.1.7" as="font" type="font/woff2" crossorigin>
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.406d0bb9b7e93dd1c4497ee4abb177af6bea8f6c16aea89ae05f2aef56ef44e5.css" integrity="sha256-QG0LubfpPdHESX7kq7F3r2vqj2wWrqia4F8q71bvROU=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.dde8a61eb31a32353b4baf3d9113f03c4ea2a8ca9bb736f59ca2d2b2cb664f0b.css" integrity="sha256-3eimHrMaMjU7S689kRPwPE6iqMqbtzb1nKLSsstmTws=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+
+    <meta name="generator" content="Hugo 0.83.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="preload-transitions colorscheme-auto"
+        onload=""
+  >
+    
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      Junyi Zhou
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/about/">About</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/posts/">Projects</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/publications/">Publications</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/contact/">Contact me</a>
+            </li>
+          
+        
+        
+          
+          
+          
+            
+          
+            
+              
+                <li class="navigation-item menu-separator">
+                  <span>|</span>
+                </li>
+                
+              
+              <li class="navigation-item">
+                <a href="https://jzhou.org/cn/">中文</a>
+              </li>
+            
+          
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://jzhou.org/posts/cca/">
+              Canonical Correlation Analysis (CCA)
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime='2021-05-21T00:00:00Z'>
+                May 21, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="/categories/thoughts/">Thoughts</a></div>
+
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <a href="/tags/cca/">CCA</a>
+      <span class="separator">•</span>
+    <a href="/tags/unsupervised-learning/">Unsupervised Learning</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+<div id="motivation-of-canonical-correlation-analysis-cca" class="section level1">
+<h1>Motivation of canonical correlation analysis (CCA)</h1>
+<p>The main motivation of CCA is to provide multi-view of the data, which usually consists of two sets of variables. Canonical correlation analysis determines a set of canonical variates, i.e., orthogonal linear combinations of the variables within each set that best explain the variability both within and between sets. So there could be multiple dimensions (canonical variables) that represent the association between two sets of variables. That yields multiple aspects, aka, multi-view, for the data.</p>
+</div>
+<div id="problem-setup" class="section level1">
+<h1>Problem setup</h1>
+<p>For <span class="math inline">\(n\)</span> observations, there are two sets of variables observed, denote as <span class="math inline">\(X\in \mathbb R^{n\times p_1}\)</span> and <span class="math inline">\(Y\in \mathbb R^{n\times p_2}\)</span>. We hope to find out a combination of variables in <span class="math inline">\(X\)</span>, denoted as <span class="math inline">\(Xu\)</span>, and a combination of variables in <span class="math inline">\(Y\)</span>, denoted as <span class="math inline">\(Yv\)</span> such that maximize their correlation. This <span class="math inline">\((Xu, Yv)\)</span> is called the first canonical pair. The objective of CCA is thus
+<span class="math display">\[
+\max_{u,v} \text{corr}(Xu, Yv)
+\]</span>
+Assuming <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are centered, then the objective function can be written as
+<span class="math display" id="eq:obj">\[\begin{equation}
+\max_{u,v} \frac{\text{Cov}(Xu, Yv)}{(\text{Var}(Xu)\text{Var}(Yv))^{-1/2}} = \frac{u^T\Sigma_{XY} v}{\sqrt{u^T\Sigma_Xuv^T\Sigma_Yv}} \tag{1}
+\end{equation}\]</span>
+where <span class="math inline">\(\Sigma_{XY} = E(X^TY), \Sigma_{X}=E(X^TX), \Sigma_{Y}=E(Y^TY)\)</span>.</p>
+<p>The objective <a href="#eq:obj">(1)</a> is equivalent to
+<span class="math display">\[
+\begin{aligned}
+\max_{u,v} &amp; \quad u^T\Sigma_{XY} v \\
+\text{s.t. } &amp; \quad u^T\Sigma_Xu=1 \\
+&amp; \quad v^T\Sigma_Yv = 1
+\end{aligned}
+\]</span>
+which is a very standard optimization problem.</p>
+<p>Here we propose a common strategy in solving optimization problem <a href="#eq:obj">(1)</a>. Denote <span class="math inline">\(\tilde{u} = \Sigma_X^{1/2} u\)</span> and <span class="math inline">\(\tilde{v} = \Sigma_Y^{1/2} v\)</span>, then we obtain
+<span class="math display" id="eq:obj2">\[\begin{equation}
+\max_{\tilde{u},\tilde{v}}  \frac{ \tilde{u}^T\Sigma_X^{-1/2}\Sigma_{XY} \Sigma_Y^{-1/2} v}{\sqrt{ \tilde{u}^T\tilde{u} \tilde{v}^T\tilde{v}}} \tag{2}
+\end{equation}\]</span>
+Recall the objective function of PCA (for the principal component)
+<span class="math display">\[
+\max_{u}  \frac{u^TX^TXu}{u^Tu}
+\]</span>
+which shares the similar structure and could be solved by eigendecomposition. Following the same logic, as <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> are of different length, problem <a href="#eq:obj2">(2)</a> could be solved by SVD. Denote the SVD of <span class="math inline">\(\Sigma_X^{-1/2}\Sigma_{XY} \Sigma_Y^{-1/2} = P\Lambda Q^T\)</span>, the solution of <span class="math inline">\((\tilde{u}, \tilde{v})\)</span> is <span class="math inline">\((P_1, Q_1)\)</span> corresponding to the largest sigular value. Thus, we obtain <span class="math inline">\((u,v) = (\Sigma_X^{-1/2}P_1, \Sigma_Y^{-1/2}Q_1)\)</span>.</p>
+<p>Extending to multiple canonical pair <span class="math inline">\((u_i,v_i), i = 1,...,\min(p_1,p_2)\)</span>, denote them in the matrix form as <span class="math inline">\((U, V) \in (\mathbb R^{p_1 \times \min(p_1,p_2)}, \mathbb R^{p_2 \times \min(p_1,p_2)})\)</span>. The solution is, with the same logic,
+<span class="math display">\[
+(U,V) = (\Sigma_X^{-1/2}P, \Sigma_Y^{-1/2}Q)
+\]</span></p>
+</div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+        ©
+        
+          2020 -
+        
+        2021
+         Junyi Zhou 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+        
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+      
+      <script src="/js/coder.min.235666b114443867d43eeb5799d51f6252965e5163f338285e113fa381d3d27e.js" integrity="sha256-I1ZmsRREOGfUPutXmdUfYlKWXlFj8zgoXhE/o4HT0n4="></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+  </body>
+
+</html>
