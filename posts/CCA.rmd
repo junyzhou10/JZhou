@@ -14,6 +14,21 @@ header-includes:
 - <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 - <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 ---
+```{css, echo=FALSE}
+.watch-out {
+  background-color: AliceBlue;
+  border: 3px solid AliceBlue;
+  font-weight: bold;
+}
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(CCA)
+require(expm)
+options(warn=-1)
+```
 
 
 # Motivation of canonical correlation analysis (CCA)
@@ -48,11 +63,214 @@ Recall the objective function of PCA (for the principal component)
 $$
 \max_{u}  \frac{u^TX^TXu}{u^Tu}
 $$
-which shares the similar structure and could be solved by eigendecomposition. Following the same logic, as $u$ and $v$ are of different length, problem \@ref(eq:obj2) could be solved by SVD. Denote the SVD of $\Sigma_X^{-1/2}\Sigma_{XY} \Sigma_Y^{-1/2} = P\Lambda Q^T$, the solution of $(\tilde{u}, \tilde{v})$ is $(P_1, Q_1)$ corresponding to the largest sigular value. Thus, we obtain $(u,v) = (\Sigma_X^{-1/2}P_1, \Sigma_Y^{-1/2}Q_1)$. 
+which shares the similar structure and could be solved by eigendecomposition. Following the same logic, as $u$ and $v$ are of different length, problem \@ref(eq:obj2) could be solved by SVD. Denote the SVD of $\Sigma_X^{-1/2}\Sigma_{XY} \Sigma_Y^{-1/2} = P\Lambda Q^T$, the solution of $(\tilde{u}, \tilde{v})$ is $(P_1, Q_1)$ corresponding to the largest singular value. Thus, we obtain $(u,v) = (\Sigma_X^{-1/2}P_1, \Sigma_Y^{-1/2}Q_1)$. 
 
 Extending to multiple canonical pair $(u_i,v_i), i = 1,...,\min(p_1,p_2)$, denote them in the matrix form as $(U, V) \in (\mathbb R^{p_1 \times \min(p_1,p_2)}, \mathbb R^{p_2 \times \min(p_1,p_2)})$. The solution is, with the same logic, 
+\begin{equation}
+(U,V) = (\Sigma_X^{-1/2}P, \Sigma_Y^{-1/2}Q) (\#eq:solution)
+\end{equation}
+
+Usually we only need the first several canonical pairs to view the data. So CCA is basically another way to accomplish dimension reduction.
+
+# Toy example
+Let's check it with a toy example: \
+*A researcher has collected data on three psychological variables, four academic variables (standardized test scores) and gender for 600 college freshman. She is interested in how the set of psychological variables relates to the academic variables and gender. In particular, the researcher is interested in how many dimensions (canonical variables) are necessary to understand the association between the two sets of variables.* ([ref](https://stats.idre.ucla.edu/r/dae/canonical-correlation-analysis/))
+
+First, we use the existing R package `CCA` to conduct the analysis. 
+```{r echo = T, class.source="watch-out", class.output="bg-warning"}
+mm <- read.csv("https://stats.idre.ucla.edu/stat/data/mmreg.csv")
+colnames(mm) <- c("Control", "Concept", "Motivation", "Read", "Write", "Math", "Science", "Sex")
+# i.e. X: 600x3; Y: 600x5
+
+psych <- mm[, 1:3]
+acad <- mm[, 4:8]
+cc1 <- cc(psych, acad)
+round(cc1$xcoef,4) # i.e. U: 3xmin(3,5)
+round(cc1$ycoef,4) # i.e. V: 5xmin(3,5)
+cc1$cor # canonical correlations
+```
+
+We can also do it manually using the expression in \@ref(eq:solution).
+```{r echo = T, class.source="watch-out", class.output="bg-warning"}
+# do it manually
+mm = apply(mm, 2, function(x) scale(x, center = T, scale = F))
+psych <- mm[, 1:3]
+acad <- mm[, 4:8]
+Sig_x = t(psych)%*%as.matrix(psych); Sig_xsqrt = sqrtm(Sig_x)
+Sig_y = t(acad)%*%as.matrix(acad);   Sig_ysqrt = sqrtm(Sig_y)
+Sig_xy= t(psych)%*%as.matrix(acad)
+MM = solve(Sig_xsqrt)%*%Sig_xy%*%solve(Sig_ysqrt)
+res = svd(MM)
+res$d ## which is just cc1$cor
+solve(Sig_xsqrt)%*%res$u # U
+solve(Sig_ysqrt)%*%res$v # V
+```
+
+Notice that the results are the same to that from the package, except there is a scale difference. 
+
+We can construct the first canonical pair $(u_1, v_1) = (-1.25Control+0.35Concept-1.26Motivation, -0.045Read-0.036Write-0.023Math-0.005Science-0.632[female=1])$. Similarly, we can construct $(u_2, v_2)$. The original data can thus be viewed from canonical pairs, as shown in figure below. 
+```{r echo = F, fig.width=7, fig.height=4, fig.cap="Viewing data on the first two canonical pairs."}
+U1 = psych %*% cc1$xcoef[,1]
+V1 = acad %*% cc1$ycoef[,1]
+
+U2 = psych %*% cc1$xcoef[,2]
+V2 = acad %*% cc1$ycoef[,2]
+
+layout(matrix(c(1,2), nrow = 1))
+plot(U1, V1, pch = 20, col = "darkblue", cex = 0.6, main = paste("Corr =", round(cc1$cor[1],3)))
+abline(a=0,b=1, col= "red")
+plot(U2, V2, pch = 20, col = "darkblue", cex = 0.6, main = paste("Corr =", round(cc1$cor[2],3)))
+abline(a=0,b=1, col= "red")
+```
+
+
+# Regularized CCA
+For high dimensional data, it is more desirable to incorporate sparsity to construct canonical pairs using limited number of covariates. It helps to have a more clear picture of the results. Generally, we can add penalty terms to the objective function to accomplish this task, such as ridge penalty
 $$
-(U,V) = (\Sigma_X^{-1/2}P, \Sigma_Y^{-1/2}Q)
+\begin{aligned}
+\max_{u,v} & \quad u^T\Sigma_{XY} v - \lambda_1||u||_2-\lambda_2||v||_2\\
+\text{s.t. } & \quad u^T\Sigma_Xu=1 \\
+& \quad v^T\Sigma_Yv = 1 \\
+& \quad \lambda_1, \lambda_2 \geq 0
+\end{aligned}
 $$
+
+which is equivalent to 
+$$
+\begin{aligned}
+\max_{u,v} & \quad u^T\Sigma_{XY} v\\
+\text{s.t. } & \quad u^T(\Sigma_X+\lambda_1I)u=1 \\
+& \quad v^T(\Sigma_Y+\lambda_2I)v = 1 \\
+& \quad \lambda_1, \lambda_2 \geq 0
+\end{aligned}
+$$
+or
+$$
+\max_{u,v}  \frac{u^T\Sigma_{XY} v}{\sqrt{u^T(\Sigma_X+\lambda_1I)uv^T(\Sigma_Y+\lambda_2I)v}}
+$$
+which could be solved nearly the same as CCA.
+
+
+
+# Subgroup Identification
+In previous section, we discuss about the sparsity in terms of the covariates. Another very interesting topic is to identify subgroups that are similar and easier to be described by certain canonical pairs. It is related to subgroup clustering techniques and has practical importance in many fields, like genetic studies.
+
+Recall that the $u$ and $v$ in CCA assign weights to more related covariates ($p_1,p_2$). Similarly, we can select subjects ($n$) by assigning another weight to original data $X$ and $Y$. The likelihood function could be written as
+$$
+\max_{u,v, w} \text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv)
+$$
+where $\text{diag}(w)$ is a square matrix with diagonal elements as vector $w = [w_1,...,w_n]$. To avoid overfitting, we could assign an entropy loss to avoid too extreme selection:
+\begin{equation}
+\max_{u,v, w} \text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv) - \lambda\sum_{i=1}^n w^T\log w (\#eq:wObj)
+\end{equation}
+
+The optimization of objective function \@ref(eq:wObj) could be accomplished by [coordinate descent](https://www.stat.cmu.edu/~ryantibs/convexopt-S15/lectures/22-coord-desc.pdf), i.e. first take gradient descent on $(u, v)$ with $w$ fixed and then on $w$ with $(u,v)$ fixed:
+$$
+\begin{aligned}
+(u^{(k)}, v^{(k)}) &= \arg\min_{(u,v)} \ \ \text{corr}(\text{diag}(w^{(k-1)})Xu, \text{diag}(w^{(k-1)})Yv) - \lambda\sum_{i=1}^n (w^{(k-1)})^T\log w^{(k-1)} \\
+w^{(k)} &= \arg\min_w  \ \ \text{corr}(\text{diag}(w)Xu^{(k)}, \text{diag}(w)Yv^{(k)}) - \lambda w^T\log w
+\end{aligned}
+$$
+
+Let's see how it work through the following codes. We just conduct 10 loops and check the results. Here we pre-specified the penalty coefficient $\lambda$ for simplicity. 
+
+```{r echo = T, class.source="watch-out", class.output="bg-warning"}
+# objective function (negative for minimization)
+opt_func <- function(w) {
+  -cor(w*U1, w*V1) + lambda*sum(w*log(w))
+}
+# equality constraint
+equal_fun <- function(w) {
+  sum(w)
+}
+
+n = dim(mm)[1]
+w0 = rep(1/n,n); lambda = 1/abs(sum(w0*log(w0))) # just choose a proper lambda as an example
+
+# let's try several rounds using coordinate descent optimization strategy
+for (i in 1:10) {
+  cc1 <- cc(diag(w0)%*%psych, diag(w0)%*%acad) # fix w
+  U1 = psych %*% cc1$xcoef[,1]
+  V1 = acad %*% cc1$ycoef[,1]
+  # then fix U,V
+  opt_res = suppressWarnings(Rsolnp::solnp(rep(1/n,n),
+                                           opt_func, 
+                                           eqfun = equal_fun,
+                                           eqB = 1,
+                                           LB = rep(1e-10,n),
+                                           UB = rep(1-1e-10,n),
+                                           control = list(trace = 0))
+                             ) 
+  w0 = opt_res$pars
+  print(paste0("Objective function value: ",-round(min(opt_res$values), 4), " (Loop", i,")"))
+}
+```
+
+
+```{r echo=FALSE}
+U2 = w0*psych %*% cc1$xcoef[,2]
+V2 = w0*acad %*% cc1$ycoef[,2]
+```
+
+The value of objective function keeps increasing and converges within 10 loops. The optimal correlation between first weighted canonical pair $\text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv)$ is `r round(cor(w0*U1, w0*V1),3)`. Notice that since the objective function \@ref(eq:wObj) only optimize on the first pair, so the correlation between second canonical pair will not be influenced, which is `r round(cor(w0*U2, w0*V2),3)`. 
+
+However, the issue is the correlation can be greatly influenced by the outlier. Even though we penalize on the entropy, a large weight is assigned to a single point that makes the correlation quite large (see the figure below).
+
+```{r echo = F, fig.width=10, fig.height=4, fig.cap="Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights"}
+layout(matrix(seq(1,3), nrow = 1))
+plot(w0*U1, w0*V1, pch = 20, col = "darkblue", cex = 0.6, main = paste("(a) Corr =", round(cc1$cor[1],3)), xlab = "diag(w)U1", ylab = "diag(w)V1")
+abline(a=0,b=1, col= "red")
+plot((w0*U1)[-which.max(w0)], (w0*V1)[-which.max(w0)], pch = 20, col = "darkblue", cex = 0.6, main = paste("(b) Corr =", round(cor((w0*U1)[-which.max(w0)], (w0*V1)[-which.max(w0)]),3)), xlab = "diag(w)U1", ylab = "diag(w)V1")
+abline(a=0,b=1, col= "red")
+
+hist(w0, main = "(c) Histogram of weights")
+```
+
+One way to handle this issue is to adopt a different penalty term that are more sensitive to the influencial point. One ponential proposal could be 
+$$
+\max_{u,v, w} \text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv) - \lambda||w||_{\infty}
+$$
+which penalize on the maximal $w$. The results are listed below. From panel (b) in Figure 3, we see a clear difference in weights of subjects, which might imply a pattern of subgroups. 
+
+```{r echo = F, class.source="watch-out", class.output="bg-warning"}
+# objective function (negative for minimization)
+opt_func <- function(w) {
+  -cor(w*U1, w*V1) + lambda*max(w)
+}
+# equality constraint
+equal_fun <- function(w) {
+  sum(w)
+}
+
+n = dim(mm)[1]
+w0 = rep(1/n,n); lambda = 100/abs(sum(w0*log(w0))) # just choose a proper lambda as an example
+
+# let's try several rounds using coordinate descent optimization strategy
+for (i in 1:3) {
+  cc1 <- cc(diag(w0)%*%psych, diag(w0)%*%acad) # fix w
+  U1 = psych %*% cc1$xcoef[,1]
+  V1 = acad %*% cc1$ycoef[,1]
+  # then fix U,V
+  opt_res = suppressWarnings(Rsolnp::solnp(rep(1/n,n),
+                                           opt_func, 
+                                           eqfun = equal_fun,
+                                           eqB = 1,
+                                           LB = rep(1e-10,n),
+                                           UB = rep(1-1e-10,n),
+                                           control = list(trace = 0))
+                             ) 
+  w0 = opt_res$pars
+  print(paste0("Objective function value: ",-round(min(opt_res$values), 4), " (Loop", i,")"))
+}
+```
+
+
+```{r echo = F, fig.width=10, fig.height=4, fig.cap="Results after weighting on subjects. (a) All data; (b) Histogram of weights"}
+layout(matrix(seq(1,2), nrow = 1))
+plot(w0*U1, w0*V1, pch = 20, col = "darkblue", cex = 0.6, main = paste("(a) Corr =", round(cc1$cor[1],3)), xlab = "diag(w)U1", ylab = "diag(w)V1")
+abline(a=0,b=1, col= "red")
+
+hist(w0, main = "(b) Histogram of weights")
+```
 
 

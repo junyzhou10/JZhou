@@ -160,7 +160,7 @@
             </span>
             <span class="reading-time">
               <i class="fa fa-clock-o" aria-hidden="true"></i>
-              2-minute read
+              8-minute read
             </span>
           </div>
           
@@ -185,6 +185,13 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
+<style type="text/css">
+.watch-out {
+  background-color: AliceBlue;
+  border: 3px solid AliceBlue;
+  font-weight: bold;
+}
+</style>
 <div id="motivation-of-canonical-correlation-analysis-cca" class="section level1">
 <h1>Motivation of canonical correlation analysis (CCA)</h1>
 <p>The main motivation of CCA is to provide multi-view of the data, which usually consists of two sets of variables. Canonical correlation analysis determines a set of canonical variates, i.e., orthogonal linear combinations of the variables within each set that best explain the variability both within and between sets. So there could be multiple dimensions (canonical variables) that represent the association between two sets of variables. That yields multiple aspects, aka, multi-view, for the data.</p>
@@ -217,11 +224,178 @@ Recall the objective function of PCA (for the principal component)
 <span class="math display">\[
 \max_{u}  \frac{u^TX^TXu}{u^Tu}
 \]</span>
-which shares the similar structure and could be solved by eigendecomposition. Following the same logic, as <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> are of different length, problem <a href="#eq:obj2">(2)</a> could be solved by SVD. Denote the SVD of <span class="math inline">\(\Sigma_X^{-1/2}\Sigma_{XY} \Sigma_Y^{-1/2} = P\Lambda Q^T\)</span>, the solution of <span class="math inline">\((\tilde{u}, \tilde{v})\)</span> is <span class="math inline">\((P_1, Q_1)\)</span> corresponding to the largest sigular value. Thus, we obtain <span class="math inline">\((u,v) = (\Sigma_X^{-1/2}P_1, \Sigma_Y^{-1/2}Q_1)\)</span>.</p>
+which shares the similar structure and could be solved by eigendecomposition. Following the same logic, as <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> are of different length, problem <a href="#eq:obj2">(2)</a> could be solved by SVD. Denote the SVD of <span class="math inline">\(\Sigma_X^{-1/2}\Sigma_{XY} \Sigma_Y^{-1/2} = P\Lambda Q^T\)</span>, the solution of <span class="math inline">\((\tilde{u}, \tilde{v})\)</span> is <span class="math inline">\((P_1, Q_1)\)</span> corresponding to the largest singular value. Thus, we obtain <span class="math inline">\((u,v) = (\Sigma_X^{-1/2}P_1, \Sigma_Y^{-1/2}Q_1)\)</span>.</p>
 <p>Extending to multiple canonical pair <span class="math inline">\((u_i,v_i), i = 1,...,\min(p_1,p_2)\)</span>, denote them in the matrix form as <span class="math inline">\((U, V) \in (\mathbb R^{p_1 \times \min(p_1,p_2)}, \mathbb R^{p_2 \times \min(p_1,p_2)})\)</span>. The solution is, with the same logic,
+<span class="math display" id="eq:solution">\[\begin{equation}
+(U,V) = (\Sigma_X^{-1/2}P, \Sigma_Y^{-1/2}Q) \tag{3}
+\end{equation}\]</span></p>
+<p>Usually we only need the first several canonical pairs to view the data. So CCA is basically another way to accomplish dimension reduction.</p>
+</div>
+<div id="toy-example" class="section level1">
+<h1>Toy example</h1>
+<p>Let’s check it with a toy example:<br />
+<em>A researcher has collected data on three psychological variables, four academic variables (standardized test scores) and gender for 600 college freshman. She is interested in how the set of psychological variables relates to the academic variables and gender. In particular, the researcher is interested in how many dimensions (canonical variables) are necessary to understand the association between the two sets of variables.</em> (<a href="https://stats.idre.ucla.edu/r/dae/canonical-correlation-analysis/">ref</a>)</p>
+<p>First, we use the existing R package <code>CCA</code> to conduct the analysis.</p>
+<pre class="r watch-out"><code>mm &lt;- read.csv(&quot;https://stats.idre.ucla.edu/stat/data/mmreg.csv&quot;)
+colnames(mm) &lt;- c(&quot;Control&quot;, &quot;Concept&quot;, &quot;Motivation&quot;, &quot;Read&quot;, &quot;Write&quot;, &quot;Math&quot;, &quot;Science&quot;, &quot;Sex&quot;)
+# i.e. X: 600x3; Y: 600x5
+
+psych &lt;- mm[, 1:3]
+acad &lt;- mm[, 4:8]
+cc1 &lt;- cc(psych, acad)
+round(cc1$xcoef,4) # i.e. U: 3xmin(3,5)</code></pre>
+<pre class="bg-warning"><code>##               [,1]    [,2]    [,3]
+## Control    -1.2538 -0.6215 -0.6617
+## Concept     0.3513 -1.1877  0.8267
+## Motivation -1.2624  2.0273  2.0002</code></pre>
+<pre class="r watch-out"><code>round(cc1$ycoef,4) # i.e. V: 5xmin(3,5)</code></pre>
+<pre class="bg-warning"><code>##            [,1]    [,2]    [,3]
+## Read    -0.0446 -0.0049  0.0214
+## Write   -0.0359  0.0421  0.0913
+## Math    -0.0234  0.0042  0.0094
+## Science -0.0050 -0.0852 -0.1098
+## Sex     -0.6321  1.0846 -1.7946</code></pre>
+<pre class="r watch-out"><code>cc1$cor # canonical correlations</code></pre>
+<pre class="bg-warning"><code>## [1] 0.4640861 0.1675092 0.1039911</code></pre>
+<p>We can also do it manually using the expression in <a href="#eq:solution">(3)</a>.</p>
+<pre class="r watch-out"><code># do it manually
+mm = apply(mm, 2, function(x) scale(x, center = T, scale = F))
+psych &lt;- mm[, 1:3]
+acad &lt;- mm[, 4:8]
+Sig_x = t(psych)%*%as.matrix(psych); Sig_xsqrt = sqrtm(Sig_x)
+Sig_y = t(acad)%*%as.matrix(acad);   Sig_ysqrt = sqrtm(Sig_y)
+Sig_xy= t(psych)%*%as.matrix(acad)
+MM = solve(Sig_xsqrt)%*%Sig_xy%*%solve(Sig_ysqrt)
+res = svd(MM)
+res$d ## which is just cc1$cor</code></pre>
+<pre class="bg-warning"><code>## [1] 0.4640861 0.1675092 0.1039911</code></pre>
+<pre class="r watch-out"><code>solve(Sig_xsqrt)%*%res$u # U</code></pre>
+<pre class="bg-warning"><code>##             [,1]        [,2]        [,3]
+## [1,] -0.05123026 -0.02539288 -0.02703590
+## [2,]  0.01435577 -0.04852756  0.03377890
+## [3,] -0.05158110  0.08283177  0.08172711</code></pre>
+<pre class="r watch-out"><code>solve(Sig_ysqrt)%*%res$v # V</code></pre>
+<pre class="bg-warning"><code>##               [,1]          [,2]          [,3]
+## [1,] -0.0018231483 -0.0002006181  0.0008735867
+## [2,] -0.0014658991  0.0017189940  0.0037307163
+## [3,] -0.0009568002  0.0001728118  0.0003839993
+## [4,] -0.0002053221 -0.0034796325 -0.0044877370
+## [5,] -0.0258276917  0.0443172840 -0.0733272900</code></pre>
+<p>Notice that the results are the same to that from the package, except there is a scale difference.</p>
+We can construct the first canonical pair <span class="math inline">\((u_1, v_1) = (-1.25Control+0.35Concept-1.26Motivation, -0.045Read-0.036Write-0.023Math-0.005Science-0.632[female=1])\)</span>. Similarly, we can construct <span class="math inline">\((u_2, v_2)\)</span>. The original data can thus be viewed from canonical pairs, as shown in figure below.
+<div class="figure"><span id="fig:unnamed-chunk-4"></span>
+<img src="/posts/CCA_files/figure-html/unnamed-chunk-4-1.png" alt="Viewing data on the first two canonical pairs." width="672" />
+<p class="caption">
+Figure 1: Viewing data on the first two canonical pairs.
+</p>
+</div>
+</div>
+<div id="regularized-cca" class="section level1">
+<h1>Regularized CCA</h1>
+<p>For high dimensional data, it is more desirable to incorporate sparsity to construct canonical pairs using limited number of covariates. It helps to have a more clear picture of the results. Generally, we can add penalty terms to the objective function to accomplish this task, such as ridge penalty
 <span class="math display">\[
-(U,V) = (\Sigma_X^{-1/2}P, \Sigma_Y^{-1/2}Q)
+\begin{aligned}
+\max_{u,v} &amp; \quad u^T\Sigma_{XY} v - \lambda_1||u||_2-\lambda_2||v||_2\\
+\text{s.t. } &amp; \quad u^T\Sigma_Xu=1 \\
+&amp; \quad v^T\Sigma_Yv = 1 \\
+&amp; \quad \lambda_1, \lambda_2 \geq 0
+\end{aligned}
 \]</span></p>
+<p>which is equivalent to
+<span class="math display">\[
+\begin{aligned}
+\max_{u,v} &amp; \quad u^T\Sigma_{XY} v\\
+\text{s.t. } &amp; \quad u^T(\Sigma_X+\lambda_1I)u=1 \\
+&amp; \quad v^T(\Sigma_Y+\lambda_2I)v = 1 \\
+&amp; \quad \lambda_1, \lambda_2 \geq 0
+\end{aligned}
+\]</span>
+or
+<span class="math display">\[
+\max_{u,v}  \frac{u^T\Sigma_{XY} v}{\sqrt{u^T(\Sigma_X+\lambda_1I)uv^T(\Sigma_Y+\lambda_2I)v}}
+\]</span>
+which could be solved nearly the same as CCA.</p>
+</div>
+<div id="subgroup-identification" class="section level1">
+<h1>Subgroup Identification</h1>
+<p>In previous section, we discuss about the sparsity in terms of the covariates. Another very interesting topic is to identify subgroups that are similar and easier to be described by certain canonical pairs. It is related to subgroup clustering techniques and has practical importance in many fields, like genetic studies.</p>
+<p>Recall that the <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> in CCA assign weights to more related covariates (<span class="math inline">\(p_1,p_2\)</span>). Similarly, we can select subjects (<span class="math inline">\(n\)</span>) by assigning another weight to original data <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. The likelihood function could be written as
+<span class="math display">\[
+\max_{u,v, w} \text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv)
+\]</span>
+where <span class="math inline">\(\text{diag}(w)\)</span> is a square matrix with diagonal elements as vector <span class="math inline">\(w = [w_1,...,w_n]\)</span>. To avoid overfitting, we could assign an entropy loss to avoid too extreme selection:
+<span class="math display" id="eq:wObj">\[\begin{equation}
+\max_{u,v, w} \text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv) - \lambda\sum_{i=1}^n w^T\log w \tag{4}
+\end{equation}\]</span></p>
+<p>The optimization of objective function <a href="#eq:wObj">(4)</a> could be accomplished by <a href="https://www.stat.cmu.edu/~ryantibs/convexopt-S15/lectures/22-coord-desc.pdf">coordinate descent</a>, i.e. first take gradient descent on <span class="math inline">\((u, v)\)</span> with <span class="math inline">\(w\)</span> fixed and then on <span class="math inline">\(w\)</span> with <span class="math inline">\((u,v)\)</span> fixed:
+<span class="math display">\[
+\begin{aligned}
+(u^{(k)}, v^{(k)}) &amp;= \arg\min_{(u,v)} \ \ \text{corr}(\text{diag}(w^{(k-1)})Xu, \text{diag}(w^{(k-1)})Yv) - \lambda\sum_{i=1}^n (w^{(k-1)})^T\log w^{(k-1)} \\
+w^{(k)} &amp;= \arg\min_w  \ \ \text{corr}(\text{diag}(w)Xu^{(k)}, \text{diag}(w)Yv^{(k)}) - \lambda w^T\log w
+\end{aligned}
+\]</span></p>
+<p>Let’s see how it work through the following codes. We just conduct 10 loops and check the results. Here we pre-specified the penalty coefficient <span class="math inline">\(\lambda\)</span> for simplicity.</p>
+<pre class="r watch-out"><code># objective function (negative for minimization)
+opt_func &lt;- function(w) {
+  -cor(w*U1, w*V1) + lambda*sum(w*log(w))
+}
+# equality constraint
+equal_fun &lt;- function(w) {
+  sum(w)
+}
+
+n = dim(mm)[1]
+w0 = rep(1/n,n); lambda = 1/abs(sum(w0*log(w0))) # just choose a proper lambda as an example
+
+# let&#39;s try several rounds using coordinate descent optimization strategy
+for (i in 1:10) {
+  cc1 &lt;- cc(diag(w0)%*%psych, diag(w0)%*%acad) # fix w
+  U1 = psych %*% cc1$xcoef[,1]
+  V1 = acad %*% cc1$ycoef[,1]
+  # then fix U,V
+  opt_res = suppressWarnings(Rsolnp::solnp(rep(1/n,n),
+                                           opt_func, 
+                                           eqfun = equal_fun,
+                                           eqB = 1,
+                                           LB = rep(1e-10,n),
+                                           UB = rep(1-1e-10,n),
+                                           control = list(trace = 0))
+                             ) 
+  w0 = opt_res$pars
+  print(paste0(&quot;Objective function value: &quot;,-round(min(opt_res$values), 4), &quot; (Loop&quot;, i,&quot;)&quot;))
+}</code></pre>
+<pre class="bg-warning"><code>## [1] &quot;Objective function value: 1.9481 (Loop1)&quot;
+## [1] &quot;Objective function value: 1.9505 (Loop2)&quot;
+## [1] &quot;Objective function value: 1.9511 (Loop3)&quot;
+## [1] &quot;Objective function value: 1.9513 (Loop4)&quot;
+## [1] &quot;Objective function value: 1.9513 (Loop5)&quot;
+## [1] &quot;Objective function value: 1.9513 (Loop6)&quot;
+## [1] &quot;Objective function value: 1.9513 (Loop7)&quot;
+## [1] &quot;Objective function value: 1.9513 (Loop8)&quot;
+## [1] &quot;Objective function value: 1.9513 (Loop9)&quot;
+## [1] &quot;Objective function value: 1.9513 (Loop10)&quot;</code></pre>
+<p>The value of objective function keeps increasing and converges within 10 loops. The optimal correlation between first weighted canonical pair <span class="math inline">\(\text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv)\)</span> is 0.983. Notice that since the objective function <a href="#eq:wObj">(4)</a> only optimize on the first pair, so the correlation between second canonical pair will not be influenced, which is 0.151.</p>
+<p>However, the issue is the correlation can be greatly influenced by the outlier. Even though we penalize on the entropy, a large weight is assigned to a single point that makes the correlation quite large (see the figure below).</p>
+<div class="figure"><span id="fig:unnamed-chunk-7"></span>
+<img src="/posts/CCA_files/figure-html/unnamed-chunk-7-1.png" alt="Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights" width="960" />
+<p class="caption">
+Figure 2: Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights
+</p>
+</div>
+<p>One way to handle this issue is to adopt a different penalty term that are more sensitive to the influencial point. One ponential proposal could be
+<span class="math display">\[
+\max_{u,v, w} \text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv) - \lambda||w||_{\infty}
+\]</span>
+which penalize on the maximal <span class="math inline">\(w\)</span>. The results are listed below. From panel (b) in Figure 3, we see a clear difference in weights of subjects, which might imply a pattern of subgroups.</p>
+<pre class="bg-warning"><code>## [1] &quot;Objective function value: 0.8527 (Loop1)&quot;
+## [1] &quot;Objective function value: 0.8815 (Loop2)&quot;
+## [1] &quot;Objective function value: 0.884 (Loop3)&quot;</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-9"></span>
+<img src="/posts/CCA_files/figure-html/unnamed-chunk-9-1.png" alt="Results after weighting on subjects. (a) All data; (b) Histogram of weights" width="960" />
+<p class="caption">
+Figure 3: Results after weighting on subjects. (a) All data; (b) Histogram of weights
+</p>
+</div>
 </div>
 
       </div>
