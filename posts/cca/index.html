@@ -377,12 +377,12 @@ for (i in 1:10) {
 <p>The value of objective function keeps increasing and converges within 10 loops. The optimal correlation between first weighted canonical pair <span class="math inline">\(\text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv)\)</span> is 0.983. Notice that since the objective function <a href="#eq:wObj">(4)</a> only optimize on the first pair, so the correlation between second canonical pair will not be influenced, which is 0.151.</p>
 <p>However, the issue is the correlation can be greatly influenced by the outlier. Even though we penalize on the entropy, a large weight is assigned to a single point that makes the correlation quite large (see the figure below).</p>
 <div class="figure"><span id="fig:unnamed-chunk-7"></span>
-<img src="/posts/CCA_files/figure-html/unnamed-chunk-7-1.png" alt="Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights" width="960" />
+<img src="/posts/CCA_files/figure-html/unnamed-chunk-7-1.png" alt="Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights" width="672" />
 <p class="caption">
 Figure 2: Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights
 </p>
 </div>
-<p>One way to handle this issue is to adopt a different penalty term that are more sensitive to the influencial point. One ponential proposal could be
+<p>One way to handle this issue is to adopt a different penalty term that are more sensitive to the influential point. One potential proposal could be
 <span class="math display">\[
 \max_{u,v, w} \text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv) - \lambda||w||_{\infty}
 \]</span>
