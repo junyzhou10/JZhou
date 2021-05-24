@@ -216,7 +216,7 @@ The value of objective function keeps increasing and converges within 10 loops. 
 
 However, the issue is the correlation can be greatly influenced by the outlier. Even though we penalize on the entropy, a large weight is assigned to a single point that makes the correlation quite large (see the figure below).
 
-```{r echo = F, fig.width=7, fig.height=4, fig.cap="Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights"}
+```{r echo = F, fig.width=10, fig.height=4, fig.cap="Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights"}
 layout(matrix(seq(1,3), nrow = 1))
 plot(w0*U1, w0*V1, pch = 20, col = "darkblue", cex = 0.6, main = paste("(a) Corr =", round(cc1$cor[1],3)), xlab = "diag(w)U1", ylab = "diag(w)V1")
 abline(a=0,b=1, col= "red")
@@ -265,7 +265,7 @@ for (i in 1:3) {
 ```
 
 
-```{r echo = F, fig.width=10, fig.height=4, fig.cap="Results after weighting on subjects. (a) All data; (b) Histogram of weights"}
+```{r echo = F, fig.width=7, fig.height=4, fig.cap="Results after weighting on subjects. (a) All data; (b) Histogram of weights"}
 layout(matrix(seq(1,2), nrow = 1))
 plot(w0*U1, w0*V1, pch = 20, col = "darkblue", cex = 0.6, main = paste("(a) Corr =", round(cc1$cor[1],3)), xlab = "diag(w)U1", ylab = "diag(w)V1")
 abline(a=0,b=1, col= "red")

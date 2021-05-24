@@ -377,7 +377,7 @@ for (i in 1:10) {
 <p>The value of objective function keeps increasing and converges within 10 loops. The optimal correlation between first weighted canonical pair <span class="math inline">\(\text{corr}(\text{diag}(w)Xu, \text{diag}(w)Yv)\)</span> is 0.983. Notice that since the objective function <a href="#eq:wObj">(4)</a> only optimize on the first pair, so the correlation between second canonical pair will not be influenced, which is 0.151.</p>
 <p>However, the issue is the correlation can be greatly influenced by the outlier. Even though we penalize on the entropy, a large weight is assigned to a single point that makes the correlation quite large (see the figure below).</p>
 <div class="figure"><span id="fig:unnamed-chunk-7"></span>
-<img src="/posts/CCA_files/figure-html/unnamed-chunk-7-1.png" alt="Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights" width="672" />
+<img src="/posts/CCA_files/figure-html/unnamed-chunk-7-1.png" alt="Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights" width="960" />
 <p class="caption">
 Figure 2: Results after weighting on subjects. (a) All data; (b) removing the influencial point; (c) histogram of weights
 </p>
@@ -391,7 +391,7 @@ which penalize on the maximal <span class="math inline">\(w\)</span>. The result
 ## [1] &quot;Objective function value: 0.8815 (Loop2)&quot;
 ## [1] &quot;Objective function value: 0.884 (Loop3)&quot;</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-9"></span>
-<img src="/posts/CCA_files/figure-html/unnamed-chunk-9-1.png" alt="Results after weighting on subjects. (a) All data; (b) Histogram of weights" width="960" />
+<img src="/posts/CCA_files/figure-html/unnamed-chunk-9-1.png" alt="Results after weighting on subjects. (a) All data; (b) Histogram of weights" width="672" />
 <p class="caption">
 Figure 3: Results after weighting on subjects. (a) All data; (b) Histogram of weights
 </p>
