@@ -2,21 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://jzhou.org/cn/tags/app/</loc>
-    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://jzhou.org/tags/app/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="cn"
-                href="https://jzhou.org/cn/tags/app/"
-                />
-  </url><url>
     <loc>https://jzhou.org/cn/categories/app/</loc>
-    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -28,8 +15,21 @@
                 href="https://jzhou.org/cn/categories/app/"
                 />
   </url><url>
+    <loc>https://jzhou.org/cn/posts/bivarintcensored/</loc>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://jzhou.org/posts/bivarintcensored/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="https://jzhou.org/cn/posts/bivarintcensored/"
+                />
+  </url><url>
     <loc>https://jzhou.org/cn/categories/</loc>
-    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -42,7 +42,7 @@
                 />
   </url><url>
     <loc>https://jzhou.org/cn/posts/</loc>
-    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -54,8 +54,21 @@
                 href="https://jzhou.org/cn/posts/"
                 />
   </url><url>
+    <loc>https://jzhou.org/cn/tags/r/</loc>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://jzhou.org/tags/r/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="https://jzhou.org/cn/tags/r/"
+                />
+  </url><url>
     <loc>https://jzhou.org/cn/tags/</loc>
-    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -68,7 +81,7 @@
                 />
   </url><url>
     <loc>https://jzhou.org/cn/</loc>
-    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -81,7 +94,23 @@
                 />
   </url><url>
     <loc>https://jzhou.org/cn/tags/%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://jzhou.org/cn/tags/%E7%94%9F%E5%AD%98%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://jzhou.org/cn/tags/app/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://jzhou.org/tags/app/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="https://jzhou.org/cn/tags/app/"
+                />
   </url><url>
     <loc>https://jzhou.org/cn/posts/clusterlongapp/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
@@ -107,19 +136,6 @@
                 rel="alternate"
                 hreflang="cn"
                 href="https://jzhou.org/cn/posts/clusterlongpackage/"
-                />
-  </url><url>
-    <loc>https://jzhou.org/cn/tags/r/</loc>
-    <lastmod>2021-04-16T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://jzhou.org/tags/r/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="cn"
-                href="https://jzhou.org/cn/tags/r/"
                 />
   </url><url>
     <loc>https://jzhou.org/cn/categories/r-package/</loc>

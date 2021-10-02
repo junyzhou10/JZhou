@@ -6,22 +6,22 @@
     <description>Recent content in Categories on Junyi Zhou</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 21 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>App</title>
+      <link>https://jzhou.org/categories/app/</link>
+      <pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://jzhou.org/categories/app/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Thoughts</title>
       <link>https://jzhou.org/categories/thoughts/</link>
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://jzhou.org/categories/thoughts/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>App</title>
-      <link>https://jzhou.org/categories/app/</link>
-      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://jzhou.org/categories/app/</guid>
       <description></description>
     </item>
     
