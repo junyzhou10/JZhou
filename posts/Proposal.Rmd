@@ -1,12 +1,12 @@
 ---
 author: Junyi Zhou
 date: "2019-11-05"
-description: Review of Causal Inference
+description: 'Review of Causal Inference: Heterogeneous Treatment Effect Estimation (old version)'
 categories:
 - Lectures/Slides
 tags:
 - Causal Inference
-title: Review of Causal Inference
+title: 'Review of Causal Inference: Heterogeneous Treatment Effect Estimation (old version)'
 
 fontsize: 12pt
 

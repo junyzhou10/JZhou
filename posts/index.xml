@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Junyi Zhou</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 01 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Review of Causal Inference: An Overview</title>
+      <link>https://jzhou.org/posts/reviewcausal/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://jzhou.org/posts/reviewcausal/</guid>
+      <description>Brief Introduction The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. Conceptually, causal inference is all about a question of ‘what if’. People can ask themself what if I took chemotherapy rather than radiation to treat my cancer, would I get better now?</description>
+    </item>
+    
     <item>
       <title>BivarIntCensored: An R-package for bivariate interval-censored data analysis using spline-based seive NPMLE</title>
       <link>https://jzhou.org/posts/bivarintcensored/</link>
@@ -62,7 +71,7 @@
     </item>
     
     <item>
-      <title>Review of Causal Inference</title>
+      <title>Review of Causal Inference: Heterogeneous Treatment Effect Estimation (old version)</title>
       <link>https://jzhou.org/posts/proposal/</link>
       <pubDate>Tue, 05 Nov 2019 00:00:00 +0000</pubDate>
       
