@@ -31,7 +31,7 @@
       <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://jzhou.org/about/</guid>
-      <description>Junyi Zhou is currently a Ph.D. candidate in Biostatistics at Richard M. Fairbanks School of Public Health and School of Medicine, Indiana University. He is co-advised by Dr. Wanzhu Tu and Dr. Ying Zhang. His research focuses on data clustering methods especially for longitudinal data; causal inference in potential outcome framework when multiple treatments exist; positive and unlabeled data learning methods in the situation like cancer-metastasis that only positive cases are for sure, while the rest are unlabeled.</description>
+      <description>Junyi Zhou was a Ph.D. candidate in Biostatistics at Richard M. Fairbanks School of Public Health and School of Medicine, Indiana University. He is co-advised by Dr. Wanzhu Tu and Dr. Ying Zhang. His research focuses on data clustering methods especially for longitudinal data; causal inference in potential outcome framework when multiple treatments exist; positive and unlabeled data learning methods in the situation like cancer-metastasis that only positive cases are for sure, while the rest are unlabeled.</description>
     </item>
     
     <item>
@@ -124,9 +124,8 @@ To send me an email, please go to the front page and click the envelope icon. Or
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://jzhou.org/publications/</guid>
-      <description>Journal Publications      Ying Zhang, Junyi Zhou, Carissa R Gehl, Jeffrey D. Long, Hans Johnson, Vince Magnotta, Wenjing Lu, Daniel Sewell and Jane Paulsen, “Mild Cognitive Impairment as an Early Landmark in Huntington Disease,” Frontiers in Neurology, DOI: 10.3389/fneur.2021.678652.
-  Wu Y, Zhang Y, Zhou J. A Spline-Based Nonparametric Analysis for Interval-Censored Bivariate Survival Data. Statistica Sinica, DOI: 10.5705/ss.202019.0296.
-  Schoelwer, M. J., Tu, W.</description>
+      <description>Journal Publications      Junyi Zhou, Xiaoyu Lu, Wennan Chang, Changlin Wan, Xiongbin Lu, Chi Zhang and Sha Cao, “PLUS: Predicting Cancer Metastasis Potential based on Positive and Unlabeled Learning,” In press, Plos Computational Biology
+  Ying Zhang, Junyi Zhou, Carissa R Gehl, Jeffrey D. Long, Hans Johnson, Vince Magnotta, Wenjing Lu, Daniel Sewell and Jane Paulsen, “Mild Cognitive Impairment as an Early Landmark in Huntington Disease,” Frontiers in Neurology, DOI: 10.</description>
     </item>
     
   </channel>
