@@ -8,6 +8,16 @@
     <language>en</language>
     <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://jzhou.org/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Meta-Learners (working)</title>
+      <link>https://jzhou.org/posts/metalearner/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://jzhou.org/posts/metalearner/</guid>
+      <description>Meta-learners for treatment effect estimation &amp;amp; optimal treatment recommendation under multiple treatment setting Meta-learners are a simple way to leverage off-the-shelf predictive machine learning methods to estimate CATE/HTE/ITE.
+Treatment Effect Estimation Q-learning gets its name because its objective function plays a role similar to that of the Q or reward function in reinforcement learnin (Li, Wang, and Tu 2021) and is first used in estimating optimal dynamic treatment regime (Murphy 2003; Robins 2004; Schulte et al.</description>
+    </item>
+    
+    <item>
       <title>Review of Causal Inference: An Overview</title>
       <link>https://jzhou.org/posts/reviewcausal/</link>
       <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>

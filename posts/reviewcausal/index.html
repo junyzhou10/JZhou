@@ -160,7 +160,7 @@
             </span>
             <span class="reading-time">
               <i class="fa fa-clock-o" aria-hidden="true"></i>
-              13-minute read
+              27-minute read
             </span>
           </div>
           
@@ -233,7 +233,7 @@ where <span class="math inline">\(\pi(\mathbf x)\)</span> is called <strong>Prop
 <p>Basically, the observations can be either from randomized experiments, like randomized controlled trial (RCT), or observational studies, so-called real world data (RWD). With different observations, the estimation methods can be very different.</p>
 <p>Briefly speaking, the ATE can be easily obtained via well-designed RCTs or A/B tests (we will see why in section <a href="#ATE">Average Treatment Effect</a>). That’s how pharmaceutical/biotech companies evaluate their drug effectiveness. In recent years, a big trend in drug development which is <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/considerations-use-real-world-data-and-real-world-evidence-support-regulatory-decision-making-drug">supported by FDA</a> is to use RWD and <a href="https://www.fda.gov/science-research/science-and-research-special-topics/real-world-evidence">real world evidence (RWE)</a> to support as well as speed-up the regulatory approval. Since RWD is obervational rather than randomized controlled, a sizable methods are proposed including <strong>Matching</strong> <span class="citation">(Rosenbaum and Rubin <a href="#ref-rosenbaum1983central" role="doc-biblioref">1983</a>; Austin <a href="#ref-austin2014comparison" role="doc-biblioref">2014</a>)</span>, <strong>Subclassification</strong> <span class="citation">(Rosenbaum and Rubin <a href="#ref-rosenbaum1984reducing" role="doc-biblioref">1984</a>)</span>, <strong>Weighting</strong> <span class="citation">(Hirano, Imbens, and Ridder <a href="#ref-hirano2003efficient" role="doc-biblioref">2003</a>; Austin <a href="#ref-austin2011introduction" role="doc-biblioref">2011</a>; Austin and Stuart <a href="#ref-austin2015moving" role="doc-biblioref">2015</a>)</span>, <strong>Regression</strong> <span class="citation">(Rubin <a href="#ref-rubin1979using" role="doc-biblioref">1979</a>, <a href="#ref-rubin:1985" role="doc-biblioref">1985</a>; Hahn <a href="#ref-hahn1998role" role="doc-biblioref">1998</a>; Gutman and Rubin <a href="#ref-gutman2013robust" role="doc-biblioref">2013</a>)</span>, or a mixture of them <span class="citation">(Bang and Robins <a href="#ref-bang2005doubly" role="doc-biblioref">2005</a>; Van Der Laan and Rubin <a href="#ref-van2006targeted" role="doc-biblioref">2006</a>)</span>.</p>
 <p>Another heat topic in causal inference is about the estimation of CATE/HTE/ITE from observational studies. This is usually tough because given the noise of observational studies and subject-level estimation, the estimates can have large variance. Various of methods have been proposed including but not limited to causal boosting <span class="citation">(Powers et al. <a href="#ref-powers2018some" role="doc-biblioref">2018</a>)</span>, causal forests <span class="citation">(Athey and Imbens <a href="#ref-athey2016recursive" role="doc-biblioref">2016</a>)</span>, individual-treatment-rule-based methods that mostly involves outcome weighted learning (OWL) <span class="citation">(Qian and Murphy <a href="#ref-qian2011performance" role="doc-biblioref">2011</a>; Zhao et al. <a href="#ref-zhao2012estimating" role="doc-biblioref">2012</a>; Zhou et al. <a href="#ref-zhou2017residual" role="doc-biblioref">2017</a>; Qi et al. <a href="#ref-qi2020multi" role="doc-biblioref">2020</a>)</span>, and several meta-learners, such as X-learner <span class="citation">(Künzel et al. <a href="#ref-kunzel2019metalearners" role="doc-biblioref">2019</a>)</span> and R-learner <span class="citation">(Nie and Wager <a href="#ref-NieQuasi2020" role="doc-biblioref">2020</a>)</span>. These methods can be easily degenerate to study the CATE/HTE/ITE in randomized trials.</p>
-<div id="causal-estimands" class="section level2">
+<div id="Estimands" class="section level2">
 <h2>Causal Estimands</h2>
 <p>Different scientific questions leads to the estimation of different causal estimands. As aforementioned, for instance, ATE is basically for assessing the population/sub-population treatment effect which is the key focus for the drug companies. On the other hand, CATE which is more about individual-level treatment effect, so it can be used to do precision medicine or personalized recommendations. Here is a list of some commonly used acronym causal estimands:</p>
 <ul>
@@ -303,7 +303,7 @@ But how to achieve a good estimator of propensity score <span class="math inline
 </div>
 <div id="inverse-probability-weighting-ipw" class="section level3">
 <h3>Inverse Probability Weighting (IPW)</h3>
-<p>It can be shown that (Proof in Appendix )
+<p>It can be shown that (Proof in <a href="app1">Appendix</a>)
 <span class="math display">\[
 E[Y^{(t)}] = E\left[\frac{1[T = t]Y}{Pr(T=t \mid \mathbf X)}\right]
 \]</span>
@@ -340,21 +340,220 @@ where the second equation comes from:
 \end{aligned}
 \]</span></p>
 </div>
-<div id="augmented-inverse-probability-weighting-aipw" class="section level3">
-<h3>Augmented Inverse Probability Weighting (AIPW) </h3>
+<div id="AIPW" class="section level3">
+<h3>Augmented Inverse Probability Weighting (AIPW)</h3>
 <p><span class="citation">Robins, Rotnitzky, and Zhao (<a href="#ref-robins1995analysis" role="doc-biblioref">1995</a>)</span> augmented the IPW by a weighted average of the outcome model
 <span class="math display">\[\begin{align}
 \tau^{\text{AIPW}} =&amp; \underbrace{E\left[\frac{1[T = 1]Y}{\pi(\mathbf X)}\right] - E\left[\frac{1[T = -1]Y}{1-\pi(\mathbf X)}\right]}_\text{IPW} \nonumber \\
 &amp;- \underbrace{E\left[\frac{1[T=1] -\pi(\mathbf X)}{\pi(\mathbf X)}\mu_1(\mathbf X) + \frac{1[T=1] -\pi(\mathbf X)}{1-\pi(\mathbf X)} \mu_{-1}(\mathbf X)\right]}_\text{Augmentation} \label{eq:AIPW}
 \end{align}\]</span>
-This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified <span class="citation">(Kurz <a href="#ref-kurz2021augmented" role="doc-biblioref">2021</a>)</span>. If the propensity score is correctly specified, then <span class="math inline">\(E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0\)</span> which simplifies AIPW to IPW no matter whether response surface functions <span class="math inline">\(\mu_T()\)</span> are correct. On the other hand, if response model <span class="math inline">\(\mu_T()\)</span> are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in Appendix )</p>
+This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified <span class="citation">(Kurz <a href="#ref-kurz2021augmented" role="doc-biblioref">2021</a>)</span>. If the propensity score is correctly specified, then <span class="math inline">\(E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0\)</span> which simplifies AIPW to IPW no matter whether response surface functions <span class="math inline">\(\mu_T()\)</span> are correct. On the other hand, if response model <span class="math inline">\(\mu_T()\)</span> are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in <a href="app2">Appendix</a>)</p>
+</div>
+<div id="covariate-balancing-propensity-score-cbps" class="section level3">
+<h3>Covariate Balancing Propensity Score (CBPS)</h3>
+<p>The very nature of weighting is it helps to make sure the confounding covariates distribution between the observed two arms are balanced. If covariate balancing is guaranteed, then the observed data can mimic the randomized trial data and the treatment effect can be directly obtained from observations. <span class="citation">Imai and Ratkovic (<a href="#ref-imai2014covariate" role="doc-biblioref">2014</a>)</span> propose to directly target on the covariate balancing instead of weighting. So they developed a Covariate Balancing Propensity Score (CBPS) method which is a propensity score estimating method that yields the PSs improve the covariate balancing.
+
+The core idea of CBPS is fit a logistic PS model–maximize the likelihood function–subject to covariate balancing constraints. Specifically, the logistic PS model looks like
+<span class="math display">\[
+\hat\beta = \arg\min_{\beta\in\Theta} \quad -\sum_{i=1}^N T_i\log\pi(\mathbf X_i;\beta)+(1-T_i)\log(1-\pi(\mathbf X_i;\beta))
+\]</span>
+which is equivalent to (take derivative w.r.t. <span class="math inline">\(\beta\)</span>)
+<span class="math display">\[
+E\left[\frac{ T_i \tilde {\mathbf X}_i}{\pi(\mathbf X_i;\beta)} - \frac{ (1-T_i) \tilde {\mathbf X}_i}{1-\pi(\mathbf X_i;\beta)}\right] = 0
+\]</span>
+where <span class="math inline">\(\tilde {\mathbf X}_i = \pi&#39;(\mathbf X_i;\beta)\)</span> which is the first derivative of <span class="math inline">\(\pi(\mathbf X_i;\beta)\)</span> over <span class="math inline">\(\beta\)</span>. The balancing conditions are
+<span class="math display">\[
+E\left[\frac{T_i f(\mathbf X_i)}{\pi(\mathbf X_i ; \beta)}\right] = E\left[\frac{(1-T_i)f(\mathbf X_i)}{1 - \pi(\mathbf X_i ; \beta)}\right]
+\]</span>
+where <span class="math inline">\(f()\)</span> can be any type of function that intended to be balanced, including first moment <span class="math inline">\(\mathbf X\)</span>, second moment <span class="math inline">\(\mathbf X^2\)</span>, interaction <span class="math inline">\(\mathbf X_i \mathbf X_j, i\neq j\)</span>, etc. When <span class="math inline">\(f(\mathbf X_i) = \tilde {\mathbf X}_i\)</span>, CBPS is exactly the MLE of logistic regression. If <span class="math inline">\(\tilde {\mathbf X}_i = \mathbf X_i\)</span> (a linear logistic model), the number of constraints is equal to the number of parameters, which is called exact CBPS. But we can manually add more constraints to make sure higher moments of covariates are balanced as well, then we have more constraints than the covariates, which is call over-identified CBPS. But “overidentifying restrictions generally improve asymptotic efficiency but may result in a poor finite sample performance” <span class="citation">(Imai and Ratkovic <a href="#ref-imai2014covariate" role="doc-biblioref">2014</a>)</span>.
+The <strong>caveat</strong> of CBPS is, even PS model is completely misspecificed, the imposed moments (of <span class="math inline">\(X\)</span>, <span class="math inline">\(X_iX_j\)</span>) are still balanced. CBPS largely avoids extremely propensities and thus, is more robust and better balance.</p>
+<p>CBPS is just one of the Covariate-Balancing-type method to obtain the weights. There are many other methods following this idea <span class="citation">(Hainmueller <a href="#ref-hainmueller2012entropy" role="doc-biblioref">2012</a>; Chan, Yam, and Zhang <a href="#ref-chan2016globally" role="doc-biblioref">2016</a>; Pirracchio and Carone <a href="#ref-pirracchio2018balance" role="doc-biblioref">2018</a>; Huling and Mak <a href="#ref-huling2020energy" role="doc-biblioref">2020</a>)</span> but will not be introduced here.</p>
+</div>
+<div id="TMLE" class="section level3">
+<h3>TMLE</h3>
+<p>Another estimator that is receiving more attention for ATE estimation is the <strong>targeted maximum likelihood estimator (TMLE)</strong> <span class="citation">(Van Der Laan and Rubin <a href="#ref-van2006targeted" role="doc-biblioref">2006</a>)</span>, which also enjoys the double robustness as AIPW along with other desired features like efficient and aysmptotically linear (allows for construction of valid Wald-type confidence intervals). Either <span class="math inline">\(\hat\mu_i(\cdot)\)</span> and <span class="math inline">\(\hat\pi(\cdot)\)</span> are correctly specified leads to consistent estimator while if both are consistently estimated, TMLEs achieve the semi-parametric efficiency bound <span class="citation">(Van Der Laan and Rubin <a href="#ref-van2006targeted" role="doc-biblioref">2006</a>)</span>.</p>
+<p>TMLE is a two-stage procedure with the first stage to obtain an initial estimate of response surface/conditional mean response <span class="math inline">\(\hat\mu_1(\mathbf X)\)</span> and <span class="math inline">\(\hat\mu_{-1}(\mathbf X)\)</span>. If the initial estimator response surfaces is consistent, the TMLE remains consistent; but if the initial estimator is not consistent, the subsequent <em>targeting step</em> provides an opportunity for TMLE to reduce any residual bias in the estimate of the parameter of interest. Specifically, TMLE solves the <em>efficient influence curve</em> estimating equation for the target parameter (ATE here) in the second stage, which fluctuate/correct the initial estimation on the correct direction as a <a href="https://observablehq.com/@herbps10/one-step-estimators-and-pathwise-derivatives">one-step estimator</a>. The whole idea is supported by the semiparametric theory and here are some references: <a href="https://arxiv.org/pdf/1709.06418.pdf">Semiparametric theory</a>; <a href="http://www.ehkennedy.com/uploads/5/8/4/5/58450265/unc_2019_cirg.pdf">Nonparametric efficiency theory in causal inference</a>; <a href="https://arxiv.org/pdf/1810.03260.pdf">influence functions</a>.</p>
+<p><span class="math display">\[
+\hat\tau^{\text{TMLE}}(\mathbf X) = \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) + \hat\varepsilon \left(\frac{1[T=1]}{\hat\pi(\mathbf X)} - \frac{1[T=-1]}{1-\hat\pi(\mathbf X)}\right)
+\]</span>
+where <span class="math inline">\(\varepsilon\)</span> is a flunctuation parameter to update the initial estimation of response surfaces <span class="math inline">\(\hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X)\)</span> using the information from propensity score, just like other doubly-robust estimator or X-learner. <span class="math inline">\(\varepsilon\)</span> can be estimated by fitting ‘clever covariate’ <span class="math inline">\(H(T, \mathbf X) = \frac{1[T=1]}{\hat\pi(\mathbf X)} - \frac{1[T=-1]}{1-\hat\pi(\mathbf X)}\)</span> on the residual <span class="math inline">\(Y - \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) \sim H(T, \mathbf X)\)</span>.</p>
+<hr />
+</div>
+</div>
+<div id="general-framework-of-ate-estiamtion-process" class="section level2">
+<h2>General Framework of ATE Estiamtion Process</h2>
+<p>After introducing this much methods, we would like to provide a high-level picture of how and when to use these methods. Usually, there are two-step included in propensity score (PS) related methods in causal estimand estimation.</p>
+<p>The first step is to estimate the propensity score. There are several commonly adopted branches:</p>
+<ul>
+<li>Logistic regression related. For instance, including all interaction terms as well as squared terms long with LASSO-type penalty for sparsity</li>
+<li>Machine learning algorithms, such as CART <span class="citation">(Breiman <a href="#ref-breiman2017classification" role="doc-biblioref">2017</a>)</span>, BART <span class="citation">(Chipman, George, and McCulloch <a href="#ref-chipman1998bayesian" role="doc-biblioref">1998</a>, <a href="#ref-chipman2002bayesian" role="doc-biblioref">2002</a>; Chipman et al. <a href="#ref-chipman2010bart" role="doc-biblioref">2010</a>)</span>, GAM <span class="citation">(Hastie and Tibshirani <a href="#ref-hastie1986generalized" role="doc-biblioref">1986</a>)</span>, GBM <span class="citation">(Friedman <a href="#ref-friedman2001greedy" role="doc-biblioref">2001</a>)</span>, Random Forest <span class="citation">(Breiman <a href="#ref-breiman2001random" role="doc-biblioref">2001</a>)</span>, XGBoost <span class="citation">(Chen and Guestrin <a href="#ref-Chen_2016" role="doc-biblioref">2016</a>)</span>, Super Learner <span class="citation">(Van der Laan, Polley, and Hubbard <a href="#ref-van2007super" role="doc-biblioref">2007</a>)</span>, etc.</li>
+<li>Weights (or propensity score) estimated for covariate balancing, e.g., CBPS (covariate balancing propensity score <span class="citation">(Imai and Ratkovic <a href="#ref-imai2014covariate" role="doc-biblioref">2014</a>)</span>), Entropy balancing <span class="citation">(Hainmueller <a href="#ref-hainmueller2012entropy" role="doc-biblioref">2012</a>)</span>, EBCM (empirical balancing calibration weighting) <span class="citation">(Chan, Yam, and Zhang <a href="#ref-chan2016globally" role="doc-biblioref">2016</a>)</span>, etc.</li>
+</ul>
+<p>In second step, we plug in the propensity score estimated from the first step for the desired estimand. The common approaches for ATE/ATT include:</p>
+<ul>
+<li>Matching <span class="citation">(Rosenbaum and Rubin <a href="#ref-rosenbaum1983central" role="doc-biblioref">1983</a>)</span></li>
+<li>Subclassification <span class="citation">(Rosenbaum and Rubin <a href="#ref-rosenbaum1984reducing" role="doc-biblioref">1984</a>)</span></li>
+<li>Weighting
+<ul>
+<li>HT <span class="citation">(Horvitz and Thompson <a href="#ref-horvitz1952generalization" role="doc-biblioref">1952</a>)</span></li>
+<li>IPW (IPTW) <span class="citation">(Hirano, Imbens, and Ridder <a href="#ref-hirano2003efficient" role="doc-biblioref">2003</a>)</span></li>
+</ul></li>
+<li>Regression
+<ul>
+<li>Outcome regression/outcome model <span class="citation">(Rubin <a href="#ref-rubin1979using" role="doc-biblioref">1979</a>)</span>, i.e. <span class="math inline">\(E(Y\mid X, T)\)</span></li>
+<li><span class="math inline">\(E(Y \mid \pi(\mathbf X))\)</span> or <span class="math inline">\(E(Y \mid \pi(\mathbf X), \mathbf X)\)</span> <span class="citation">(Rubin <a href="#ref-rubin:1985" role="doc-biblioref">1985</a>; Hahn <a href="#ref-hahn1998role" role="doc-biblioref">1998</a>; Gutman and Rubin <a href="#ref-gutman2013robust" role="doc-biblioref">2013</a>)</span></li>
+<li>Weighted regression of outcome <span class="math inline">\(Y\)</span> on treatment indicator <span class="math inline">\(T\)</span> with weights be the inverse of propensity scores</li>
+</ul></li>
+<li>Mixture of above
+<ul>
+<li>AIPW <span class="citation">(Bang and Robins <a href="#ref-bang2005doubly" role="doc-biblioref">2005</a>)</span></li>
+<li>TMLE <span class="citation">(Van Der Laan and Rubin <a href="#ref-van2006targeted" role="doc-biblioref">2006</a>)</span></li>
+</ul></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="CATE" class="section level1">
+<h1>ConditionalAverage Treatment Effect (CATE)</h1>
+<p>Sometimes also known as Heterogeneous Treatment effect (HTE). With assumption 1, 2, and 3, it’s definition under two-arm scenario is
+<span class="math display">\[
+\begin{aligned}
+\tau(\mathbf x) &amp;= E[Y^{(1)} - Y^{(-1)} \mid \mathbf X = \mathbf x] \\
+&amp;=E(Y \mid \mathbf X = \mathbf x, T = 1) - E(Y \mid \mathbf X = \mathbf x, T = -1)
+\end{aligned}
+\]</span></p>
+<div id="randomized-experiments" class="section level2">
+<h2>Randomized Experiments</h2>
+<p>As discussed, the CATE estimation under randomized setting is generally a special case of those methods under observational studies. Nonetheless, we want to briefly introduce some interaction-oriented methods that are more suitable in randomized setting.</p>
+<div id="interaction-oriented-methods" class="section level3">
+<h3>Interaction-oriented Methods</h3>
+<p>Without loss of generality, outcome <span class="math inline">\(Y\)</span> can be written by
+<span class="math display">\[
+E(Y) = f(\mathbf X) + 1[T=1]g(\mathbf X),
+\]</span>
+then <span class="math inline">\(E(Y\mid \mathbf X = \mathbf x, T = 1) = f(\mathbf x)+g(\mathbf x)\)</span>, <span class="math inline">\(E(Y\mid \mathbf X = \mathbf x, T = -1) = f(\mathbf x)\)</span>, and therefore, <span class="math inline">\(\tau(\mathbf x) = g(\mathbf x)\)</span>. So the problem of estimating treatment effect, or subgroup identification turns to be figuring out <span class="math inline">\(g(\mathbf x)\)</span>. Notice that here <span class="math inline">\(1(T=1)\)</span> is independent of covariates <span class="math inline">\(\mathbf X\)</span>, reflecting the nature of randomized trial.</p>
+<p>Also be aware that the covariates of <span class="math inline">\(f(\cdot)\)</span> and <span class="math inline">\(g(\cdot)\)</span> could be different. Denote <span class="math inline">\(\mathcal Z\)</span> and <span class="math inline">\(\mathcal V\)</span> are two subspaces of origincal covariate space <span class="math inline">\(\mathcal X\)</span>, and
+<span class="math display">\[
+E(Y) = f(\mathbf V) + 1[T=1]g(\mathbf Z),
+\]</span>
+where <span class="math inline">\(\mathbf Z \in \mathcal Z, \mathbf V \in \mathcal V\)</span>, and <span class="math inline">\(\mathcal V\)</span> and <span class="math inline">\(\mathcal Z\)</span> can have overlap. Generally, covariates in <span class="math inline">\(\mathbf V\)</span> are called diagnostic variables and <span class="math inline">\(\mathbf Z\)</span> are predictive variables <span class="citation">(Imai, Ratkovic, and others <a href="#ref-imai2013estimating" role="doc-biblioref">2013</a>)</span>. Some variables are predictive only, indicating that they only react to the treatment; some variables are diagnostic only, meaning that they do nothing with treatment but impact the outcome; some variables are both predictive and diagnostic, while some variables play no effect at all. See Figure  for illustration.</p>
+<p>A bunch of methods are developed following this idea: Interaction trees <span class="citation">(Su et al. <a href="#ref-su2008interaction" role="doc-biblioref">2008</a>, <a href="#ref-su2009subgroup" role="doc-biblioref">2009</a>)</span>, <strong>GUIDE</strong> (Generalized unbiased interaction detection and estimation) <span class="citation">(Loh <a href="#ref-loh2002regression" role="doc-biblioref">2002</a>; Loh, He, and Man <a href="#ref-loh2015regression" role="doc-biblioref">2015</a>)</span>, <strong>MOB</strong> (Model-Based Recursive Partitioning) <span class="citation">(Zeileis, Hothorn, and Hornik <a href="#ref-zeileis2008model" role="doc-biblioref">2008</a>; Seibold, Zeileis, and Hothorn <a href="#ref-seibold2016model" role="doc-biblioref">2016</a>)</span>.</p>
+<div class="figure"><span id="fig:illustration"></span>
+<img src="/posts/ReviewCausal_files/figure-html/illustration-1.png" alt="Illustration of predictive and diagnostic variable" width="960" />
+<p class="caption">
+Figure 1: Illustration of predictive and diagnostic variable
+</p>
+</div>
+<hr />
+</div>
+</div>
+<div id="observational-studies-1" class="section level2">
+<h2>Observational Studies</h2>
+<div id="q-learning" class="section level3">
+<h3>Q-learning</h3>
+<p><strong>Q-learning</strong> gets its name because its objective function plays a role similar to that of the Q or reward function in reinforcement learnin <span class="citation">(Li, Wang, and Tu <a href="#ref-li2021robust" role="doc-biblioref">2021</a>)</span> and is first used in estimating optimal <em>dynamic treatment regime</em> <span class="citation">(Murphy <a href="#ref-murphy2003optimal" role="doc-biblioref">2003</a>; Robins <a href="#ref-robins2004optimal" role="doc-biblioref">2004</a>; Schulte et al. <a href="#ref-schulte2014q" role="doc-biblioref">2014</a>)</span>. The basic idea is focusing on the estimation of response surfaces <span class="math inline">\(E[Y \mid \mathbf X, T]\)</span>, which is also known as g-computation <span class="citation">(Robins <a href="#ref-robins1986new" role="doc-biblioref">1986</a>)</span>. So this approach is also called the parametric g-formula <span class="citation">(Hernán and Robins <a href="#ref-hernan2010causal" role="doc-biblioref">2010</a>)</span> in the literature.</p>
+<div id="single-learner-s-learner" class="section level4">
+<h4>1. Single-Learner (S-learner)</h4>
+<p>Estimate a joint function <span class="math inline">\(\hat\mu(\mathbf X, T) = E[Y \mid \mathbf X, T]\)</span> then
+<span class="math display">\[\begin{equation}
+\hat\tau(\mathbf X) = \hat\mu(\mathbf X, 1) - \hat\mu(\mathbf X, -1). \label{eq:Slearner}
+\end{equation}\]</span>
+This approach is usually named as G-computation estimators, Parametric G-formula, or <strong>S-learner</strong>. But <span class="math inline">\(T\)</span> can be neglected or underweighted if <span class="math inline">\(X\)</span> has high dimension</p>
+</div>
+<div id="two-learner-t-learner" class="section level4">
+<h4>2. Two-Learner (T-learner)</h4>
+<p>Estimate response surfaces <span class="math inline">\(E[Y \mid \mathbf X, T]\)</span> separately, i.e., one function <span class="math inline">\(\mu_1(\mathbf X) = E[Y \mid \mathbf X, T= 1]\)</span> for <span class="math inline">\(T=1\)</span> and another <span class="math inline">\(\mu_{-1}(\mathbf X) = E[Y \mid \mathbf X, T= -1]\)</span> for <span class="math inline">\(T=-1\)</span>. Then
+<span class="math display">\[\begin{equation}
+\hat\tau(\mathbf X) = \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) \label{eq:Tlearner}
+\end{equation}\]</span>
+It is called <strong>T-learner</strong>. But lose data efficiency as only part of data is used in each model.</p>
+</div>
+</div>
+<div id="a-learning" class="section level3">
+<h3>A-learning</h3>
+<p>The basic idea of advantage-learning or A-learning, is to estimate treatment effect <span class="math inline">\(\tau(\mathbf x)\)</span> directly, rather than estimating the reponse surfaces like Q-learning which can be deemed as an indirect way. Here are some selected approaches in this camp.</p>
+<div id="outcome-weighted-methodsmodified-outcome-methods-mom" class="section level4">
+<h4>Outcome Weighted Methods/Modified Outcome Methods (MOM)</h4>
+<p>For a 50:50 randomized trial, we can make following transformation <span class="citation">(Signorovitch <a href="#ref-signorovitch2007identifying" role="doc-biblioref">2007</a>)</span>
+<span class="math display">\[
+Y^* = 
+\begin{cases}
+2Y \quad &amp;\text{if }\ T=1 \\
+-2Y \quad &amp;\text{if }\ T=-1
+\end{cases},
+\]</span>
+or equivalently, <span class="math inline">\(Y^* = 2TY\)</span>, and then, we may notice that
+<span class="math display">\[
+\begin{aligned}
+E(Y^*\mid \mathbf X) 
+&amp; = E(Y^*\mid \mathbf X, T = 1)\Pr(T=1) + E(Y^*\mid \mathbf X, T = -1)\Pr(T=-1) \\
+&amp; = E(2Y\mid \mathbf X, T = 1)/2 + E(-2Y\mid \mathbf X, T = -1)/2 \\
+&amp; = E(Y\mid \mathbf X, T = 1) - E(Y\mid \mathbf X, T = -1) \\
+&amp; = \tau(\mathbf X).
+\end{aligned}
+\]</span>
+This means that we can directly fit a model on <span class="math inline">\(Y^*\)</span> using <span class="math inline">\(\mathbf X\)</span> and it will return an unbiased estimator of treatment effect (even though the variance could be very large). 
+Similarly, from equation (), we know that
+<span class="math display">\[\begin{equation}
+\tau(\mathbf x) = E\left[ \frac{TY}{T\pi(\mathbf X) + (1-T)/2} \;\middle|\; \mathbf  X = \mathbf x \right] \label{eq:OWIPW}
+\end{equation}\]</span>
+The corresponding transformation or modification of outcome is <span class="math inline">\(Y^* = \frac{TY}{T\pi(\mathbf X) + (1-T)/2}\)</span> and this MOM-IPW loss function is
+<span class="math display">\[\begin{equation}
+E[l(\hat\tau, \tau)] = E\left[ \left\{ \hat\tau(\mathbf X)- \frac{TY}{T\pi(\mathbf X) + (1-T)/2} \right\}^2 \right] \label{eq:MOMIPW}
+\end{equation}\]</span></p>
+<p>Notably, this method though simple and straightforward, suffers from the <em>limitation of outcome type and the larger variance</em>.</p>
+</div>
+<div id="modified-covariate-methods-mcm" class="section level4">
+<h4>Modified Covariate Methods (MCM)</h4>
+<p>Observing that we only need to optimize the loss function such as (), <span class="citation">Tian et al. (<a href="#ref-tian2014simple" role="doc-biblioref">2014</a>)</span> modified MOM methods by adjusting the proxy loss function a little bit
+<span class="math display">\[
+E[\{\hat\tau(X) - Y^*\}^2] = E[c^2\{\hat\tau(X)/c - Y\}^2]
+\]</span>
+and then minimizing the right-hand-size, which is the loss function for MCM, targeting on <span class="math inline">\(\hat\tau(X)\)</span> directly as well. For example, the MCM version of the loss function for randomized trial is thus
+<span class="math display">\[
+E\left[ \{\hat\tau(X)\cdot W/2-Y \}^2 \right].
+\]</span>
+For MOM-IPW version, with some modification on (), the loss function for MCM-IPW version is derived as
+<span class="math display">\[
+E\left[ \left\{ \hat\tau(X) \cdot [(W+1)/2 - \pi(X)]- Y \right\}^2  \right]
+\]</span>
+and with further adjustment, it turns out to be
+<span class="math display">\[
+E\left[ \frac{\left\{ \hat\tau(X)\cdot W- Y \right\}^2}{W\pi(X) + (1-W)/2} \right].
+\]</span>
+So, we no longer need to worry about the outcome type.</p>
+</div>
+<div id="r-learner" class="section level4">
+<h4>R-learner</h4>
+<p>R-learner <span class="citation">(Nie and Wager <a href="#ref-NieQuasi2020" role="doc-biblioref">2020</a>)</span> can be considered as a very special case of MCM, but it does not follow the same logic flow as MCM. It adopts the Robinson’s decomposition <span class="citation">(Robinson <a href="#ref-robinson1988root" role="doc-biblioref">1988</a>)</span> to connect the CATE with the observed outcome
+<span class="math display">\[\begin{equation}
+E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \label{eq:Rlearner}
+\end{equation}\]</span>
+where <span class="math inline">\(m(\mathbf X) = E[Y \mid \mathbf X]\)</span>.</p>
+</div>
+<div id="x-learner" class="section level4">
+<h4>X-learner </h4>
+<p>X-learner <span class="citation">(Künzel et al. <a href="#ref-kunzel2019metalearners" role="doc-biblioref">2019</a>)</span> enjoys the simplicity of T-learner but fixes its data efficiency issue by targeting on the treatment effects rather than the response surfaces. The main procedure is the following:</p>
+<ul>
+<li>Step 1: Estimate <span class="math inline">\(\hat\mu_1(\cdot)\)</span> and <span class="math inline">\(\hat\mu_{-1}(\cdot)\)</span> just like T-learner</li>
+<li>Step 2a: Impute ITEs for subjects in <span class="math inline">\(T=1\)</span> arm by <span class="math inline">\(\hat\tau_{1,i} = Y_i - \hat\mu_{-1}(\mathbf x_i)\)</span> (recall that <span class="math inline">\(\tau_i = Y_i^{(1)} - Y_i^{(-1)}\)</span>) and ITEs for subjects in <span class="math inline">\(T=-1\)</span> arm by <span class="math inline">\(\hat\tau_{-1,i} = \hat\mu_{1}(\mathbf x_i) - Y_i\)</span></li>
+<li>Step 2b: Fit one model <span class="math inline">\(\hat\tau_1(\cdot)\)</span> to predict <span class="math inline">\(\hat\tau_{1,i}\)</span> using data in <span class="math inline">\(T=1\)</span> arm, i.e., <span class="math inline">\(\{(\mathbf x_i, Y_i)\}_{i:T_i = 1}\)</span>; and fit another model <span class="math inline">\(\hat\tau_{-1}(\cdot)\)</span> to predict <span class="math inline">\(\hat\tau_{-1,i}\)</span> using data in <span class="math inline">\(T=-1\)</span> arm, i.e., <span class="math inline">\(\{(\mathbf x_i, Y_i)\}_{i:T_i = -1}\)</span></li>
+<li>Step 3: Combine <span class="math inline">\(\hat\tau_1(\cdot)\)</span> and <span class="math inline">\(\hat\tau_{-1}(\cdot)\)</span> to achieve the final treatment effect model <span class="math inline">\(\hat\tau(\mathbf x) = g(\mathbf x)\tau_{-1}(\mathbf x) + (1-g(\mathbf x))\tau_{1}(\mathbf x)\)</span>, where <span class="math inline">\(g(\cdot)\)</span> is some weighting function, e.g., propensity score.</li>
+</ul>
+<p>Notably, when calculating <span class="math inline">\(\hat\tau_1(\cdot)\)</span>, for example, X-learner uses whole data, including instances from both <span class="math inline">\(T=1\)</span> and <span class="math inline">\(T=-1\)</span>, which is deems as fixing the data efficiency issue in T-learner approach.</p>
+</div>
+</div>
+<div id="other-tree-based-methods" class="section level3">
+<h3>Other tree-based methods</h3>
+<p>There are many tree-based methods such as virtual trees <span class="citation">(Foster <a href="#ref-foster2013subgroup" role="doc-biblioref">2013</a>)</span>, causal tree/forest <span class="citation">(Athey and Imbens <a href="#ref-athey2016recursive" role="doc-biblioref">2016</a>; Wager and Athey <a href="#ref-wager2018estimation" role="doc-biblioref">2018</a>)</span>, causal boosting/PTO forest/causal MARS <span class="citation">(Powers et al. <a href="#ref-powers2018some" role="doc-biblioref">2018</a>)</span>. Actually, most of them can be categorized as S- or T-learners on a high-level.</p>
+<hr />
 </div>
 </div>
 </div>
 <div id="appendix" class="section level1">
 <h1>Appendix</h1>
-<div id="proof-of-ipw" class="section level2">
-<h2>Proof of IPW </h2>
+<div id="app1" class="section level2">
+<h2>Proof of IPW</h2>
 <p><span class="math display">\[
 \begin{aligned}
 &amp; E\left[\frac{1[T = t]Y}{\Pr(T=t \mid \mathbf X)}\right] \\
@@ -368,8 +567,8 @@ This AIPW is called “doubly robust” because it is consistent as long as eith
 \end{aligned}
 \]</span></p>
 </div>
-<div id="proof-of-aipw" class="section level2">
-<h2>Proof of AIPW </h2>
+<div id="app2" class="section level2">
+<h2>Proof of AIPW</h2>
 <p>To demonstrate that AIPW can be consistent even when propensity score is not correctly specified, we only need to focus on the general element <span class="math inline">\(E\left[\frac{1[T = t]Y}{\pi^{(t)}(\mathbf X)} - \frac{1[T=t] -\pi^{(t)}(\mathbf X)}{\pi^{(t)}(\mathbf X)} \mu_t(\mathbf X)\right]\)</span>.</p>
 <p>When propensity score is wrong, i.e., <span class="math inline">\(\pi^{(t)}(\mathbf X)\neq \Pr(T = t\mid \mathbf X)\)</span> but response surface estimation is correct, i.e., <span class="math inline">\(\mu_t(\mathbf X) = E(Y^{(t)} \mid \mathbf X)\)</span>,
 <span class="math display">\[
@@ -384,6 +583,7 @@ This AIPW is called “doubly robust” because it is consistent as long as eith
 \end{aligned}
 \]</span>
 Therefore, under this situation, AIPW in equation () becomes <span class="math inline">\(\tau^{AIPW}=E\left[Y^{(1)}\right] - E\left[Y^{(-1)}\right] = \tau\)</span>.</p>
+<hr />
 </div>
 </div>
 <div id="references" class="section level1">
@@ -406,11 +606,47 @@ Therefore, under this situation, AIPW in equation () becomes <span class="math i
 <div id="ref-bang2005doubly">
 <p>Bang, Heejung, and James M Robins. 2005. “Doubly Robust Estimation in Missing Data and Causal Inference Models.” <em>Biometrics</em> 61 (4): 962–73.</p>
 </div>
+<div id="ref-breiman2001random">
+<p>Breiman, Leo. 2001. “Random Forests.” <em>Machine Learning</em> 45 (1): 5–32.</p>
+</div>
+<div id="ref-breiman2017classification">
+<p>———. 2017. <em>Classification and Regression Trees</em>. Routledge.</p>
+</div>
+<div id="ref-chan2016globally">
+<p>Chan, Kwun Chuen Gary, Sheung Chi Phillip Yam, and Zheng Zhang. 2016. “Globally Efficient Non-Parametric Inference of Average Treatment Effects by Empirical Balancing Calibration Weighting.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 78 (3): 673–700.</p>
+</div>
+<div id="ref-Chen_2016">
+<p>Chen, Tianqi, and Carlos Guestrin. 2016. “XGBoost: A Scalable Tree Boosting System.” In <em>Proceedings of the 22nd Acm Sigkdd International Conference on Knowledge Discovery and Data Mining</em>, 785–94. KDD ’16. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/2939672.2939785">https://doi.org/10.1145/2939672.2939785</a>.</p>
+</div>
+<div id="ref-chipman1998bayesian">
+<p>Chipman, Hugh A, Edward I George, and Robert E McCulloch. 1998. “Bayesian Cart Model Search.” <em>Journal of the American Statistical Association</em> 93 (443): 935–48.</p>
+</div>
+<div id="ref-chipman2002bayesian">
+<p>———. 2002. “Bayesian Treed Models.” <em>Machine Learning</em> 48 (1-3): 299–320.</p>
+</div>
+<div id="ref-chipman2010bart">
+<p>Chipman, Hugh A, Edward I George, Robert E McCulloch, and others. 2010. “BART: Bayesian Additive Regression Trees.” <em>The Annals of Applied Statistics</em> 4 (1): 266–98.</p>
+</div>
+<div id="ref-foster2013subgroup">
+<p>Foster, Jared C. 2013. “Subgroup Identification and Variable Selection from Randomized Clinical Trial Data.” PhD thesis.</p>
+</div>
+<div id="ref-friedman2001greedy">
+<p>Friedman, Jerome H. 2001. “Greedy Function Approximation: A Gradient Boosting Machine.” <em>Annals of Statistics</em>, 1189–1232.</p>
+</div>
 <div id="ref-gutman2013robust">
 <p>Gutman, Roee, and Donald B Rubin. 2013. “Robust Estimation of Causal Effects of Binary Treatments in Unconfounded Studies with Dichotomous Outcomes.” <em>Statistics in Medicine</em> 32 (11): 1795–1814.</p>
 </div>
 <div id="ref-hahn1998role">
 <p>Hahn, Jinyong. 1998. “On the Role of the Propensity Score in Efficient Semiparametric Estimation of Average Treatment Effects.” <em>Econometrica</em>, 315–31.</p>
+</div>
+<div id="ref-hainmueller2012entropy">
+<p>Hainmueller, Jens. 2012. “Entropy Balancing for Causal Effects: A Multivariate Reweighting Method to Produce Balanced Samples in Observational Studies.” <em>Political Analysis</em> 20 (1): 25–46.</p>
+</div>
+<div id="ref-hastie1986generalized">
+<p>Hastie, Trevor, and Robert Tibshirani. 1986. “Generalized Additive Models.” <em>Statistical Science</em>, 297–310.</p>
+</div>
+<div id="ref-hernan2010causal">
+<p>Hernán, Miguel A, and James M Robins. 2010. “Causal Inference.” CRC Boca Raton, FL;</p>
 </div>
 <div id="ref-hirano2003efficient">
 <p>Hirano, Keisuke, Guido W Imbens, and Geert Ridder. 2003. “Efficient Estimation of Average Treatment Effects Using the Estimated Propensity Score.” <em>Econometrica</em> 71 (4): 1161–89.</p>
@@ -418,8 +654,14 @@ Therefore, under this situation, AIPW in equation () becomes <span class="math i
 <div id="ref-horvitz1952generalization">
 <p>Horvitz, Daniel G, and Donovan J Thompson. 1952. “A Generalization of Sampling Without Replacement from a Finite Universe.” <em>Journal of the American Statistical Association</em> 47 (260): 663–85.</p>
 </div>
+<div id="ref-huling2020energy">
+<p>Huling, Jared D, and Simon Mak. 2020. “Energy Balancing of Covariate Distributions.” <em>arXiv Preprint arXiv:2004.13962</em>.</p>
+</div>
 <div id="ref-imai2014covariate">
 <p>Imai, Kosuke, and Marc Ratkovic. 2014. “Covariate Balancing Propensity Score.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 76 (1): 243–63.</p>
+</div>
+<div id="ref-imai2013estimating">
+<p>Imai, Kosuke, Marc Ratkovic, and others. 2013. “Estimating Treatment Effect Heterogeneity in Randomized Program Evaluation.” <em>The Annals of Applied Statistics</em> 7 (1): 443–70.</p>
 </div>
 <div id="ref-imbens2015causal">
 <p>Imbens, Guido W, and Donald B Rubin. 2015. <em>Causal Inference in Statistics, Social, and Biomedical Sciences</em>. Cambridge University Press.</p>
@@ -430,11 +672,26 @@ Therefore, under this situation, AIPW in equation () becomes <span class="math i
 <div id="ref-kunzel2019metalearners">
 <p>Künzel, Sören R, Jasjeet S Sekhon, Peter J Bickel, and Bin Yu. 2019. “Metalearners for Estimating Heterogeneous Treatment Effects Using Machine Learning.” <em>Proceedings of the National Academy of Sciences</em> 116 (10): 4156–65.</p>
 </div>
+<div id="ref-li2021robust">
+<p>Li, Ruohong, Honglang Wang, and Wanzhu Tu. 2021. “Robust Estimation of Heterogeneous Treatment Effects Using Electronic Health Record Data.” <em>Statistics in Medicine</em> 40 (11): 2713–52.</p>
+</div>
+<div id="ref-loh2002regression">
+<p>Loh, Wei-Yin. 2002. “Regression Tress with Unbiased Variable Selection and Interaction Detection.” <em>Statistica Sinica</em>, 361–86.</p>
+</div>
+<div id="ref-loh2015regression">
+<p>Loh, Wei-Yin, Xu He, and Michael Man. 2015. “A Regression Tree Approach to Identifying Subgroups with Differential Treatment Effects.” <em>Statistics in Medicine</em> 34 (11): 1818–33.</p>
+</div>
+<div id="ref-murphy2003optimal">
+<p>Murphy, Susan A. 2003. “Optimal Dynamic Treatment Regimes.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 65 (2): 331–55.</p>
+</div>
 <div id="ref-neyman1923application">
 <p>Neyman, Jerzy S. 1923. “On the Application of Probability Theory to Agricultural Experiments. Essay on Principles. Section 9.(tlanslated and Edited by Dm Dabrowska and Tp Speed, Statistical Science (1990), 5, 465-480).” <em>Annals of Agricultural Sciences</em> 10: 1–51.</p>
 </div>
 <div id="ref-NieQuasi2020">
 <p>Nie, X, and S Wager. 2020. “Quasi-oracle estimation of heterogeneous treatment effects.” <em>Biometrika</em> 108 (2): 299–319. <a href="https://doi.org/10.1093/biomet/asaa076">https://doi.org/10.1093/biomet/asaa076</a>.</p>
+</div>
+<div id="ref-pirracchio2018balance">
+<p>Pirracchio, Romain, and Marco Carone. 2018. “The Balance Super Learner: A Robust Adaptation of the Super Learner to Improve Estimation of the Average Treatment Effect in the Treated Based on Propensity Score Matching.” <em>Statistical Methods in Medical Research</em> 27 (8): 2504–18.</p>
 </div>
 <div id="ref-powers2018some">
 <p>Powers, Scott, Junyang Qian, Kenneth Jung, Alejandro Schuler, Nigam H Shah, Trevor Hastie, and Robert Tibshirani. 2018. “Some Methods for Heterogeneous Treatment Effect Estimation in High Dimensions.” <em>Statistics in Medicine</em> 37 (11): 1767–87.</p>
@@ -445,8 +702,17 @@ Therefore, under this situation, AIPW in equation () becomes <span class="math i
 <div id="ref-qian2011performance">
 <p>Qian, Min, and Susan A Murphy. 2011. “Performance Guarantees for Individualized Treatment Rules.” <em>Annals of Statistics</em> 39 (2): 1180.</p>
 </div>
+<div id="ref-robins1986new">
+<p>Robins, James. 1986. “A New Approach to Causal Inference in Mortality Studies with a Sustained Exposure Period—Application to Control of the Healthy Worker Survivor Effect.” <em>Mathematical Modelling</em> 7 (9-12): 1393–1512.</p>
+</div>
+<div id="ref-robins2004optimal">
+<p>Robins, James M. 2004. “Optimal Structural Nested Models for Optimal Sequential Decisions.” In <em>Proceedings of the Second Seattle Symposium in Biostatistics</em>, 189–326. Springer.</p>
+</div>
 <div id="ref-robins1995analysis">
 <p>Robins, James M, Andrea Rotnitzky, and Lue Ping Zhao. 1995. “Analysis of Semiparametric Regression Models for Repeated Outcomes in the Presence of Missing Data.” <em>Journal of the American Statistical Association</em> 90 (429): 106–21.</p>
+</div>
+<div id="ref-robinson1988root">
+<p>Robinson, P. M. 1988. “Root-N-Consistent Semiparametric Regression.” <em>Econometrica</em> 56 (4): 931–54. <a href="http://www.jstor.org/stable/1912705">http://www.jstor.org/stable/1912705</a>.</p>
 </div>
 <div id="ref-rosenbaum1983central">
 <p>Rosenbaum, Paul R, and Donald B Rubin. 1983. “The Central Role of the Propensity Score in Observational Studies for Causal Effects.” <em>Biometrika</em> 70 (1): 41–55.</p>
@@ -466,8 +732,35 @@ Therefore, under this situation, AIPW in equation () becomes <span class="math i
 <div id="ref-rubin1980randomization">
 <p>———. 1980. “Randomization Analysis of Experimental Data: The Fisher Randomization Test Comment.” <em>Journal of the American Statistical Association</em> 75 (371): 591–93.</p>
 </div>
+<div id="ref-schulte2014q">
+<p>Schulte, Phillip J, Anastasios A Tsiatis, Eric B Laber, and Marie Davidian. 2014. “Q-and a-Learning Methods for Estimating Optimal Dynamic Treatment Regimes.” <em>Statistical Science: A Review Journal of the Institute of Mathematical Statistics</em> 29 (4): 640.</p>
+</div>
+<div id="ref-seibold2016model">
+<p>Seibold, Heidi, Achim Zeileis, and Torsten Hothorn. 2016. “Model-Based Recursive Partitioning for Subgroup Analyses.” <em>The International Journal of Biostatistics</em> 12 (1): 45–63.</p>
+</div>
+<div id="ref-signorovitch2007identifying">
+<p>Signorovitch, James Edward. 2007. “Identifying Informative Biological Markers in High-Dimensional Genomic Data and Clinical Trials.” PhD thesis, Harvard University.</p>
+</div>
+<div id="ref-su2009subgroup">
+<p>Su, Xiaogang, Chih-Ling Tsai, Hansheng Wang, David M Nickerson, and Bogong Li. 2009. “Subgroup Analysis via Recursive Partitioning.” <em>Journal of Machine Learning Research</em> 10 (Feb): 141–58.</p>
+</div>
+<div id="ref-su2008interaction">
+<p>Su, Xiaogang, Tianni Zhou, Xin Yan, Juanjuan Fan, and Song Yang. 2008. “Interaction Trees with Censored Survival Data.” <em>The International Journal of Biostatistics</em> 4 (1).</p>
+</div>
+<div id="ref-tian2014simple">
+<p>Tian, Lu, Ash A Alizadeh, Andrew J Gentles, and Robert Tibshirani. 2014. “A Simple Method for Estimating Interactions Between a Treatment and a Large Number of Covariates.” <em>Journal of the American Statistical Association</em> 109 (508): 1517–32.</p>
+</div>
+<div id="ref-van2007super">
+<p>Van der Laan, Mark J, Eric C Polley, and Alan E Hubbard. 2007. “Super Learner.” <em>Statistical Applications in Genetics and Molecular Biology</em> 6 (1).</p>
+</div>
 <div id="ref-van2006targeted">
 <p>Van Der Laan, Mark J, and Daniel Rubin. 2006. “Targeted Maximum Likelihood Learning.” <em>The International Journal of Biostatistics</em> 2 (1).</p>
+</div>
+<div id="ref-wager2018estimation">
+<p>Wager, Stefan, and Susan Athey. 2018. “Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests.” <em>Journal of the American Statistical Association</em> 113 (523): 1228–42.</p>
+</div>
+<div id="ref-zeileis2008model">
+<p>Zeileis, Achim, Torsten Hothorn, and Kurt Hornik. 2008. “Model-Based Recursive Partitioning.” <em>Journal of Computational and Graphical Statistics</em> 17 (2): 492–514.</p>
 </div>
 <div id="ref-zhao2012estimating">
 <p>Zhao, Yingqi, Donglin Zeng, A John Rush, and Michael R Kosorok. 2012. “Estimating Individualized Treatment Rules Using Outcome Weighted Learning.” <em>Journal of the American Statistical Association</em> 107 (499): 1106–18.</p>

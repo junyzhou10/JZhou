@@ -97,7 +97,7 @@ Another heat topic in causal inference is about the estimation of CATE/HTE/ITE f
 
 
 
-## Causal Estimands
+## Causal Estimands {#Estimands}
 Different scientific questions leads to the estimation of different causal estimands. As aforementioned, for instance, ATE is basically for assessing the population/sub-population treatment effect which is the key focus for the drug companies. On the other hand, CATE which is more about individual-level treatment effect, so it can be used to do precision medicine or personalized recommendations. Here is a list of some commonly used acronym causal estimands:
 
 - ITE (individual treatment effect)
@@ -163,7 +163,7 @@ But how to achieve a good estimator of propensity score $\pi(\cdot)$ turns out t
 
 
 ### Inverse Probability Weighting (IPW)
-It can be shown that (Proof in Appendix \ref{app1})
+It can be shown that (Proof in [Appendix](app1))
 $$
 E[Y^{(t)}] = E\left[\frac{1[T = t]Y}{Pr(T=t \mid \mathbf X)}\right]
 $$
@@ -201,24 +201,230 @@ $$
 $$
 
 
-### Augmented Inverse Probability Weighting (AIPW) \label{sec:AIPW} 
+### Augmented Inverse Probability Weighting (AIPW) {#AIPW} 
 @robins1995analysis augmented the IPW by a weighted average of the outcome model
 \begin{align}
 \tau^{\text{AIPW}} =& \underbrace{E\left[\frac{1[T = 1]Y}{\pi(\mathbf X)}\right] - E\left[\frac{1[T = -1]Y}{1-\pi(\mathbf X)}\right]}_\text{IPW} \nonumber \\
 &- \underbrace{E\left[\frac{1[T=1] -\pi(\mathbf X)}{\pi(\mathbf X)}\mu_1(\mathbf X) + \frac{1[T=1] -\pi(\mathbf X)}{1-\pi(\mathbf X)} \mu_{-1}(\mathbf X)\right]}_\text{Augmentation} \label{eq:AIPW}
 \end{align}
-This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified [@kurz2021augmented]. If the propensity score is correctly specified, then $E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0$ which simplifies AIPW to IPW no matter whether response surface functions $\mu_T()$ are correct. On the other hand, if response model $\mu_T()$ are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in Appendix \ref{app2})
+This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified [@kurz2021augmented]. If the propensity score is correctly specified, then $E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0$ which simplifies AIPW to IPW no matter whether response surface functions $\mu_T()$ are correct. On the other hand, if response model $\mu_T()$ are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in [Appendix](app2))
+
+
+### Covariate Balancing Propensity Score (CBPS)
+The very nature of weighting is it helps to make sure the confounding covariates distribution between the observed two arms are balanced. If covariate balancing is guaranteed, then the observed data can mimic the randomized trial data and the treatment effect can be directly obtained from observations. @imai2014covariate propose to directly target on the covariate balancing instead of weighting. So they developed a Covariate Balancing Propensity Score (CBPS) method which is a propensity score estimating method that yields the PSs improve the covariate balancing. 
+\newline 
+The core idea of CBPS is fit a logistic PS model--maximize the likelihood function--subject to covariate balancing constraints. Specifically, the logistic PS model looks like
+$$
+\hat\beta = \arg\min_{\beta\in\Theta} \quad -\sum_{i=1}^N T_i\log\pi(\mathbf X_i;\beta)+(1-T_i)\log(1-\pi(\mathbf X_i;\beta))
+$$
+which is equivalent to (take derivative w.r.t. $\beta$)
+$$
+E\left[\frac{ T_i \tilde {\mathbf X}_i}{\pi(\mathbf X_i;\beta)} - \frac{ (1-T_i) \tilde {\mathbf X}_i}{1-\pi(\mathbf X_i;\beta)}\right] = 0
+$$
+where $\tilde {\mathbf X}_i = \pi'(\mathbf X_i;\beta)$ which is the first derivative of $\pi(\mathbf X_i;\beta)$ over $\beta$. The balancing conditions are
+$$
+E\left[\frac{T_i f(\mathbf X_i)}{\pi(\mathbf X_i ; \beta)}\right] = E\left[\frac{(1-T_i)f(\mathbf X_i)}{1 - \pi(\mathbf X_i ; \beta)}\right]
+$$
+where $f()$ can be any type of function that intended to be balanced, including first moment $\mathbf X$, second moment $\mathbf X^2$, interaction $\mathbf X_i \mathbf X_j, i\neq j$, etc. When $f(\mathbf X_i) = \tilde {\mathbf X}_i$, CBPS is exactly the MLE of logistic regression. If $\tilde {\mathbf X}_i = \mathbf X_i$ (a linear logistic model), the number of constraints is equal to the number of parameters, which is called exact CBPS. But we can manually add more constraints to make sure higher moments of covariates are balanced as well, then we have more constraints than the covariates, which is call over-identified CBPS. But "overidentifying restrictions generally improve asymptotic efficiency but may result in a poor finite sample performance" [@imai2014covariate]. 
+\newline The **caveat** of CBPS is, even PS model is completely misspecificed, the imposed moments (of $X$, $X_iX_j$) are still balanced. CBPS largely avoids extremely propensities and thus, is more robust and better balance.
+
+CBPS is just one of the Covariate-Balancing-type method to obtain the weights. There are many other methods following this idea [@hainmueller2012entropy; @chan2016globally; @pirracchio2018balance; @huling2020energy] but will not be introduced here.
+
+### TMLE {#TMLE}
+Another estimator that is receiving more attention for ATE estimation is the **targeted maximum likelihood estimator (TMLE)** [@van2006targeted], which also enjoys the double robustness as AIPW along with other desired features like efficient and aysmptotically linear (allows for construction of valid Wald-type confidence intervals). Either $\hat\mu_i(\cdot)$ and $\hat\pi(\cdot)$ are correctly specified leads to consistent estimator while if both are consistently estimated, TMLEs achieve the semi-parametric efficiency bound [@van2006targeted].
+
+TMLE is a two-stage procedure with the first stage to obtain an initial estimate of response surface/conditional mean response $\hat\mu_1(\mathbf X)$ and $\hat\mu_{-1}(\mathbf X)$. If the initial estimator response surfaces is consistent, the TMLE remains consistent; but if the initial estimator is not consistent, the subsequent *targeting step* provides an opportunity for TMLE to reduce any residual bias in the estimate of the parameter of interest. Specifically, TMLE solves the *efficient influence curve* estimating equation for the target parameter (ATE here) in the second stage, which fluctuate/correct the initial estimation on the correct direction as a [one-step estimator](https://observablehq.com/@herbps10/one-step-estimators-and-pathwise-derivatives). The whole idea is supported by the semiparametric theory and here are some references: [Semiparametric theory](https://arxiv.org/pdf/1709.06418.pdf); [Nonparametric efficiency theory in causal inference](http://www.ehkennedy.com/uploads/5/8/4/5/58450265/unc_2019_cirg.pdf); [influence functions](https://arxiv.org/pdf/1810.03260.pdf).
+
+$$
+\hat\tau^{\text{TMLE}}(\mathbf X) = \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) + \hat\varepsilon \left(\frac{1[T=1]}{\hat\pi(\mathbf X)} - \frac{1[T=-1]}{1-\hat\pi(\mathbf X)}\right)
+$$
+where $\varepsilon$ is a flunctuation parameter to update the initial estimation of response surfaces $\hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X)$ using the information from propensity score, just like other doubly-robust estimator or X-learner. $\varepsilon$ can be estimated by fitting 'clever covariate' $H(T, \mathbf X) = \frac{1[T=1]}{\hat\pi(\mathbf X)} - \frac{1[T=-1]}{1-\hat\pi(\mathbf X)}$ on the residual $Y - \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) \sim H(T, \mathbf X)$.
+
+***
+
+## General Framework of ATE Estiamtion Process
+After introducing this much methods, we would like to provide a high-level picture of how and when to use these methods. Usually, there are two-step included in propensity score (PS) related methods in causal estimand estimation. 
+
+The first step is to estimate the propensity score. There are several commonly adopted branches:
+
+- Logistic regression related. For instance, including all interaction terms as well as squared terms long with LASSO-type penalty for sparsity
+- Machine learning algorithms, such as CART [@breiman2017classification], BART [@chipman1998bayesian; @chipman2002bayesian; @chipman2010bart], GAM [@hastie1986generalized], GBM [@friedman2001greedy], Random Forest [@breiman2001random], XGBoost [@Chen_2016], Super Learner [@van2007super], etc.
+- Weights (or propensity score) estimated for covariate balancing, e.g., CBPS (covariate balancing propensity score [@imai2014covariate]), Entropy balancing [@hainmueller2012entropy], EBCM (empirical balancing calibration weighting) [@chan2016globally], etc.
+
+In second step, we plug in the propensity score estimated from the first step for the desired estimand. The common approaches for ATE/ATT include:
+
+- Matching [@rosenbaum1983central]
+- Subclassification [@rosenbaum1984reducing]
+- Weighting
+  + HT [@horvitz1952generalization]
+  + IPW (IPTW) [@hirano2003efficient]
+- Regression
+  + Outcome regression/outcome model [@rubin1979using], i.e. $E(Y\mid X, T)$
+  + $E(Y \mid \pi(\mathbf X))$ or $E(Y \mid \pi(\mathbf X), \mathbf X)$ [@rubin:1985; @hahn1998role; @gutman2013robust]
+  + Weighted regression of outcome $Y$ on treatment indicator $T$ with weights be the inverse of propensity scores
+- Mixture of above
+  + AIPW [@bang2005doubly]
+  + TMLE [@van2006targeted]
+
+
+***
+
+
+# ConditionalAverage Treatment Effect (CATE) {#CATE} 
+Sometimes also known as Heterogeneous Treatment effect (HTE). With assumption 1, 2, and 3, it's definition under two-arm scenario is 
+$$
+\begin{aligned}
+\tau(\mathbf x) &= E[Y^{(1)} - Y^{(-1)} \mid \mathbf X = \mathbf x] \\
+&=E(Y \mid \mathbf X = \mathbf x, T = 1) - E(Y \mid \mathbf X = \mathbf x, T = -1)
+\end{aligned}
+$$
+
+##  Randomized Experiments
+As discussed, the CATE estimation under randomized setting is generally a special case of those methods under observational studies. Nonetheless, we want to briefly introduce some interaction-oriented methods that are more suitable in randomized setting.
+
+### Interaction-oriented Methods
+Without loss of generality, outcome $Y$ can be written by
+$$
+E(Y) = f(\mathbf X) + 1[T=1]g(\mathbf X),
+$$
+then $E(Y\mid \mathbf X = \mathbf x, T = 1) = f(\mathbf x)+g(\mathbf x)$, $E(Y\mid \mathbf X = \mathbf x, T = -1) = f(\mathbf x)$, and therefore, $\tau(\mathbf x) = g(\mathbf x)$. So the problem of estimating treatment effect, or subgroup identification turns to be figuring out $g(\mathbf x)$. Notice that here $1(T=1)$ is independent of covariates $\mathbf X$, reflecting the nature of randomized trial.
+
+Also be aware that the covariates of $f(\cdot)$ and $g(\cdot)$ could be different. Denote $\mathcal Z$ and $\mathcal V$ are two subspaces of origincal covariate space $\mathcal X$, and 
+$$
+E(Y) = f(\mathbf V) + 1[T=1]g(\mathbf Z),
+$$
+where $\mathbf Z \in \mathcal Z, \mathbf V \in \mathcal V$, and $\mathcal V$ and $\mathcal Z$ can have overlap. Generally, covariates in $\mathbf V$ are called diagnostic variables and $\mathbf Z$ are predictive variables [@imai2013estimating]. Some variables are predictive only, indicating that they only react to the treatment; some variables are diagnostic only, meaning that they do nothing with treatment but impact the outcome; some variables are both predictive and diagnostic, while some variables play no effect at all. See Figure \ref{fig:prediag} for illustration.
+
+A bunch of methods are developed following this idea: Interaction trees [@su2008interaction; @su2009subgroup], **GUIDE** (Generalized unbiased interaction detection and estimation) [@loh2002regression; @loh2015regression], **MOB** (Model-Based Recursive Partitioning) [@zeileis2008model; @seibold2016model].
+
+```{r illustration, echo=FALSE, fig.width=10, fig.height=3.2, fig.cap="Illustration of predictive and diagnostic variable"}
+layout(matrix(seq(4),1,4))
+# Prognostic only
+plot(1,type = "n", xlab = "Covariate (X)", ylab = "Outcome (Y)", xlim = c(0,5), ylim = c(0,5), main = "Prognostic only", xaxt='n', yaxt='n')
+segments(0.2,   1, 4.8,   2, col = "darkblue", lwd = 2)
+segments(0.2, 2.5, 4.8, 3.5, col = "darkred" , lwd = 2)
+legend("topleft", legend = c("Treatment", "Control"), col = c("darkred", "darkblue"), lty = c(1,1), lwd = c(2,2))
+
+# Predictive only
+plot(1,type = "n", xlab = "Covariate (X)", ylab = "Outcome (Y)", xlim = c(0,5), ylim = c(0,5), main = "Predictive only", xaxt='n', yaxt='n')
+segments(0.2,   1, 4.8,   1, col = "darkblue", lwd = 2)
+segments(0.2, 2.5, 4.8, 3.5, col = "darkred" , lwd = 2)
+legend("topleft", legend = c("Treatment", "Control"), col = c("darkred", "darkblue"), lty = c(1,1), lwd = c(2,2))
+
+# Predictive & Prognostic
+plot(1,type = "n", xlab = "Covariate (X)", ylab = "Outcome (Y)", xlim = c(0,5), ylim = c(0,5), main = "Predictive & Prognostic", xaxt='n', yaxt='n')
+segments(0.2,   1, 4.8,   3.5, col = "darkblue", lwd = 2)
+segments(0.2, 2.5, 4.8, 3.5, col = "darkred" , lwd = 2)
+legend("topleft", legend = c("Treatment", "Control"), col = c("darkred", "darkblue"), lty = c(1,1), lwd = c(2,2))
+
+# None
+plot(1,type = "n", xlab = "Covariate (X)", ylab = "Outcome (Y)", xlim = c(0,5), ylim = c(0,5), main = "No Effect", xaxt='n', yaxt='n')
+segments(0.2,   1, 4.8,   1, col = "darkblue", lwd = 2)
+segments(0.2, 2.5, 4.8, 2.5, col = "darkred" , lwd = 2)
+legend("topleft", legend = c("Treatment", "Control"), col = c("darkred", "darkblue"), lty = c(1,1), lwd = c(2,2))
+```
+
+***
+
+
+## Observational Studies
+### Q-learning 
+**Q-learning** gets its name because its objective function plays a role similar to that of the Q or reward function in reinforcement learnin [@li2021robust] and is first used in estimating optimal *dynamic treatment regime* [@murphy2003optimal; @robins2004optimal; @schulte2014q]. The basic idea is focusing on the estimation of response surfaces $E[Y \mid \mathbf X, T]$, which is also known as g-computation [@robins1986new]. So this approach is also called the parametric g-formula [@hernan2010causal] in the literature.
+
+#### 1. Single-Learner (S-learner) 
+Estimate a joint function $\hat\mu(\mathbf X, T) = E[Y \mid \mathbf X, T]$ then
+\begin{equation}
+\hat\tau(\mathbf X) = \hat\mu(\mathbf X, 1) - \hat\mu(\mathbf X, -1). \label{eq:Slearner}
+\end{equation}
+This approach is usually named as G-computation estimators, Parametric G-formula, or **S-learner**. But $T$ can be neglected or underweighted if $X$ has high dimension
+
+#### 2. Two-Learner (T-learner)
+Estimate response surfaces $E[Y \mid \mathbf X, T]$ separately, i.e., one function $\mu_1(\mathbf X) = E[Y \mid \mathbf X, T= 1]$ for $T=1$ and another $\mu_{-1}(\mathbf X) = E[Y \mid \mathbf X, T= -1]$ for $T=-1$. Then
+\begin{equation}
+\hat\tau(\mathbf X) = \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) \label{eq:Tlearner}
+\end{equation}
+It is called **T-learner**. But lose data efficiency as only part of data is used in each model.
+
+
+### A-learning
+The basic idea of advantage-learning or A-learning, is to estimate treatment effect $\tau(\mathbf x)$ directly, rather than estimating the reponse surfaces like Q-learning which can be deemed as an indirect way. Here are some selected approaches in this camp.
+
+#### Outcome Weighted Methods/Modified Outcome Methods (MOM)
+For a 50:50 randomized trial, we can make following transformation [@signorovitch2007identifying]
+$$
+Y^* = 
+\begin{cases}
+2Y \quad &\text{if }\ T=1 \\
+-2Y \quad &\text{if }\ T=-1
+\end{cases},
+$$ 
+or equivalently, $Y^* = 2TY$, and then, we may notice that
+$$
+\begin{aligned}
+E(Y^*\mid \mathbf X) 
+& = E(Y^*\mid \mathbf X, T = 1)\Pr(T=1) + E(Y^*\mid \mathbf X, T = -1)\Pr(T=-1) \\
+& = E(2Y\mid \mathbf X, T = 1)/2 + E(-2Y\mid \mathbf X, T = -1)/2 \\
+& = E(Y\mid \mathbf X, T = 1) - E(Y\mid \mathbf X, T = -1) \\
+& = \tau(\mathbf X).
+\end{aligned}
+$$
+This means that we can directly fit a model on $Y^*$ using $\mathbf X$ and it will return an unbiased estimator of treatment effect (even though the variance could be very large). \newline
+Similarly, from equation (\ref{eq:IPW}), we know that
+\begin{equation}
+\tau(\mathbf x) = E\left[ \frac{TY}{T\pi(\mathbf X) + (1-T)/2} \;\middle|\; \mathbf  X = \mathbf x \right] \label{eq:OWIPW}
+\end{equation}
+The corresponding transformation or modification of outcome is $Y^* = \frac{TY}{T\pi(\mathbf X) + (1-T)/2}$ and this MOM-IPW loss function is
+\begin{equation}
+E[l(\hat\tau, \tau)] = E\left[ \left\{ \hat\tau(\mathbf X)- \frac{TY}{T\pi(\mathbf X) + (1-T)/2} \right\}^2 \right] \label{eq:MOMIPW}
+\end{equation}
+
+Notably, this method though simple and straightforward, suffers from the *limitation of outcome type and the larger variance*.
+
+
+#### Modified Covariate Methods (MCM)
+Observing that we only need to optimize the loss function such as (\ref{eq:MOMIPW}), @tian2014simple modified MOM methods by adjusting the proxy loss function a little bit
+$$
+E[\{\hat\tau(X) - Y^*\}^2] = E[c^2\{\hat\tau(X)/c - Y\}^2]
+$$
+and then minimizing the right-hand-size, which is the loss function for MCM, targeting on $\hat\tau(X)$ directly as well. For example, the MCM version of the loss function for randomized trial is thus
+$$
+E\left[ \{\hat\tau(X)\cdot W/2-Y \}^2 \right].
+$$
+For MOM-IPW version, with some modification on (\ref{eq:MOMIPW}), the loss function for MCM-IPW version is derived as
+$$
+E\left[ \left\{ \hat\tau(X) \cdot [(W+1)/2 - \pi(X)]- Y \right\}^2  \right]
+$$
+and with further adjustment, it turns out to be
+$$
+E\left[ \frac{\left\{ \hat\tau(X)\cdot W- Y \right\}^2}{W\pi(X) + (1-W)/2} \right].
+$$
+So, we no longer need to worry about the outcome type.
+
+#### R-learner 
+R-learner [@NieQuasi2020] can be considered as a very special case of MCM, but it does not follow the same logic flow as MCM. It adopts the Robinson's decomposition [@robinson1988root] to connect the CATE with the observed outcome
+\begin{equation}
+E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \label{eq:Rlearner}
+\end{equation}
+where $m(\mathbf X) = E[Y \mid \mathbf X]$.
+
+#### X-learner \label{sec:xlearner}
+X-learner [@kunzel2019metalearners] enjoys the simplicity of T-learner but fixes its data efficiency issue by targeting on the treatment effects rather than the response surfaces. The main procedure is the following:
+
+- Step 1: Estimate $\hat\mu_1(\cdot)$ and $\hat\mu_{-1}(\cdot)$ just like T-learner
+- Step 2a: Impute ITEs for subjects in $T=1$ arm by $\hat\tau_{1,i} = Y_i - \hat\mu_{-1}(\mathbf x_i)$ (recall that $\tau_i = Y_i^{(1)} - Y_i^{(-1)}$) and ITEs for subjects in $T=-1$ arm by $\hat\tau_{-1,i} = \hat\mu_{1}(\mathbf x_i) - Y_i$
+- Step 2b: Fit one model $\hat\tau_1(\cdot)$ to predict $\hat\tau_{1,i}$ using data in $T=1$ arm, i.e., $\{(\mathbf x_i, Y_i)\}_{i:T_i = 1}$; and fit another model $\hat\tau_{-1}(\cdot)$ to predict $\hat\tau_{-1,i}$ using data in $T=-1$ arm, i.e., $\{(\mathbf x_i, Y_i)\}_{i:T_i = -1}$
+- Step 3: Combine $\hat\tau_1(\cdot)$ and $\hat\tau_{-1}(\cdot)$ to achieve the final treatment effect model $\hat\tau(\mathbf x) = g(\mathbf x)\tau_{-1}(\mathbf x) + (1-g(\mathbf x))\tau_{1}(\mathbf x)$, where $g(\cdot)$ is some weighting function, e.g., propensity score. 
+
+Notably, when calculating $\hat\tau_1(\cdot)$, for example, X-learner uses whole data, including instances from both $T=1$ and $T=-1$, which is deems as fixing the data efficiency issue in T-learner approach.
+
+### Other tree-based methods 
+There are many tree-based methods such as virtual trees [@foster2013subgroup], causal tree/forest [@athey2016recursive; @wager2018estimation], causal boosting/PTO forest/causal MARS [@powers2018some]. Actually, most of them can be categorized as S- or T-learners on a high-level.
 
 
 
-
-
-
-
-
-
+***
 # Appendix
-## Proof of IPW \label{app1}
+## Proof of IPW {#app1}
 $$
 \begin{aligned}
 & E\left[\frac{1[T = t]Y}{\Pr(T=t \mid \mathbf X)}\right] \\
@@ -232,7 +438,7 @@ $$
 \end{aligned}
 $$
 
-## Proof of AIPW \label{app2}
+## Proof of AIPW {#app2}
 To demonstrate that AIPW can be consistent even when propensity score is not correctly specified, we only need to focus on the general element $E\left[\frac{1[T = t]Y}{\pi^{(t)}(\mathbf X)} - \frac{1[T=t] -\pi^{(t)}(\mathbf X)}{\pi^{(t)}(\mathbf X)} \mu_t(\mathbf X)\right]$.
 
 When propensity score is wrong, i.e., $\pi^{(t)}(\mathbf X)\neq \Pr(T = t\mid \mathbf X)$ but response surface estimation is correct, i.e., $\mu_t(\mathbf X) = E(Y^{(t)} \mid \mathbf X)$,
@@ -250,7 +456,7 @@ $$
 Therefore, under this situation, AIPW in equation (\ref{eq:AIPW}) becomes $\tau^{AIPW}=E\left[Y^{(1)}\right] - E\left[Y^{(-1)}\right] = \tau$.
 
 
-
+***
 # References
 \small
 \setlength{\parindent}{-0.5in}

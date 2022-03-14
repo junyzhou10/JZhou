@@ -1,0 +1,103 @@
+---
+author: Junyi Zhou
+date: "2022-01-01"
+description: 'Meta-Learners'
+categories:
+- Lectures/Slides
+tags:
+- Causal Inference
+title: 'Meta-Learners (working)'
+
+fontsize: 12pt
+
+header-includes:
+- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+- \usepackage{setspace}\doublespacing
+- \usepackage{array}
+- \usepackage{booktabs}
+- \usepackage{multirow}
+- \usepackage{threeparttable}
+- \usepackage{graphicx}
+- \usepackage{mathtools}
+
+indent: true
+
+bibliography: ref.bib
+biblio-style: apa
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(knitr)
+library(DT)
+library(xtable)
+library(kableExtra)
+```
+
+
+# Meta-learners for treatment effect estimation & optimal treatment recommendation under multiple treatment setting
+Meta-learners are a simple way to leverage off-the-shelf predictive machine learning methods to estimate CATE/HTE/ITE. 
+
+![](/images/ReviewCausal_1.png)
+
+
+## Treatment Effect Estimation
+
+**Q-learning** gets its name because its objective function plays a role similar to that of the Q or reward function in reinforcement learnin [@li2021robust] and is first used in estimating optimal *dynamic treatment regime* [@murphy2003optimal; @robins2004optimal; @schulte2014q]. The basic idea is focusing on the estimation of response surfaces $E[Y \mid \mathbf X, T]$, which is also known as g-computation [@robins1986new]. So this approach is also called the parametric g-formula [@hernan2010causal] in the literature. 
+
+Specifically, we here consider Single or S-learner and Two or T-learner method in the Q-learning camp. Both methods can be easily extended to mutliple treatment scenarios. For **S-learner**, we estimate a joint function $\hat\mu(\mathbf X, T) = E[Y \mid \mathbf X, T]$ with $T \in \{1, 2,...,K\}$ then the HTE between treatment $i$ and $j$, $i\neq j$, can be found by
+\begin{equation}
+\hat\tau_i^{(j)}(\mathbf X) = \hat\mu(\mathbf X, j) - \hat\mu(\mathbf X, i). \label{eq:Slearner}
+\end{equation}
+The whole data is used to estimate function $\mu()$ but since $T$ is considered as one of the covariates, it can be neglected or underweighted if $X$ has high dimension.
+
+**T-learner**, on the other hand, estimate $E[Y \mid \mathbf X, T]$ which only use part of the observed data. For example, when there are $K$ treatments, a total of $K$ functions need to by estimated, i.e., $\mu_k(\mathbf X) = E[Y \mid \mathbf X, T= k]$ for $k=1,...,K$. Then, the HTE can be calculated by
+\begin{equation}
+\hat\tau_i^{(j)}(\mathbf X) = \hat\mu_j(\mathbf X) - \hat\mu_{i}(\mathbf X)\label{eq:Tlearner}
+\end{equation}
+But it can lose the data efficiency due to the fact that each model is estimated separately.
+
+The basic idea of advantage-learning or **A-learning**, is to estimate treatment effect $\tau(\mathbf x)$ directly. The X-learner and R-learner are considered under this framework. Both approach is initially proposed for two treatments scenario, so we first extend them to multiple treatments.
+
+**X-learner** [@kunzel2019metalearners] enjoys the simplicity of T-learner but fixes its data efficiency issue by targeting on the treatment effects rather than the response surfaces. The main procedure is the following:
+
+- Step 1: Estimate $\hat\mu_1(\cdot)$ and $\hat\mu_{-1}(\cdot)$ just like T-learner
+- Step 2a: Impute ITEs for subjects in $T=1$ arm by $\hat\tau_{1,i} = Y_i - \hat\mu_{-1}(\mathbf x_i)$ (recall that $\tau_i = Y_i^{(1)} - Y_i^{(-1)}$) and ITEs for subjects in $T=-1$ arm by $\hat\tau_{-1,i} = \hat\mu_{1}(\mathbf x_i) - Y_i$
+- Step 2b: Fit one model $\hat\tau_1(\cdot)$ to predict $\hat\tau_{1,i}$ using data in $T=1$ arm, i.e., $\{(\mathbf x_i, Y_i)\}_{i:T_i = 1}$; and fit another model $\hat\tau_{-1}(\cdot)$ to predict $\hat\tau_{-1,i}$ using data in $T=-1$ arm, i.e., $\{(\mathbf x_i, Y_i)\}_{i:T_i = -1}$
+- Step 3: Combine $\hat\tau_1(\cdot)$ and $\hat\tau_{-1}(\cdot)$ to achieve the final treatment effect model $\hat\tau(\mathbf x) = g(\mathbf x)\tau_{-1}(\mathbf x) + (1-g(\mathbf x))\tau_{1}(\mathbf x)$, where $g(\cdot)$ is some weighting function, e.g., propensity score. 
+
+**R-learner** [@NieQuasi2020] adopts the Robinson's decomposition [@robinson1988root] to connect the HTE with the observed outcome
+\begin{equation}
+E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \label{eq:Rlearner}
+\end{equation}
+where $m(\mathbf X) = E[Y \mid \mathbf X]$. Following (citation), the loss function of R-learner for multiple treatment is
+\begin{equation}
+\arg\min_{\boldsymbol \tau_i} \ \mathbb E\left[\left( Y - m(\mathbf X) - \sum_{k\neq i} (1[T=k]-\pi^{(k)}(\mathbf X))\tau_i^{(k)}(\mathbf X)\right)^2\right] \label{eq:rawRL}
+\end{equation}
+where denote the estimated treatment effects $\hat{\boldsymbol \tau}_i = (\hat\tau_i^{(1)},...,\hat\tau_i^{(k-1)}, \hat\tau_i^{(k+1)}, ..., \hat\tau_i^{(K)})$. In practice, we can estimate $\hat m()$ and $\hat\pi()$ in the first stage and plug in to obtain $\hat{\boldsymbol \tau}_i$. Notably, with different reference group selection, loss functions (\ref{eq:rawRL}) are different so that we can have $\hat{\boldsymbol \tau}_1,...,\hat{\boldsymbol \tau}_K$.
+
+
+## Treatment recommendation
+For S- and T- learner, the optimal treatment given covariate $\mathbf x$ can be directly derived from
+$$
+T^{\text{opt}} = \arg\max_k \hat\mu(\mathbf x, k)
+$$
+for S-learner and 
+$$
+T^{\text{opt}} = \arg\max_k \hat\mu_k(\mathbf x)
+$$
+for T-learner, suppose the larger outcome the better.
+
+Other than these learners, the angle-based clutering method by @qi2020multi is designed for optimal treatment recommendation with multiple treatments. 
+
+
+
+
+
+
+***
+# Reference
+
