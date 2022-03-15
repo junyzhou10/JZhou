@@ -339,7 +339,7 @@ But how to achieve a good estimator of propensity score <span class="math inline
 </div>
 <div id="IPW" class="section level3">
 <h3>Inverse Probability Weighting (IPW)</h3>
-<p>It can be shown that (Proof in <a href="app1">Appendix</a>)
+<p>It can be shown that (Proof in <a href="#app1">Appendix</a>)
 <span class="math display">\[
 E[Y^{(t)}] = E\left[\frac{1[T = t]Y}{Pr(T=t \mid \mathbf X)}\right]
 \]</span>
@@ -383,7 +383,7 @@ where the second equation comes from:
 \tau^{\text{AIPW}} =&amp; \underbrace{E\left[\frac{1[T = 1]Y}{\pi(\mathbf X)}\right] - E\left[\frac{1[T = -1]Y}{1-\pi(\mathbf X)}\right]}_\text{IPW} \nonumber \\
 &amp;- \underbrace{E\left[\frac{1[T=1] -\pi(\mathbf X)}{\pi(\mathbf X)}\mu_1(\mathbf X) + \frac{1[T=1] -\pi(\mathbf X)}{1-\pi(\mathbf X)} \mu_{-1}(\mathbf X)\right]}_\text{Augmentation} \tag{3}
 \end{align}\]</span>
-This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified <span class="citation">(Kurz <a href="#ref-kurz2021augmented" role="doc-biblioref">2021</a>)</span>. If the propensity score is correctly specified, then <span class="math inline">\(E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0\)</span> which simplifies AIPW to IPW no matter whether response surface functions <span class="math inline">\(\mu_T()\)</span> are correct. On the other hand, if response model <span class="math inline">\(\mu_T()\)</span> are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in <a href="app2">Appendix</a>)</p>
+This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified <span class="citation">(Kurz <a href="#ref-kurz2021augmented" role="doc-biblioref">2021</a>)</span>. If the propensity score is correctly specified, then <span class="math inline">\(E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0\)</span> which simplifies AIPW to IPW no matter whether response surface functions <span class="math inline">\(\mu_T()\)</span> are correct. On the other hand, if response model <span class="math inline">\(\mu_T()\)</span> are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in <a href="#app2">Appendix</a>)</p>
 </div>
 <div id="CBPS" class="section level3">
 <h3>Covariate Balancing Propensity Score (CBPS)</h3>

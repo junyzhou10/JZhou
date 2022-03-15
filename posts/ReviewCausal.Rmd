@@ -166,7 +166,7 @@ But how to achieve a good estimator of propensity score $\pi(\cdot)$ turns out t
 
 
 ### Inverse Probability Weighting (IPW) {#IPW}
-It can be shown that (Proof in [Appendix](app1))
+It can be shown that (Proof in [Appendix](#app1))
 $$
 E[Y^{(t)}] = E\left[\frac{1[T = t]Y}{Pr(T=t \mid \mathbf X)}\right]
 $$
@@ -210,7 +210,7 @@ $$
 \tau^{\text{AIPW}} =& \underbrace{E\left[\frac{1[T = 1]Y}{\pi(\mathbf X)}\right] - E\left[\frac{1[T = -1]Y}{1-\pi(\mathbf X)}\right]}_\text{IPW} \nonumber \\
 &- \underbrace{E\left[\frac{1[T=1] -\pi(\mathbf X)}{\pi(\mathbf X)}\mu_1(\mathbf X) + \frac{1[T=1] -\pi(\mathbf X)}{1-\pi(\mathbf X)} \mu_{-1}(\mathbf X)\right]}_\text{Augmentation} (\#eq:AIPW)
 \end{align}
-This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified [@kurz2021augmented]. If the propensity score is correctly specified, then $E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0$ which simplifies AIPW to IPW no matter whether response surface functions $\mu_T()$ are correct. On the other hand, if response model $\mu_T()$ are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in [Appendix](app2))
+This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified [@kurz2021augmented]. If the propensity score is correctly specified, then $E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0$ which simplifies AIPW to IPW no matter whether response surface functions $\mu_T()$ are correct. On the other hand, if response model $\mu_T()$ are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in [Appendix](#app2))
 
 
 ### Covariate Balancing Propensity Score (CBPS) {#CBPS}
