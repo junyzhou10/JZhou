@@ -60,7 +60,7 @@ Y = 1[T = 1]Y^{(1)} + 1[T = -1]Y^{(-1)}.
 $$
 The individual causal effect, or individual treatment effect (ITE), is thus defined by
 \begin{equation}
-\tau_i = Y_i^{(1)} - Y_i^{(-1)} \label{eq:ITE}
+\tau_i = Y_i^{(1)} - Y_i^{(-1)} (\#eq:ITE)
 \end{equation}
 for subject $i$, but it is unobservable in real world.
 
@@ -172,7 +172,7 @@ E[Y^{(t)}] = E\left[\frac{1[T = t]Y}{Pr(T=t \mid \mathbf X)}\right]
 $$
 which leads to
 \begin{equation}
-\tau = E[Y^{(1)} - Y^{(-1)}] = E\left[\frac{1[T = 1]Y}{\pi(\mathbf X)}\right] - E\left[\frac{1[T = -1]Y}{1-\pi(\mathbf X)}\right]. \label{eq:IPW}
+\tau = E[Y^{(1)} - Y^{(-1)}] = E\left[\frac{1[T = 1]Y}{\pi(\mathbf X)}\right] - E\left[\frac{1[T = -1]Y}{1-\pi(\mathbf X)}\right].  (\#eq:IPW)
 \end{equation}
 Thus, the estimator of ATE based on observed dataset is
 $$
@@ -208,7 +208,7 @@ $$
 @robins1995analysis augmented the IPW by a weighted average of the outcome model
 \begin{align}
 \tau^{\text{AIPW}} =& \underbrace{E\left[\frac{1[T = 1]Y}{\pi(\mathbf X)}\right] - E\left[\frac{1[T = -1]Y}{1-\pi(\mathbf X)}\right]}_\text{IPW} \nonumber \\
-&- \underbrace{E\left[\frac{1[T=1] -\pi(\mathbf X)}{\pi(\mathbf X)}\mu_1(\mathbf X) + \frac{1[T=1] -\pi(\mathbf X)}{1-\pi(\mathbf X)} \mu_{-1}(\mathbf X)\right]}_\text{Augmentation} \label{eq:AIPW}
+&- \underbrace{E\left[\frac{1[T=1] -\pi(\mathbf X)}{\pi(\mathbf X)}\mu_1(\mathbf X) + \frac{1[T=1] -\pi(\mathbf X)}{1-\pi(\mathbf X)} \mu_{-1}(\mathbf X)\right]}_\text{Augmentation} (\#eq:AIPW)
 \end{align}
 This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified [@kurz2021augmented]. If the propensity score is correctly specified, then $E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0$ which simplifies AIPW to IPW no matter whether response surface functions $\mu_T()$ are correct. On the other hand, if response model $\mu_T()$ are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in [Appendix](app2))
 
@@ -252,22 +252,22 @@ The first step is to estimate the propensity score. There are several commonly a
 
 - Logistic regression related. For instance, including all interaction terms as well as squared terms long with LASSO-type penalty for sparsity
 - Machine learning algorithms, such as CART [@breiman2017classification], BART [@chipman1998bayesian; @chipman2002bayesian; @chipman2010bart], GAM [@hastie1986generalized], GBM [@friedman2001greedy], Random Forest [@breiman2001random], XGBoost [@Chen_2016], Super Learner [@van2007super], etc.
-- Weights (or propensity score) estimated on purposely for covariate balancing, e.g., [CBPS](CBPS) [@imai2014covariate], Entropy balancing [@hainmueller2012entropy], EBCM (empirical balancing calibration weighting) [@chan2016globally], etc. (Mostly, PS/weights obtained in this approach are mainly for weighting method)
+- Weights (or propensity score) estimated on purposely for covariate balancing, e.g., [CBPS](#CBPS) [@imai2014covariate], Entropy balancing [@hainmueller2012entropy], EBCM (empirical balancing calibration weighting) [@chan2016globally], etc. (Mostly, PS/weights obtained in this approach are mainly for weighting method)
 
 In second step, we plug in the propensity score estimated from the first step for the desired estimand. The common approaches for ATE/ATT include:
 
-- [Matching](Match) [@rosenbaum1983central]
+- [Matching](#Matching) [@rosenbaum1983central]
 - Subclassification [@rosenbaum1984reducing]
 - Weighting
   + HT [@horvitz1952generalization]
-  + [IPW](IPW) (IPTW) [@hirano2003efficient]
+  + [IPW](#IPW) (IPTW) [@hirano2003efficient]
 - Regression
   + Outcome regression/outcome model [@rubin1979using], i.e. $E(Y\mid X, T)$
   + $E(Y \mid \pi(\mathbf X))$ or $E(Y \mid \pi(\mathbf X), \mathbf X)$ [@rubin:1985; @hahn1998role; @gutman2013robust]
   + Weighted regression of outcome $Y$ on treatment indicator $T$ with weights be the inverse of propensity scores
 - Mixture of above
-  + [AIPW](AIPW) [@bang2005doubly]
-  + [TMLE](TMLE) [@van2006targeted]
+  + [AIPW](#AIPW) [@bang2005doubly]
+  + [TMLE](#TMLE) [@van2006targeted]
 
 
 ***
@@ -296,11 +296,11 @@ Also be aware that the covariates of $f(\cdot)$ and $g(\cdot)$ could be differen
 $$
 E(Y) = f(\mathbf V) + 1[T=1]g(\mathbf Z),
 $$
-where $\mathbf Z \in \mathcal Z, \mathbf V \in \mathcal V$, and $\mathcal V$ and $\mathcal Z$ can have overlap. Generally, covariates in $\mathbf V$ are called diagnostic variables and $\mathbf Z$ are predictive variables [@imai2013estimating]. Some variables are predictive only, indicating that they only react to the treatment; some variables are diagnostic only, meaning that they do nothing with treatment but impact the outcome; some variables are both predictive and diagnostic, while some variables play no effect at all. See Figure \ref{fig:prediag} for illustration.
+where $\mathbf Z \in \mathcal Z, \mathbf V \in \mathcal V$, and $\mathcal V$ and $\mathcal Z$ can have overlap. Generally, covariates in $\mathbf V$ are called diagnostic variables and $\mathbf Z$ are predictive variables [@imai2013estimating]. Some variables are predictive only, indicating that they only react to the treatment; some variables are diagnostic only, meaning that they do nothing with treatment but impact the outcome; some variables are both predictive and diagnostic, while some variables play no effect at all. See Figure (\@ref(fig:prediag)) for illustration.
 
 A bunch of methods are developed following this idea: Interaction trees [@su2008interaction; @su2009subgroup], **GUIDE** (Generalized unbiased interaction detection and estimation) [@loh2002regression; @loh2015regression], **MOB** (Model-Based Recursive Partitioning) [@zeileis2008model; @seibold2016model].
 
-```{r illustration, echo=FALSE, fig.width=10, fig.height=3.2, fig.cap="Illustration of predictive and diagnostic variable"}
+```{r prediag, echo=FALSE, fig.width=10, fig.height=3.2, fig.cap="\\label{fig:prediag}Illustration of predictive and diagnostic variable"}
 layout(matrix(seq(4),1,4))
 # Prognostic only
 plot(1,type = "n", xlab = "Covariate (X)", ylab = "Outcome (Y)", xlim = c(0,5), ylim = c(0,5), main = "Prognostic only", xaxt='n', yaxt='n')
@@ -337,14 +337,14 @@ legend("topleft", legend = c("Treatment", "Control"), col = c("darkred", "darkbl
 #### 1. Single-Learner (S-learner) 
 Estimate a joint function $\hat\mu(\mathbf X, T) = E[Y \mid \mathbf X, T]$ then
 \begin{equation}
-\hat\tau(\mathbf X) = \hat\mu(\mathbf X, 1) - \hat\mu(\mathbf X, -1). \label{eq:Slearner}
+\hat\tau(\mathbf X) = \hat\mu(\mathbf X, 1) - \hat\mu(\mathbf X, -1). (\#eq:Slearner)
 \end{equation}
 This approach is usually named as G-computation estimators, Parametric G-formula, or **S-learner**. But $T$ can be neglected or underweighted if $X$ has high dimension
 
 #### 2. Two-Learner (T-learner)
 Estimate response surfaces $E[Y \mid \mathbf X, T]$ separately, i.e., one function $\mu_1(\mathbf X) = E[Y \mid \mathbf X, T= 1]$ for $T=1$ and another $\mu_{-1}(\mathbf X) = E[Y \mid \mathbf X, T= -1]$ for $T=-1$. Then
 \begin{equation}
-\hat\tau(\mathbf X) = \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) \label{eq:Tlearner}
+\hat\tau(\mathbf X) = \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) (\#eq:Tlearner)
 \end{equation}
 It is called **T-learner**. But lose data efficiency as only part of data is used in each model.
 
@@ -372,20 +372,20 @@ E(Y^*\mid \mathbf X)
 \end{aligned}
 $$
 This means that we can directly fit a model on $Y^*$ using $\mathbf X$ and it will return an unbiased estimator of treatment effect (even though the variance could be very large). \newline
-Similarly, from equation (\ref{eq:IPW}), we know that
+Similarly, from equation \@ref(eq:IPW), we know that
 \begin{equation}
-\tau(\mathbf x) = E\left[ \frac{TY}{T\pi(\mathbf X) + (1-T)/2} \;\middle|\; \mathbf  X = \mathbf x \right] \label{eq:OWIPW}
+\tau(\mathbf x) = E\left[ \frac{TY}{T\pi(\mathbf X) + (1-T)/2} \;\middle|\; \mathbf  X = \mathbf x \right] (\#eq:OWIPW)
 \end{equation}
 The corresponding transformation or modification of outcome is $Y^* = \frac{TY}{T\pi(\mathbf X) + (1-T)/2}$ and this MOM-IPW loss function is
 \begin{equation}
-E[l(\hat\tau, \tau)] = E\left[ \left\{ \hat\tau(\mathbf X)- \frac{TY}{T\pi(\mathbf X) + (1-T)/2} \right\}^2 \right] \label{eq:MOMIPW}
+E[l(\hat\tau, \tau)] = E\left[ \left\{ \hat\tau(\mathbf X)- \frac{TY}{T\pi(\mathbf X) + (1-T)/2} \right\}^2 \right] (\#eq:MOMIPW)
 \end{equation}
 
 Notably, this method though simple and straightforward, suffers from the *limitation of outcome type and the larger variance*.
 
 
 #### 2. Modified Covariate Methods (MCM)
-Observing that we only need to optimize the loss function such as (\ref{eq:MOMIPW}), @tian2014simple modified MOM methods by adjusting the proxy loss function a little bit
+Observing that we only need to optimize the loss function such as \@ref(eq:MOMIPW), @tian2014simple modified MOM methods by adjusting the proxy loss function a little bit
 $$
 E[\{\hat\tau(X) - Y^*\}^2] = E[c^2\{\hat\tau(X)/c - Y\}^2]
 $$
@@ -393,7 +393,7 @@ and then minimizing the right-hand-size, which is the loss function for MCM, tar
 $$
 E\left[ \{\hat\tau(X)\cdot W/2-Y \}^2 \right].
 $$
-For MOM-IPW version, with some modification on (\ref{eq:MOMIPW}), the loss function for MCM-IPW version is derived as
+For MOM-IPW version, with some modification on \@ref(eq:MOMIPW), the loss function for MCM-IPW version is derived as
 $$
 E\left[ \left\{ \hat\tau(X) \cdot [(W+1)/2 - \pi(X)]- Y \right\}^2  \right]
 $$
@@ -406,11 +406,11 @@ So, we no longer need to worry about the outcome type.
 #### 3. R-learner 
 R-learner [@NieQuasi2020] can be considered as a very special case of MCM, but it does not follow the same logic flow as MCM. It adopts the Robinson's decomposition [@robinson1988root] to connect the CATE with the observed outcome
 \begin{equation}
-E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \label{eq:Rlearner}
+E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) (\#eq:Rlearner)
 \end{equation}
 where $m(\mathbf X) = E[Y \mid \mathbf X]$.
 
-#### 4. X-learner \label{sec:xlearner}
+#### 4. X-learner {#sec:xlearner}
 X-learner [@kunzel2019metalearners] enjoys the simplicity of T-learner but fixes its data efficiency issue by targeting on the treatment effects rather than the response surfaces. The main procedure is the following:
 
 - Step 1: Estimate $\hat\mu_1(\cdot)$ and $\hat\mu_{-1}(\cdot)$ just like T-learner
@@ -497,7 +497,7 @@ $$
 =& E\left[Y^{(t)}\right] .
 \end{aligned}
 $$
-Therefore, under this situation, AIPW in equation (\ref{eq:AIPW}) becomes $\tau^{AIPW}=E\left[Y^{(1)}\right] - E\left[Y^{(-1)}\right] = \tau$.
+Therefore, under this situation, AIPW in equation \@ref(eq:AIPW) becomes $\tau^{AIPW}=E\left[Y^{(1)}\right] - E\left[Y^{(-1)}\right] = \tau$.
 
 
 ***

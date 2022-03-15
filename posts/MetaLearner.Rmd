@@ -90,13 +90,13 @@ The basic idea of advantage-learning or **A-learning**, is to estimate treatment
 #### R-learner
 **R-learner** [@NieQuasi2020] adopts the Robinson's decomposition [@robinson1988root] to connect the HTE with the observed outcome
 \begin{equation}
-E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \label{eq:Rlearner}
+E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) (\#eq:Rlearner)
 \end{equation}
 where $m(\mathbf X) = E[Y \mid \mathbf X]$. Following (citation), the loss function of R-learner for multiple treatment is
 \begin{equation}
-\arg\min_{\boldsymbol \tau_i} \ \mathbb E\left[\left( Y - m(\mathbf X) - \sum_{k\neq i} (1[T=k]-\pi^{(k)}(\mathbf X))\tau_i^{(k)}(\mathbf X)\right)^2\right] \label{eq:rawRL}
+\arg\min_{\boldsymbol \tau_i} \ \mathbb E\left[\left( Y - m(\mathbf X) - \sum_{k\neq i} (1[T=k]-\pi^{(k)}(\mathbf X))\tau_i^{(k)}(\mathbf X)\right)^2\right] (\#eq:rawRL)
 \end{equation}
-where denote the estimated treatment effects $\hat{\boldsymbol \tau}_i = (\hat\tau_i^{(1)},...,\hat\tau_i^{(k-1)}, \hat\tau_i^{(k+1)}, ..., \hat\tau_i^{(K)})$. In practice, we can estimate $\hat m()$ and $\hat\pi()$ in the first stage and plug in to obtain $\hat{\boldsymbol \tau}_i$. Notably, with different reference group selection, loss functions (\ref{eq:rawRL}) are different so that we can have $\hat{\boldsymbol \tau}_1,...,\hat{\boldsymbol \tau}_K$.
+where denote the estimated treatment effects $\hat{\boldsymbol \tau}_i = (\hat\tau_i^{(1)},...,\hat\tau_i^{(k-1)}, \hat\tau_i^{(k+1)}, ..., \hat\tau_i^{(K)})$. In practice, we can estimate $\hat m()$ and $\hat\pi()$ in the first stage and plug in to obtain $\hat{\boldsymbol \tau}_i$. Notably, with different reference group selection, loss functions (\@ref(eq:rawRL)) are different so that we can have $\hat{\boldsymbol \tau}_1,...,\hat{\boldsymbol \tau}_K$.
 
 
 ## Treatment recommendation

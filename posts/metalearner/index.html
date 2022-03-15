@@ -252,14 +252,14 @@ But it can lose the data efficiency due to the fact that each model is estimated
 <div id="r-learner" class="section level4">
 <h4>R-learner</h4>
 <p><strong>R-learner</strong> <span class="citation">(Nie and Wager <a href="#ref-NieQuasi2020" role="doc-biblioref">2020</a>)</span> adopts the Robinson’s decomposition <span class="citation">(Robinson <a href="#ref-robinson1988root" role="doc-biblioref">1988</a>)</span> to connect the HTE with the observed outcome
-<span class="math display">\[\begin{equation}
-E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \label{eq:Rlearner}
+<span class="math display" id="eq:Rlearner">\[\begin{equation}
+E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \tag{1}
 \end{equation}\]</span>
 where <span class="math inline">\(m(\mathbf X) = E[Y \mid \mathbf X]\)</span>. Following (citation), the loss function of R-learner for multiple treatment is
-<span class="math display">\[\begin{equation}
-\arg\min_{\boldsymbol \tau_i} \ \mathbb E\left[\left( Y - m(\mathbf X) - \sum_{k\neq i} (1[T=k]-\pi^{(k)}(\mathbf X))\tau_i^{(k)}(\mathbf X)\right)^2\right] \label{eq:rawRL}
+<span class="math display" id="eq:rawRL">\[\begin{equation}
+\arg\min_{\boldsymbol \tau_i} \ \mathbb E\left[\left( Y - m(\mathbf X) - \sum_{k\neq i} (1[T=k]-\pi^{(k)}(\mathbf X))\tau_i^{(k)}(\mathbf X)\right)^2\right] \tag{2}
 \end{equation}\]</span>
-where denote the estimated treatment effects <span class="math inline">\(\hat{\boldsymbol \tau}_i = (\hat\tau_i^{(1)},...,\hat\tau_i^{(k-1)}, \hat\tau_i^{(k+1)}, ..., \hat\tau_i^{(K)})\)</span>. In practice, we can estimate <span class="math inline">\(\hat m()\)</span> and <span class="math inline">\(\hat\pi()\)</span> in the first stage and plug in to obtain <span class="math inline">\(\hat{\boldsymbol \tau}_i\)</span>. Notably, with different reference group selection, loss functions () are different so that we can have <span class="math inline">\(\hat{\boldsymbol \tau}_1,...,\hat{\boldsymbol \tau}_K\)</span>.</p>
+where denote the estimated treatment effects <span class="math inline">\(\hat{\boldsymbol \tau}_i = (\hat\tau_i^{(1)},...,\hat\tau_i^{(k-1)}, \hat\tau_i^{(k+1)}, ..., \hat\tau_i^{(K)})\)</span>. In practice, we can estimate <span class="math inline">\(\hat m()\)</span> and <span class="math inline">\(\hat\pi()\)</span> in the first stage and plug in to obtain <span class="math inline">\(\hat{\boldsymbol \tau}_i\)</span>. Notably, with different reference group selection, loss functions (<a href="#eq:rawRL">(2)</a>) are different so that we can have <span class="math inline">\(\hat{\boldsymbol \tau}_1,...,\hat{\boldsymbol \tau}_K\)</span>.</p>
 </div>
 </div>
 </div>
