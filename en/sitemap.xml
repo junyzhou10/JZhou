@@ -3,10 +3,10 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://jzhou.org/tags/causal-inference/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+    <lastmod>2022-02-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://jzhou.org/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+    <lastmod>2022-02-22T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
@@ -19,10 +19,10 @@
                 />
   </url><url>
     <loc>https://jzhou.org/posts/metalearner/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+    <lastmod>2022-02-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://jzhou.org/posts/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+    <lastmod>2022-02-22T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
@@ -34,11 +34,8 @@
                 href="https://jzhou.org/posts/"
                 />
   </url><url>
-    <loc>https://jzhou.org/posts/reviewcausal/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://jzhou.org/tags/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+    <lastmod>2022-02-22T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="cn"
@@ -49,6 +46,9 @@
                 hreflang="en"
                 href="https://jzhou.org/tags/"
                 />
+  </url><url>
+    <loc>https://jzhou.org/posts/reviewcausal/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://jzhou.org/tags/app/</loc>
     <lastmod>2021-10-01T00:00:00+00:00</lastmod>

@@ -9,7 +9,7 @@
     <item>
       <title>Meta-Learners (working)</title>
       <link>https://jzhou.org/posts/metalearner/</link>
-      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 22 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://jzhou.org/posts/metalearner/</guid>
       <description>Meta-learners for treatment effect estimation &amp;amp; optimal treatment recommendation under multiple treatment setting Meta-learners are a simple way to leverage off-the-shelf predictive machine learning methods to estimate CATE/HTE/ITE.
@@ -22,7 +22,7 @@ Treatment Effect Estimation Q-learning gets its name because its objective funct
       <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://jzhou.org/posts/reviewcausal/</guid>
-      <description>Brief Introduction The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. Conceptually, causal inference is all about a question of ‘what if’. People can ask themself what if I took chemotherapy rather than radiation to treat my cancer, would I get better now?</description>
+      <description>Brief Introduction Potential Outcome Framework A Big Picture of Causal Inference Causal Estimands  Average Treatment Effect (ATE) Randomized Controlled Experiments Observational Studies Matching(subclassification/coarsened) Inverse Probability Weighting (IPW) Augmented Inverse Probability Weighting (AIPW) Covariate Balancing Propensity Score (CBPS) TMLE  General Framework of ATE Estiamtion Process  ConditionalAverage Treatment Effect (CATE) Randomized Experiments Interaction-oriented Methods  Observational Studies Q-learning A-learning Individualized Treatment Rule Other tree-based methods   Appendix Proof of IPW Proof of AIPW  References   Brief Introduction The need for causal inference arises in many different fields.</description>
     </item>
     
     <item>

@@ -160,7 +160,7 @@
             </span>
             <span class="reading-time">
               <i class="fa fa-clock-o" aria-hidden="true"></i>
-              27-minute read
+              28-minute read
             </span>
           </div>
           
@@ -192,11 +192,47 @@
 
 
 
+<div id="TOC">
+<ul>
+<li><a href="#brief-introduction">Brief Introduction</a></li>
+<li><a href="#potential-outcome-framework">Potential Outcome Framework</a></li>
+<li><a href="#a-big-picture-of-causal-inference">A Big Picture of Causal Inference</a><ul>
+<li><a href="#Estimands">Causal Estimands</a></li>
+</ul></li>
+<li><a href="#ATE">Average Treatment Effect (ATE)</a><ul>
+<li><a href="#randomized-controlled-experiments">Randomized Controlled Experiments</a></li>
+<li><a href="#observational-studies">Observational Studies</a><ul>
+<li><a href="#Matching">Matching(subclassification/coarsened)</a></li>
+<li><a href="#IPW">Inverse Probability Weighting (IPW)</a></li>
+<li><a href="#AIPW">Augmented Inverse Probability Weighting (AIPW)</a></li>
+<li><a href="#CBPS">Covariate Balancing Propensity Score (CBPS)</a></li>
+<li><a href="#TMLE">TMLE</a></li>
+</ul></li>
+<li><a href="#general-framework-of-ate-estiamtion-process">General Framework of ATE Estiamtion Process</a></li>
+</ul></li>
+<li><a href="#CATE">ConditionalAverage Treatment Effect (CATE)</a><ul>
+<li><a href="#randomized-experiments">Randomized Experiments</a><ul>
+<li><a href="#interaction-oriented-methods">Interaction-oriented Methods</a></li>
+</ul></li>
+<li><a href="#observational-studies-1">Observational Studies</a><ul>
+<li><a href="#q-learning">Q-learning</a></li>
+<li><a href="#a-learning">A-learning</a></li>
+<li><a href="#individualized-treatment-rule">Individualized Treatment Rule</a></li>
+<li><a href="#other-tree-based-methods">Other tree-based methods</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#appendix">Appendix</a><ul>
+<li><a href="#app1">Proof of IPW</a></li>
+<li><a href="#app2">Proof of AIPW</a></li>
+</ul></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
 
 <p><img src="/images/OpenJoke.png" /></p>
 <div id="brief-introduction" class="section level1">
 <h1>Brief Introduction</h1>
-<p>The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. Conceptually, causal inference is all about a question of ‘what if’. People can ask themself <em>what if</em> I took chemotherapy rather than radiation to treat my cancer, would I get better now? Or <em>what if</em> I went to graduate school rather entering the job market after graduation, would I have a better career prospects? The economists can be curious about <em>what if</em> the Federal Reserve raised the interest rate by 50bp rather than 25bp, would the inflation rate be better controlled? The most straightforward way to answer those questions is, <em>if</em> we know what will happen for any of these actions, we of course can find the one benefit our goal the most. This leads to the <strong>Potential Outcome Framework</strong> in the next section.</p>
+<p>The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. Conceptually, causal inference is all about a question of ‘what if’. People can ask themself <em>what if</em> I took chemotherapy rather than radiation to treat my cancer, would I get better now? Or <em>what if</em> I went to graduate school rather than entering the job market after graduation, would I have a better career prospect? The economists can be curious about <em>what if</em> the Federal Reserve raised the interest rate by 50bp rather than 25bp, would the inflation rate be better controlled? The most straightforward way to answer those questions is, <em>if</em> we know what will happen for any of these actions, we of course can find the one benefits our goal the most. This leads to the <strong>Potential Outcome Framework</strong> that we will discuss in the next section.</p>
 </div>
 <div id="potential-outcome-framework" class="section level1">
 <h1>Potential Outcome Framework</h1>
@@ -235,7 +271,7 @@ where <span class="math inline">\(\pi(\mathbf x)\)</span> is called <strong>Prop
 <p>Another heat topic in causal inference is about the estimation of CATE/HTE/ITE from observational studies. This is usually tough because given the noise of observational studies and subject-level estimation, the estimates can have large variance. Various of methods have been proposed including but not limited to causal boosting <span class="citation">(Powers et al. <a href="#ref-powers2018some" role="doc-biblioref">2018</a>)</span>, causal forests <span class="citation">(Athey and Imbens <a href="#ref-athey2016recursive" role="doc-biblioref">2016</a>)</span>, individual-treatment-rule-based methods that mostly involves outcome weighted learning (OWL) <span class="citation">(Qian and Murphy <a href="#ref-qian2011performance" role="doc-biblioref">2011</a>; Zhao et al. <a href="#ref-zhao2012estimating" role="doc-biblioref">2012</a>; Zhou et al. <a href="#ref-zhou2017residual" role="doc-biblioref">2017</a>; Qi et al. <a href="#ref-qi2020multi" role="doc-biblioref">2020</a>)</span>, and several meta-learners, such as X-learner <span class="citation">(Künzel et al. <a href="#ref-kunzel2019metalearners" role="doc-biblioref">2019</a>)</span> and R-learner <span class="citation">(Nie and Wager <a href="#ref-NieQuasi2020" role="doc-biblioref">2020</a>)</span>. These methods can be easily degenerate to study the CATE/HTE/ITE in randomized trials.</p>
 <div id="Estimands" class="section level2">
 <h2>Causal Estimands</h2>
-<p>Different scientific questions leads to the estimation of different causal estimands. As aforementioned, for instance, ATE is basically for assessing the population/sub-population treatment effect which is the key focus for the drug companies. On the other hand, CATE which is more about individual-level treatment effect, so it can be used to do precision medicine or personalized recommendations. Here is a list of some commonly used acronym causal estimands:</p>
+<p>Different scientific questions leads to the estimation of different causal estimands. As aforementioned, for instance, ATE is basically for assessing the population/sub-population treatment effect which is the key focus for the drug companies. On the other hand, CATE which is more about individual-level treatment effect, so it can be used to do precision medicine or personalized recommendations. Here is a list of the acronym of some commonly used causal estimands:</p>
 <ul>
 <li>ITE (individual treatment effect)</li>
 <li>ATE (average treatment effect)
@@ -276,16 +312,15 @@ where <span class="math inline">\(\pi(\mathbf x)\)</span> is called <strong>Prop
 <h2>Observational Studies</h2>
 <p>Propensity score (PS) <span class="citation">(Rosenbaum and Rubin <a href="#ref-rosenbaum1983central" role="doc-biblioref">1983</a>)</span> is defined as the conditional probability of receiving a treatment given pre-treatment covariates <span class="math inline">\(\mathbf X\)</span>. PS is the very core part in doing causal analysis, especially in the observational studies (but even in randomized trials, PS can be used to do some covariates adjustment for better results).</p>
 <p>Though <strong>Matching</strong> is also a very popular approach in ATE estimation, here we discuss <strong>Weighting</strong> in details.</p>
-<div id="matchingsubclassificationcoarsened" class="section level3">
+<div id="Matching" class="section level3">
 <h3>Matching(subclassification/coarsened)</h3>
 <p>The very beginning idea of estimating ATE (under the Assumption 1, 2 and 3) by first finding pairs of observations with covariates <em>close enough</em> to each other in two arms, and then average them out:
 <span class="math display">\[
 \tau = E_{\mathcal X}\{E[Y|\mathbf X \in \mathcal X_j, T = 1]-E[Y|\mathbf X\in \mathcal X_j, T = -1]\}
 \]</span>
 where <span class="math inline">\(\mathcal X_j\)</span> is a subspace such that <span class="math inline">\(\bigcup_{j=1}^J \mathcal X_j = \mathcal X\)</span> and <span class="math inline">\(\mathcal X_i \bigcap \mathcal X_j = \phi\)</span> for any <span class="math inline">\(i\neq j\)</span>. One-to-one paired matching is hard to find, especially when <span class="math inline">\(\mathcal X\)</span> is of high dimension. So people propose to use subclassification or coarsened, which also provide more robust estimations.</p>
-</div>
-<div id="matching-by-ps" class="section level3">
-<h3>Matching by PS</h3>
+<div id="matching-by-ps" class="section level4">
+<h4>Matching by PS</h4>
 <p>The matching idea is finally ruled by the milestone work from <span class="citation">Rosenbaum and Rubin (<a href="#ref-rosenbaum1983central" role="doc-biblioref">1983</a>)</span> who demonstrated that only matching by propensity score is good enough, because
 <span class="math display">\[
 (Y^{(1)}, Y^{(-1)}) \perp T \mid \mathbf X \Rightarrow (Y^{(1)}, Y^{(-1)}) \perp T \mid \pi(\mathbf X ).
@@ -301,7 +336,8 @@ The whole matching task is transformed from a potential high diemensional covari
 But how to achieve a good estimator of propensity score <span class="math inline">\(\pi(\cdot)\)</span> turns out to be the key problem. 
 </p>
 </div>
-<div id="inverse-probability-weighting-ipw" class="section level3">
+</div>
+<div id="IPW" class="section level3">
 <h3>Inverse Probability Weighting (IPW)</h3>
 <p>It can be shown that (Proof in <a href="app1">Appendix</a>)
 <span class="math display">\[
@@ -349,7 +385,7 @@ where the second equation comes from:
 \end{align}\]</span>
 This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified <span class="citation">(Kurz <a href="#ref-kurz2021augmented" role="doc-biblioref">2021</a>)</span>. If the propensity score is correctly specified, then <span class="math inline">\(E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0\)</span> which simplifies AIPW to IPW no matter whether response surface functions <span class="math inline">\(\mu_T()\)</span> are correct. On the other hand, if response model <span class="math inline">\(\mu_T()\)</span> are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in <a href="app2">Appendix</a>)</p>
 </div>
-<div id="covariate-balancing-propensity-score-cbps" class="section level3">
+<div id="CBPS" class="section level3">
 <h3>Covariate Balancing Propensity Score (CBPS)</h3>
 <p>The very nature of weighting is it helps to make sure the confounding covariates distribution between the observed two arms are balanced. If covariate balancing is guaranteed, then the observed data can mimic the randomized trial data and the treatment effect can be directly obtained from observations. <span class="citation">Imai and Ratkovic (<a href="#ref-imai2014covariate" role="doc-biblioref">2014</a>)</span> propose to directly target on the covariate balancing instead of weighting. So they developed a Covariate Balancing Propensity Score (CBPS) method which is a propensity score estimating method that yields the PSs improve the covariate balancing.
 
@@ -387,16 +423,16 @@ where <span class="math inline">\(\varepsilon\)</span> is a flunctuation paramet
 <ul>
 <li>Logistic regression related. For instance, including all interaction terms as well as squared terms long with LASSO-type penalty for sparsity</li>
 <li>Machine learning algorithms, such as CART <span class="citation">(Breiman <a href="#ref-breiman2017classification" role="doc-biblioref">2017</a>)</span>, BART <span class="citation">(Chipman, George, and McCulloch <a href="#ref-chipman1998bayesian" role="doc-biblioref">1998</a>, <a href="#ref-chipman2002bayesian" role="doc-biblioref">2002</a>; Chipman et al. <a href="#ref-chipman2010bart" role="doc-biblioref">2010</a>)</span>, GAM <span class="citation">(Hastie and Tibshirani <a href="#ref-hastie1986generalized" role="doc-biblioref">1986</a>)</span>, GBM <span class="citation">(Friedman <a href="#ref-friedman2001greedy" role="doc-biblioref">2001</a>)</span>, Random Forest <span class="citation">(Breiman <a href="#ref-breiman2001random" role="doc-biblioref">2001</a>)</span>, XGBoost <span class="citation">(Chen and Guestrin <a href="#ref-Chen_2016" role="doc-biblioref">2016</a>)</span>, Super Learner <span class="citation">(Van der Laan, Polley, and Hubbard <a href="#ref-van2007super" role="doc-biblioref">2007</a>)</span>, etc.</li>
-<li>Weights (or propensity score) estimated for covariate balancing, e.g., CBPS (covariate balancing propensity score <span class="citation">(Imai and Ratkovic <a href="#ref-imai2014covariate" role="doc-biblioref">2014</a>)</span>), Entropy balancing <span class="citation">(Hainmueller <a href="#ref-hainmueller2012entropy" role="doc-biblioref">2012</a>)</span>, EBCM (empirical balancing calibration weighting) <span class="citation">(Chan, Yam, and Zhang <a href="#ref-chan2016globally" role="doc-biblioref">2016</a>)</span>, etc.</li>
+<li>Weights (or propensity score) estimated on purposely for covariate balancing, e.g., <a href="CBPS">CBPS</a> <span class="citation">(Imai and Ratkovic <a href="#ref-imai2014covariate" role="doc-biblioref">2014</a>)</span>, Entropy balancing <span class="citation">(Hainmueller <a href="#ref-hainmueller2012entropy" role="doc-biblioref">2012</a>)</span>, EBCM (empirical balancing calibration weighting) <span class="citation">(Chan, Yam, and Zhang <a href="#ref-chan2016globally" role="doc-biblioref">2016</a>)</span>, etc. (Mostly, PS/weights obtained in this approach are mainly for weighting method)</li>
 </ul>
 <p>In second step, we plug in the propensity score estimated from the first step for the desired estimand. The common approaches for ATE/ATT include:</p>
 <ul>
-<li>Matching <span class="citation">(Rosenbaum and Rubin <a href="#ref-rosenbaum1983central" role="doc-biblioref">1983</a>)</span></li>
+<li><a href="Match">Matching</a> <span class="citation">(Rosenbaum and Rubin <a href="#ref-rosenbaum1983central" role="doc-biblioref">1983</a>)</span></li>
 <li>Subclassification <span class="citation">(Rosenbaum and Rubin <a href="#ref-rosenbaum1984reducing" role="doc-biblioref">1984</a>)</span></li>
 <li>Weighting
 <ul>
 <li>HT <span class="citation">(Horvitz and Thompson <a href="#ref-horvitz1952generalization" role="doc-biblioref">1952</a>)</span></li>
-<li>IPW (IPTW) <span class="citation">(Hirano, Imbens, and Ridder <a href="#ref-hirano2003efficient" role="doc-biblioref">2003</a>)</span></li>
+<li><a href="IPW">IPW</a> (IPTW) <span class="citation">(Hirano, Imbens, and Ridder <a href="#ref-hirano2003efficient" role="doc-biblioref">2003</a>)</span></li>
 </ul></li>
 <li>Regression
 <ul>
@@ -406,8 +442,8 @@ where <span class="math inline">\(\varepsilon\)</span> is a flunctuation paramet
 </ul></li>
 <li>Mixture of above
 <ul>
-<li>AIPW <span class="citation">(Bang and Robins <a href="#ref-bang2005doubly" role="doc-biblioref">2005</a>)</span></li>
-<li>TMLE <span class="citation">(Van Der Laan and Rubin <a href="#ref-van2006targeted" role="doc-biblioref">2006</a>)</span></li>
+<li><a href="AIPW">AIPW</a> <span class="citation">(Bang and Robins <a href="#ref-bang2005doubly" role="doc-biblioref">2005</a>)</span></li>
+<li><a href="TMLE">TMLE</a> <span class="citation">(Van Der Laan and Rubin <a href="#ref-van2006targeted" role="doc-biblioref">2006</a>)</span></li>
 </ul></li>
 </ul>
 <hr />
@@ -473,7 +509,7 @@ It is called <strong>T-learner</strong>. But lose data efficiency as only part o
 <h3>A-learning</h3>
 <p>The basic idea of advantage-learning or A-learning, is to estimate treatment effect <span class="math inline">\(\tau(\mathbf x)\)</span> directly, rather than estimating the reponse surfaces like Q-learning which can be deemed as an indirect way. Here are some selected approaches in this camp.</p>
 <div id="outcome-weighted-methodsmodified-outcome-methods-mom" class="section level4">
-<h4>Outcome Weighted Methods/Modified Outcome Methods (MOM)</h4>
+<h4>1. Outcome Weighted Methods/Modified Outcome Methods (MOM)</h4>
 <p>For a 50:50 randomized trial, we can make following transformation <span class="citation">(Signorovitch <a href="#ref-signorovitch2007identifying" role="doc-biblioref">2007</a>)</span>
 <span class="math display">\[
 Y^* = 
@@ -504,7 +540,7 @@ E[l(\hat\tau, \tau)] = E\left[ \left\{ \hat\tau(\mathbf X)- \frac{TY}{T\pi(\math
 <p>Notably, this method though simple and straightforward, suffers from the <em>limitation of outcome type and the larger variance</em>.</p>
 </div>
 <div id="modified-covariate-methods-mcm" class="section level4">
-<h4>Modified Covariate Methods (MCM)</h4>
+<h4>2. Modified Covariate Methods (MCM)</h4>
 <p>Observing that we only need to optimize the loss function such as (), <span class="citation">Tian et al. (<a href="#ref-tian2014simple" role="doc-biblioref">2014</a>)</span> modified MOM methods by adjusting the proxy loss function a little bit
 <span class="math display">\[
 E[\{\hat\tau(X) - Y^*\}^2] = E[c^2\{\hat\tau(X)/c - Y\}^2]
@@ -524,7 +560,7 @@ E\left[ \frac{\left\{ \hat\tau(X)\cdot W- Y \right\}^2}{W\pi(X) + (1-W)/2} \righ
 So, we no longer need to worry about the outcome type.</p>
 </div>
 <div id="r-learner" class="section level4">
-<h4>R-learner</h4>
+<h4>3. R-learner</h4>
 <p>R-learner <span class="citation">(Nie and Wager <a href="#ref-NieQuasi2020" role="doc-biblioref">2020</a>)</span> can be considered as a very special case of MCM, but it does not follow the same logic flow as MCM. It adopts the Robinson’s decomposition <span class="citation">(Robinson <a href="#ref-robinson1988root" role="doc-biblioref">1988</a>)</span> to connect the CATE with the observed outcome
 <span class="math display">\[\begin{equation}
 E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \label{eq:Rlearner}
@@ -532,7 +568,7 @@ E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X)
 where <span class="math inline">\(m(\mathbf X) = E[Y \mid \mathbf X]\)</span>.</p>
 </div>
 <div id="x-learner" class="section level4">
-<h4>X-learner </h4>
+<h4>4. X-learner </h4>
 <p>X-learner <span class="citation">(Künzel et al. <a href="#ref-kunzel2019metalearners" role="doc-biblioref">2019</a>)</span> enjoys the simplicity of T-learner but fixes its data efficiency issue by targeting on the treatment effects rather than the response surfaces. The main procedure is the following:</p>
 <ul>
 <li>Step 1: Estimate <span class="math inline">\(\hat\mu_1(\cdot)\)</span> and <span class="math inline">\(\hat\mu_{-1}(\cdot)\)</span> just like T-learner</li>
@@ -543,9 +579,20 @@ where <span class="math inline">\(m(\mathbf X) = E[Y \mid \mathbf X]\)</span>.</
 <p>Notably, when calculating <span class="math inline">\(\hat\tau_1(\cdot)\)</span>, for example, X-learner uses whole data, including instances from both <span class="math inline">\(T=1\)</span> and <span class="math inline">\(T=-1\)</span>, which is deems as fixing the data efficiency issue in T-learner approach.</p>
 </div>
 </div>
+<div id="individualized-treatment-rule" class="section level3">
+<h3>Individualized Treatment Rule</h3>
+<p>Most of the previous methods target on CATE estimation, whereas the optimal treatment can be found automatically by looking at the estimates. But the fact is, obtaining the consistent and unbiased estimates for CATE is difficult. However, if we only need to know which treatment is the optimal, we actually do not need to estimate the CATE but only the treatment assignment rule, or so-called individual-treatment-rule (ITR), <span class="math inline">\(d(\mathbf x) = sgn\{\tau(\mathbf x)\}\)</span>, which is a mapping <span class="math inline">\(d: \mathcal X \rightarrow T\)</span>. In practice, we do not need to estimate <span class="math inline">\(\tau(\cdot)\)</span> but <span class="math inline">\(d(\cdot)\)</span> directly. See Figure (@ref{ITR}) for a demonstration of the difference between Q-learning, A-learning, and ITR.</p>
+<div class="figure"><span id="fig:ITR"></span>
+<img src="/posts/ReviewCausal_files/figure-html/ITR-1.png" alt="Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (b) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect." width="960" />
+<p class="caption">
+Figure 2: Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (b) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect.
+</p>
+</div>
+</div>
 <div id="other-tree-based-methods" class="section level3">
 <h3>Other tree-based methods</h3>
 <p>There are many tree-based methods such as virtual trees <span class="citation">(Foster <a href="#ref-foster2013subgroup" role="doc-biblioref">2013</a>)</span>, causal tree/forest <span class="citation">(Athey and Imbens <a href="#ref-athey2016recursive" role="doc-biblioref">2016</a>; Wager and Athey <a href="#ref-wager2018estimation" role="doc-biblioref">2018</a>)</span>, causal boosting/PTO forest/causal MARS <span class="citation">(Powers et al. <a href="#ref-powers2018some" role="doc-biblioref">2018</a>)</span>. Actually, most of them can be categorized as S- or T-learners on a high-level.</p>
+<p>(For more details on CATE estimation, please refer to another post <a href="https://jzhou.org/posts/metalearner/">Meta-Learners</a>)</p>
 <hr />
 </div>
 </div>

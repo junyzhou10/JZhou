@@ -7,6 +7,9 @@ categories:
 tags:
 - Causal Inference
 title: 'Review of Causal Inference: An Overview'
+output:
+  blogdown::html_page:
+    toc: true
 
 fontsize: 12pt
 
@@ -46,7 +49,7 @@ library(kableExtra)
 ![](/images/OpenJoke.png)
 
 # Brief Introduction
-The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. Conceptually, causal inference is all about a question of 'what if'. People can ask themself *what if* I took chemotherapy rather than radiation to treat my cancer, would I get better now? Or *what if* I went to graduate school rather entering the job market after graduation, would I have a better career prospects? The economists can be curious about *what if* the Federal Reserve raised the interest rate by 50bp rather than 25bp, would the inflation rate be better controlled? The most straightforward way to answer those questions is, *if* we know what will happen for any of these actions, we of course can find the one benefit our goal the most. This leads to the **Potential Outcome Framework** in the next section.
+The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. Conceptually, causal inference is all about a question of 'what if'. People can ask themself *what if* I took chemotherapy rather than radiation to treat my cancer, would I get better now? Or *what if* I went to graduate school rather than entering the job market after graduation, would I have a better career prospect? The economists can be curious about *what if* the Federal Reserve raised the interest rate by 50bp rather than 25bp, would the inflation rate be better controlled? The most straightforward way to answer those questions is, *if* we know what will happen for any of these actions, we of course can find the one benefits our goal the most. This leads to the **Potential Outcome Framework** that we will discuss in the next section.
 
 
 # Potential Outcome Framework 
@@ -98,7 +101,7 @@ Another heat topic in causal inference is about the estimation of CATE/HTE/ITE f
 
 
 ## Causal Estimands {#Estimands}
-Different scientific questions leads to the estimation of different causal estimands. As aforementioned, for instance, ATE is basically for assessing the population/sub-population treatment effect which is the key focus for the drug companies. On the other hand, CATE which is more about individual-level treatment effect, so it can be used to do precision medicine or personalized recommendations. Here is a list of some commonly used acronym causal estimands:
+Different scientific questions leads to the estimation of different causal estimands. As aforementioned, for instance, ATE is basically for assessing the population/sub-population treatment effect which is the key focus for the drug companies. On the other hand, CATE which is more about individual-level treatment effect, so it can be used to do precision medicine or personalized recommendations. Here is a list of the acronym of some commonly used causal estimands:
 
 - ITE (individual treatment effect)
 - ATE (average treatment effect)
@@ -138,14 +141,14 @@ Propensity score (PS) [@rosenbaum1983central] is defined as the conditional prob
 
 Though **Matching** is also a very popular approach in ATE estimation, here we discuss **Weighting** in details.
 
-### Matching(subclassification/coarsened)
+### Matching(subclassification/coarsened) {#Matching}
 The very beginning idea of estimating ATE (under the Assumption 1, 2 and 3) by first finding pairs of observations with covariates *close enough* to each other in two arms, and then average them out:
 $$
 \tau = E_{\mathcal X}\{E[Y|\mathbf X \in \mathcal X_j, T = 1]-E[Y|\mathbf X\in \mathcal X_j, T = -1]\}
 $$
 where $\mathcal X_j$ is a subspace such that $\bigcup_{j=1}^J \mathcal X_j = \mathcal X$ and $\mathcal X_i \bigcap \mathcal X_j = \phi$ for any $i\neq j$. One-to-one paired matching is hard to find, especially when $\mathcal X$ is of high dimension. So people propose to use subclassification or coarsened, which also provide more robust estimations.
 
-### Matching by PS
+#### Matching by PS
 The matching idea is finally ruled by the milestone work from @rosenbaum1983central who demonstrated that only matching by propensity score is good enough, because
 $$
 (Y^{(1)}, Y^{(-1)}) \perp T \mid \mathbf X \Rightarrow (Y^{(1)}, Y^{(-1)}) \perp T \mid \pi(\mathbf X ).
@@ -162,7 +165,7 @@ But how to achieve a good estimator of propensity score $\pi(\cdot)$ turns out t
 \block{Though the CATE quantity occurs during the estimation process of ATE, why it is not suitable for CATE estimation?}
 
 
-### Inverse Probability Weighting (IPW)
+### Inverse Probability Weighting (IPW) {#IPW}
 It can be shown that (Proof in [Appendix](app1))
 $$
 E[Y^{(t)}] = E\left[\frac{1[T = t]Y}{Pr(T=t \mid \mathbf X)}\right]
@@ -210,7 +213,7 @@ $$
 This AIPW is called “doubly robust” because it is consistent as long as either the treatment assignment mechanism or the outcome model is correctly specified [@kurz2021augmented]. If the propensity score is correctly specified, then $E(1[T=t] - \Pr(T=t\mid \mathbf X)) = E\left[E(1[T=t] - \Pr(T=t\mid \mathbf X)\mid \mathbf X)\right] = 0$ which simplifies AIPW to IPW no matter whether response surface functions $\mu_T()$ are correct. On the other hand, if response model $\mu_T()$ are correctly specified but propensity score is not correctly estimated, AIPW reduces to S- or T-learner (definitions are in the next section. Proof in [Appendix](app2))
 
 
-### Covariate Balancing Propensity Score (CBPS)
+### Covariate Balancing Propensity Score (CBPS) {#CBPS}
 The very nature of weighting is it helps to make sure the confounding covariates distribution between the observed two arms are balanced. If covariate balancing is guaranteed, then the observed data can mimic the randomized trial data and the treatment effect can be directly obtained from observations. @imai2014covariate propose to directly target on the covariate balancing instead of weighting. So they developed a Covariate Balancing Propensity Score (CBPS) method which is a propensity score estimating method that yields the PSs improve the covariate balancing. 
 \newline 
 The core idea of CBPS is fit a logistic PS model--maximize the likelihood function--subject to covariate balancing constraints. Specifically, the logistic PS model looks like
@@ -249,22 +252,22 @@ The first step is to estimate the propensity score. There are several commonly a
 
 - Logistic regression related. For instance, including all interaction terms as well as squared terms long with LASSO-type penalty for sparsity
 - Machine learning algorithms, such as CART [@breiman2017classification], BART [@chipman1998bayesian; @chipman2002bayesian; @chipman2010bart], GAM [@hastie1986generalized], GBM [@friedman2001greedy], Random Forest [@breiman2001random], XGBoost [@Chen_2016], Super Learner [@van2007super], etc.
-- Weights (or propensity score) estimated for covariate balancing, e.g., CBPS (covariate balancing propensity score [@imai2014covariate]), Entropy balancing [@hainmueller2012entropy], EBCM (empirical balancing calibration weighting) [@chan2016globally], etc.
+- Weights (or propensity score) estimated on purposely for covariate balancing, e.g., [CBPS](CBPS) [@imai2014covariate], Entropy balancing [@hainmueller2012entropy], EBCM (empirical balancing calibration weighting) [@chan2016globally], etc. (Mostly, PS/weights obtained in this approach are mainly for weighting method)
 
 In second step, we plug in the propensity score estimated from the first step for the desired estimand. The common approaches for ATE/ATT include:
 
-- Matching [@rosenbaum1983central]
+- [Matching](Match) [@rosenbaum1983central]
 - Subclassification [@rosenbaum1984reducing]
 - Weighting
   + HT [@horvitz1952generalization]
-  + IPW (IPTW) [@hirano2003efficient]
+  + [IPW](IPW) (IPTW) [@hirano2003efficient]
 - Regression
   + Outcome regression/outcome model [@rubin1979using], i.e. $E(Y\mid X, T)$
   + $E(Y \mid \pi(\mathbf X))$ or $E(Y \mid \pi(\mathbf X), \mathbf X)$ [@rubin:1985; @hahn1998role; @gutman2013robust]
   + Weighted regression of outcome $Y$ on treatment indicator $T$ with weights be the inverse of propensity scores
 - Mixture of above
-  + AIPW [@bang2005doubly]
-  + TMLE [@van2006targeted]
+  + [AIPW](AIPW) [@bang2005doubly]
+  + [TMLE](TMLE) [@van2006targeted]
 
 
 ***
@@ -349,7 +352,7 @@ It is called **T-learner**. But lose data efficiency as only part of data is use
 ### A-learning
 The basic idea of advantage-learning or A-learning, is to estimate treatment effect $\tau(\mathbf x)$ directly, rather than estimating the reponse surfaces like Q-learning which can be deemed as an indirect way. Here are some selected approaches in this camp.
 
-#### Outcome Weighted Methods/Modified Outcome Methods (MOM)
+#### 1. Outcome Weighted Methods/Modified Outcome Methods (MOM)
 For a 50:50 randomized trial, we can make following transformation [@signorovitch2007identifying]
 $$
 Y^* = 
@@ -381,7 +384,7 @@ E[l(\hat\tau, \tau)] = E\left[ \left\{ \hat\tau(\mathbf X)- \frac{TY}{T\pi(\math
 Notably, this method though simple and straightforward, suffers from the *limitation of outcome type and the larger variance*.
 
 
-#### Modified Covariate Methods (MCM)
+#### 2. Modified Covariate Methods (MCM)
 Observing that we only need to optimize the loss function such as (\ref{eq:MOMIPW}), @tian2014simple modified MOM methods by adjusting the proxy loss function a little bit
 $$
 E[\{\hat\tau(X) - Y^*\}^2] = E[c^2\{\hat\tau(X)/c - Y\}^2]
@@ -400,14 +403,14 @@ E\left[ \frac{\left\{ \hat\tau(X)\cdot W- Y \right\}^2}{W\pi(X) + (1-W)/2} \righ
 $$
 So, we no longer need to worry about the outcome type.
 
-#### R-learner 
+#### 3. R-learner 
 R-learner [@NieQuasi2020] can be considered as a very special case of MCM, but it does not follow the same logic flow as MCM. It adopts the Robinson's decomposition [@robinson1988root] to connect the CATE with the observed outcome
 \begin{equation}
 E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \label{eq:Rlearner}
 \end{equation}
 where $m(\mathbf X) = E[Y \mid \mathbf X]$.
 
-#### X-learner \label{sec:xlearner}
+#### 4. X-learner \label{sec:xlearner}
 X-learner [@kunzel2019metalearners] enjoys the simplicity of T-learner but fixes its data efficiency issue by targeting on the treatment effects rather than the response surfaces. The main procedure is the following:
 
 - Step 1: Estimate $\hat\mu_1(\cdot)$ and $\hat\mu_{-1}(\cdot)$ just like T-learner
@@ -417,9 +420,42 @@ X-learner [@kunzel2019metalearners] enjoys the simplicity of T-learner but fixes
 
 Notably, when calculating $\hat\tau_1(\cdot)$, for example, X-learner uses whole data, including instances from both $T=1$ and $T=-1$, which is deems as fixing the data efficiency issue in T-learner approach.
 
+### Individualized Treatment Rule 
+Most of the previous methods target on CATE estimation, whereas the optimal treatment can be found automatically by looking at the estimates. But the fact is, obtaining the consistent and unbiased estimates for CATE is difficult. However, if we only need to know which treatment is the optimal, we actually do not need to estimate the CATE but only the treatment assignment rule, or so-called individual-treatment-rule (ITR), $d(\mathbf x) = sgn\{\tau(\mathbf x)\}$, which is a mapping $d: \mathcal X \rightarrow T$. In practice, we do not need to estimate $\tau(\cdot)$ but $d(\cdot)$ directly. See Figure (\@ref{ITR}) for a demonstration of the difference between Q-learning, A-learning, and ITR.
+
+
+```{r ITR, echo=FALSE, fig.width=10, fig.height=3.2, fig.cap="Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (b) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect."}
+
+set.seed(12345)
+x  = seq(0.01,1,length.out = 100)
+Y1 = 0.5*log(x)+1
+Y2 = ifelse(x<0.4, -0.2, -0.2+4*(x-0.4))
+layout(matrix(seq(1,3), nrow = 1))
+plot(x, Y1, ylim = range(Y1, Y2), type = "l", lwd = 2, col = "darkred", main = "(A) Q-learning", xlab = "Covariate", ylab = "Outcome")
+lines(x, Y2, lwd = 2, col = "darkblue")
+legend("topleft", legend = c("E(Y | T = 1)", "E(Y | T = -1)"), col = c("darkred", "darkblue"), lwd = c(2,2))
+
+plot(x, Y1-Y2, type = "l", lwd = 2, col = "darkgreen", main = "(B) A-learning", xlab = "Covariate", ylab = "Treatment Effect")
+abline(h = 0, lty = 2, col = "gray40")
+legend("topright", legend = expression(tau), col = "darkgreen", lwd = 2)
+
+plot(x, Y1-Y2, type = "n", lwd = 2, col = "gray40", main = "(C) ITR", lty = 2, xlab = "Covariate", ylab = "", yaxt = 'n')
+segments(0, 0, 0.09,   0, col = "darkblue", lwd = 5)
+segments(0.09, 0, 0.645,   0, col = "darkred", lwd = 5)
+segments(0.64, 0, 1,   0, col = "darkblue", lwd = 5)
+legend("topleft", legend = c("T = 1", "T = -1"), col = c("darkred", "darkblue"), lwd = c(5,5))
+# the root above can be found by:
+# uniroot(function(X1) 1 + 0.5*log(X1) - ifelse(X1<0.4, -0.2, -0.2+4*(X1-0.4)), interval = c(0,0.5))
+# uniroot(function(X1) 1 + 0.5*log(X1) - ifelse(X1<0.4, -0.2, -0.2+4*(X1-0.4)), interval = c(0.5,1))
+```
+
+
+
+
 ### Other tree-based methods 
 There are many tree-based methods such as virtual trees [@foster2013subgroup], causal tree/forest [@athey2016recursive; @wager2018estimation], causal boosting/PTO forest/causal MARS [@powers2018some]. Actually, most of them can be categorized as S- or T-learners on a high-level.
 
+(For more details on CATE estimation, please refer to another post [Meta-Learners](https://jzhou.org/posts/metalearner/))
 
 
 ***
