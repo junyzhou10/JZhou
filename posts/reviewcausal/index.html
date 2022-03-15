@@ -160,7 +160,7 @@
             </span>
             <span class="reading-time">
               <i class="fa fa-clock-o" aria-hidden="true"></i>
-              28-minute read
+              29-minute read
             </span>
           </div>
           
@@ -581,18 +581,27 @@ where <span class="math inline">\(m(\mathbf X) = E[Y \mid \mathbf X]\)</span>.</
 </div>
 <div id="individualized-treatment-rule" class="section level3">
 <h3>Individualized Treatment Rule</h3>
-<p>Most of the previous methods target on CATE estimation, whereas the optimal treatment can be found automatically by looking at the estimates. But the fact is, obtaining the consistent and unbiased estimates for CATE is difficult. However, if we only need to know which treatment is the optimal, we actually do not need to estimate the CATE but only the treatment assignment rule, or so-called individual-treatment-rule (ITR), <span class="math inline">\(d(\mathbf x) = sgn\{\tau(\mathbf x)\}\)</span>, which is a mapping <span class="math inline">\(d: \mathcal X \rightarrow T\)</span>. In practice, we do not need to estimate <span class="math inline">\(\tau(\cdot)\)</span> but <span class="math inline">\(d(\cdot)\)</span> directly. See Figure (@ref{ITR}) for a demonstration of the difference between Q-learning, A-learning, and ITR.</p>
+<p>Most of the previous methods target on CATE estimation, whereas the optimal treatment can be found automatically by looking at the estimates. But the fact is, obtaining the consistent and unbiased estimates for CATE is difficult. However, if we only need to know which treatment is the optimal, we actually do not need to estimate the CATE but only the treatment assignment rule, or so-called individual-treatment-rule (ITR), <span class="math inline">\(d(\mathbf x) = sgn\{\tau(\mathbf x)\}\)</span>, which is a mapping <span class="math inline">\(d: \mathcal X \rightarrow T\)</span>. In practice, we do not need to estimate <span class="math inline">\(\tau(\cdot)\)</span> but <span class="math inline">\(d(\cdot)\)</span> directly. See Figure (<a href="#fig:ITR">2</a>) for a demonstration of the difference between Q-learning, A-learning, and ITR.</p>
 <div class="figure"><span id="fig:ITR"></span>
-<img src="/posts/ReviewCausal_files/figure-html/ITR-1.png" alt="Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (b) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect." width="960" />
+<img src="/posts/ReviewCausal_files/figure-html/ITR-1.png" alt="\label{fig:ITR}Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (B) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect." width="960" />
 <p class="caption">
-Figure 2: Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (b) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect.
+Figure 2: Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (B) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect.
 </p>
 </div>
+<p>Recall the ITR is indeed a mapping from the covariate space into the treatment space <span class="math inline">\(d: \mathcal X \rightarrow T\)</span>. According to <span class="citation">Qian and Murphy (<a href="#ref-qian2011performance" role="doc-biblioref">2011</a>)</span> and <span class="citation">Zhao et al. (<a href="#ref-zhao2012estimating" role="doc-biblioref">2012</a>)</span>, the value function under the ITR <span class="math inline">\(d(\mathbf X)\)</span> is
+<span class="math display">\[
+V(d) =\mathbb E[Y\mid d(\mathbf X)=t] = \mathbb E\left[\frac{1[T = d(\mathbf X)]Y}{\pi(\mathbf X\mid T = t)}\right]
+\]</span>
+and the optimal ITR is the one corresponds to the largest value function
+<span class="math display">\[
+d^{*}() = \arg\max_{d()} V(d).
+\]</span>
+Notice that solving this objective function requires discontinuous loss functions, which may incur certain numerical difficulty. So far, various methods have been proposed in the literature to obtain the ITR following this idea <span class="citation">(Qian and Murphy <a href="#ref-qian2011performance" role="doc-biblioref">2011</a>; Zhao et al. <a href="#ref-zhao2012estimating" role="doc-biblioref">2012</a>; Xu et al. <a href="#ref-xu2015regularized" role="doc-biblioref">2015</a>; Zhu et al. <a href="#ref-zhu2017greedy" role="doc-biblioref">2017</a>; Zhou et al. <a href="#ref-zhou2017residual" role="doc-biblioref">2017</a>; Zhang and Zhang <a href="#ref-zhang2018c" role="doc-biblioref">2018</a>; Qi et al. <a href="#ref-qi2020multi" role="doc-biblioref">2020</a>)</span>. Due to its structure similar to propensity score weighting but only on outcome <span class="math inline">\(Y\)</span>, it is also known as outcome weighted learning, or O-learning <span class="citation">(Zhao et al. <a href="#ref-zhao2012estimating" role="doc-biblioref">2012</a>)</span>.</p>
 </div>
 <div id="other-tree-based-methods" class="section level3">
 <h3>Other tree-based methods</h3>
 <p>There are many tree-based methods such as virtual trees <span class="citation">(Foster <a href="#ref-foster2013subgroup" role="doc-biblioref">2013</a>)</span>, causal tree/forest <span class="citation">(Athey and Imbens <a href="#ref-athey2016recursive" role="doc-biblioref">2016</a>; Wager and Athey <a href="#ref-wager2018estimation" role="doc-biblioref">2018</a>)</span>, causal boosting/PTO forest/causal MARS <span class="citation">(Powers et al. <a href="#ref-powers2018some" role="doc-biblioref">2018</a>)</span>. Actually, most of them can be categorized as S- or T-learners on a high-level.</p>
-<p>(For more details on CATE estimation, please refer to another post <a href="https://jzhou.org/posts/metalearner/">Meta-Learners</a>)</p>
+<p>(For more details on CATE/HTE estimation, please refer to another post <a href="https://jzhou.org/posts/metalearner/">Meta-Learners</a>)</p>
 <hr />
 </div>
 </div>
@@ -806,14 +815,23 @@ Therefore, under this situation, AIPW in equation () becomes <span class="math i
 <div id="ref-wager2018estimation">
 <p>Wager, Stefan, and Susan Athey. 2018. “Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests.” <em>Journal of the American Statistical Association</em> 113 (523): 1228–42.</p>
 </div>
+<div id="ref-xu2015regularized">
+<p>Xu, Yaoyao, Menggang Yu, Ying-Qi Zhao, Quefeng Li, Sijian Wang, and Jun Shao. 2015. “Regularized Outcome Weighted Subgroup Identification for Differential Treatment Effects.” <em>Biometrics</em> 71 (3): 645–53.</p>
+</div>
 <div id="ref-zeileis2008model">
 <p>Zeileis, Achim, Torsten Hothorn, and Kurt Hornik. 2008. “Model-Based Recursive Partitioning.” <em>Journal of Computational and Graphical Statistics</em> 17 (2): 492–514.</p>
+</div>
+<div id="ref-zhang2018c">
+<p>Zhang, Baqun, and Min Zhang. 2018. “C-Learning: A New Classification Framework to Estimate Optimal Dynamic Treatment Regimes.” <em>Biometrics</em> 74 (3): 891–99.</p>
 </div>
 <div id="ref-zhao2012estimating">
 <p>Zhao, Yingqi, Donglin Zeng, A John Rush, and Michael R Kosorok. 2012. “Estimating Individualized Treatment Rules Using Outcome Weighted Learning.” <em>Journal of the American Statistical Association</em> 107 (499): 1106–18.</p>
 </div>
 <div id="ref-zhou2017residual">
 <p>Zhou, Xin, Nicole Mayer-Hamblett, Umer Khan, and Michael R Kosorok. 2017. “Residual Weighted Learning for Estimating Individualized Treatment Rules.” <em>Journal of the American Statistical Association</em> 112 (517): 169–87.</p>
+</div>
+<div id="ref-zhu2017greedy">
+<p>Zhu, Ruoqing, Ying-Qi Zhao, Guanhua Chen, Shuangge Ma, and Hongyu Zhao. 2017. “Greedy Outcome Weighted Tree Learning of Optimal Personalized Treatment Rules.” <em>Biometrics</em> 73 (2): 391–400.</p>
 </div>
 </div>
 </div>

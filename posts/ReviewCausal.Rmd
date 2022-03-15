@@ -421,10 +421,10 @@ X-learner [@kunzel2019metalearners] enjoys the simplicity of T-learner but fixes
 Notably, when calculating $\hat\tau_1(\cdot)$, for example, X-learner uses whole data, including instances from both $T=1$ and $T=-1$, which is deems as fixing the data efficiency issue in T-learner approach.
 
 ### Individualized Treatment Rule 
-Most of the previous methods target on CATE estimation, whereas the optimal treatment can be found automatically by looking at the estimates. But the fact is, obtaining the consistent and unbiased estimates for CATE is difficult. However, if we only need to know which treatment is the optimal, we actually do not need to estimate the CATE but only the treatment assignment rule, or so-called individual-treatment-rule (ITR), $d(\mathbf x) = sgn\{\tau(\mathbf x)\}$, which is a mapping $d: \mathcal X \rightarrow T$. In practice, we do not need to estimate $\tau(\cdot)$ but $d(\cdot)$ directly. See Figure (\@ref{ITR}) for a demonstration of the difference between Q-learning, A-learning, and ITR.
+Most of the previous methods target on CATE estimation, whereas the optimal treatment can be found automatically by looking at the estimates. But the fact is, obtaining the consistent and unbiased estimates for CATE is difficult. However, if we only need to know which treatment is the optimal, we actually do not need to estimate the CATE but only the treatment assignment rule, or so-called individual-treatment-rule (ITR), $d(\mathbf x) = sgn\{\tau(\mathbf x)\}$, which is a mapping $d: \mathcal X \rightarrow T$. In practice, we do not need to estimate $\tau(\cdot)$ but $d(\cdot)$ directly. See Figure (\@ref(fig:ITR)) for a demonstration of the difference between Q-learning, A-learning, and ITR.
 
 
-```{r ITR, echo=FALSE, fig.width=10, fig.height=3.2, fig.cap="Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (b) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect."}
+```{r ITR, echo=FALSE, fig.width=10, fig.height=3.2, fig.cap="\\label{fig:ITR}Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (B) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect."}
 
 set.seed(12345)
 x  = seq(0.01,1,length.out = 100)
@@ -449,13 +449,21 @@ legend("topleft", legend = c("T = 1", "T = -1"), col = c("darkred", "darkblue"),
 # uniroot(function(X1) 1 + 0.5*log(X1) - ifelse(X1<0.4, -0.2, -0.2+4*(X1-0.4)), interval = c(0.5,1))
 ```
 
-
+Recall the ITR is indeed a mapping from the covariate space into the treatment space $d: \mathcal X \rightarrow T$. According to @qian2011performance and @zhao2012estimating, the value function under the ITR $d(\mathbf X)$ is
+$$
+V(d) =\mathbb E[Y\mid d(\mathbf X)=t] = \mathbb E\left[\frac{1[T = d(\mathbf X)]Y}{\pi(\mathbf X\mid T = t)}\right]
+$$
+and the optimal ITR is the one corresponds to the largest value function
+$$
+d^{*}() = \arg\max_{d()} V(d).
+$$
+Notice that solving this objective function requires discontinuous loss functions, which may incur certain numerical difficulty. So far, various methods have been proposed in the literature to obtain the ITR following this idea [@qian2011performance; @zhao2012estimating; @xu2015regularized; @zhu2017greedy; @zhou2017residual; @zhang2018c; @qi2020multi]. Due to its structure similar to propensity score weighting but only on outcome $Y$, it is also known as outcome weighted learning, or O-learning [@zhao2012estimating].
 
 
 ### Other tree-based methods 
 There are many tree-based methods such as virtual trees [@foster2013subgroup], causal tree/forest [@athey2016recursive; @wager2018estimation], causal boosting/PTO forest/causal MARS [@powers2018some]. Actually, most of them can be categorized as S- or T-learners on a high-level.
 
-(For more details on CATE estimation, please refer to another post [Meta-Learners](https://jzhou.org/posts/metalearner/))
+(For more details on CATE/HTE estimation, please refer to another post [Meta-Learners](https://jzhou.org/posts/metalearner/))
 
 
 ***

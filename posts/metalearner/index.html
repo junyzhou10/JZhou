@@ -160,7 +160,7 @@
             </span>
             <span class="reading-time">
               <i class="fa fa-clock-o" aria-hidden="true"></i>
-              5-minute read
+              7-minute read
             </span>
           </div>
           
@@ -188,32 +188,69 @@
 
 
 
+<div id="TOC">
+<ul>
+<li><a href="#meta-learners-for-treatment-effect-estimation-optimal-treatment-recommendation-under-multiple-treatment-setting">Meta-learners for treatment effect estimation &amp; optimal treatment recommendation under multiple treatment setting</a><ul>
+<li><a href="#treatment-effect-estimation">Treatment Effect Estimation</a><ul>
+<li><a href="#q-learning">Q-learning</a></li>
+<li><a href="#a-learning">A-learning</a></li>
+</ul></li>
+<li><a href="#treatment-recommendation">Treatment recommendation</a><ul>
+<li><a href="#itr">ITR</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
 
+<p><em>A corresponding Meta-learner R-package can be found on <a href="https://github.com/junyzhou10/MetaLearners">Github</a> by the same author.</em></p>
 <div id="meta-learners-for-treatment-effect-estimation-optimal-treatment-recommendation-under-multiple-treatment-setting" class="section level1">
 <h1>Meta-learners for treatment effect estimation &amp; optimal treatment recommendation under multiple treatment setting</h1>
-<p>Meta-learners are a simple way to leverage off-the-shelf predictive machine learning methods to estimate CATE/HTE/ITE.</p>
+<p>Meta-learners are a simple way to leverage off-the-shelf predictive machine learning methods to estimate CATE/HTE/ITE. A very general process of doing causal inference is provided in the following flowchart, where there are three main parts:</p>
+<ol style="list-style-type: decimal">
+<li>Understand the real world question: what is the desired causal estimand/quantity. By potential outcome framework along with several assumptions, the causality could be inferred from the observed data.</li>
+<li>In step 2, the original real world problem is transformed to a solvable statistical problem with the assumption made in the first step. Usually, there could be different ways to form the statistical problem with pros and cons. As introduced in <a href="https://jzhou.org/posts/reviewcausal/">Review of Causal Inference: An Overview</a>, there are T-learner and S-learner following the Q-learning approach as well as A-learning-based methods such as R-learner and X-learner.</li>
+<li>After step 2, the statistical problem is built up, so in step 3, the main focus is how to solve them. If viewing in machine learning perspective, step 2 actually yields a problem specific loss function no matter following Q-learning or A-learning approach. The strength of meta-learners is they do not have strong requirements or limitations on the structure of loss function so that any off-the-shelf base learners can be readily fill in to solve. Such as Random Forests (RF) <span class="citation">(Breiman <a href="#ref-breiman2001random" role="doc-biblioref">2001</a>)</span>, Bayesian Additive Regression Trees (BART) <span class="citation">(Chipman et al. <a href="#ref-chipman2010bart" role="doc-biblioref">2010</a>)</span>, XGBoost <span class="citation">(Chen and Guestrin <a href="#ref-Chen_2016" role="doc-biblioref">2016</a>)</span>, Generalized Additive Model (GAM) <span class="citation">(Hastie and Tibshirani <a href="#ref-hastie1986generalized" role="doc-biblioref">1986</a>)</span>, Neural Network (NN) <span class="citation">(Hopfield <a href="#ref-hopfield1982neural" role="doc-biblioref">1982</a>)</span>, Model-Based recursive partitioning (MOB) <span class="citation">(Zeileis, Hothorn, and Hornik <a href="#ref-zeileis2008model" role="doc-biblioref">2008</a>; Seibold, Zeileis, and Hothorn <a href="#ref-seibold2016model" role="doc-biblioref">2016</a>)</span>, and Super Learner (SL) <span class="citation">(Van der Laan, Polley, and Hubbard <a href="#ref-van2007super" role="doc-biblioref">2007</a>)</span>.</li>
+</ol>
 <p><img src="/images/ReviewCausal_1.png" /></p>
 <div id="treatment-effect-estimation" class="section level2">
 <h2>Treatment Effect Estimation</h2>
-<p><strong>Q-learning</strong> gets its name because its objective function plays a role similar to that of the Q or reward function in reinforcement learnin <span class="citation">(Li, Wang, and Tu <a href="#ref-li2021robust" role="doc-biblioref">2021</a>)</span> and is first used in estimating optimal <em>dynamic treatment regime</em> <span class="citation">(Murphy <a href="#ref-murphy2003optimal" role="doc-biblioref">2003</a>; Robins <a href="#ref-robins2004optimal" role="doc-biblioref">2004</a>; Schulte et al. <a href="#ref-schulte2014q" role="doc-biblioref">2014</a>)</span>. The basic idea is focusing on the estimation of response surfaces <span class="math inline">\(E[Y \mid \mathbf X, T]\)</span>, which is also known as g-computation <span class="citation">(Robins <a href="#ref-robins1986new" role="doc-biblioref">1986</a>)</span>. So this approach is also called the parametric g-formula <span class="citation">(Hernán and Robins <a href="#ref-hernan2010causal" role="doc-biblioref">2010</a>)</span> in the literature.</p>
-<p>Specifically, we here consider Single or S-learner and Two or T-learner method in the Q-learning camp. Both methods can be easily extended to mutliple treatment scenarios. For <strong>S-learner</strong>, we estimate a joint function <span class="math inline">\(\hat\mu(\mathbf X, T) = E[Y \mid \mathbf X, T]\)</span> with <span class="math inline">\(T \in \{1, 2,...,K\}\)</span> then the HTE between treatment <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, <span class="math inline">\(i\neq j\)</span>, can be found by
+<div id="q-learning" class="section level3">
+<h3>Q-learning</h3>
+<p>Q-learning gets its name because its objective function plays a role similar to that of the Q or reward function in reinforcement learnin <span class="citation">(Li, Wang, and Tu <a href="#ref-li2021robust" role="doc-biblioref">2021</a>)</span> and is first used in estimating optimal <em>dynamic treatment regime</em> <span class="citation">(Murphy <a href="#ref-murphy2003optimal" role="doc-biblioref">2003</a>; Robins <a href="#ref-robins2004optimal" role="doc-biblioref">2004</a>; Schulte et al. <a href="#ref-schulte2014q" role="doc-biblioref">2014</a>)</span>. The basic idea is focusing on the estimation of response surfaces <span class="math inline">\(E[Y \mid \mathbf X, T]\)</span>, which is also known as g-computation <span class="citation">(Robins <a href="#ref-robins1986new" role="doc-biblioref">1986</a>)</span>. So this approach is also called the parametric g-formula <span class="citation">(Hernán and Robins <a href="#ref-hernan2010causal" role="doc-biblioref">2010</a>)</span> in the literature.</p>
+<p>Specifically, we here consider Single or S-learner and Two or T-learner method in the Q-learning camp. Both methods can be easily extended to mutliple treatment scenarios.</p>
+<div id="s-learner" class="section level4">
+<h4>S-learner</h4>
+<p>For <strong>S-learner</strong>, we estimate a joint function <span class="math inline">\(\hat\mu(\mathbf X, T) = E[Y \mid \mathbf X, T]\)</span> with <span class="math inline">\(T \in \{1, 2,...,K\}\)</span> then the HTE between treatment <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, <span class="math inline">\(i\neq j\)</span>, can be found by
 <span class="math display">\[\begin{equation}
 \hat\tau_i^{(j)}(\mathbf X) = \hat\mu(\mathbf X, j) - \hat\mu(\mathbf X, i). \label{eq:Slearner}
 \end{equation}\]</span>
 The whole data is used to estimate function <span class="math inline">\(\mu()\)</span> but since <span class="math inline">\(T\)</span> is considered as one of the covariates, it can be neglected or underweighted if <span class="math inline">\(X\)</span> has high dimension.</p>
+</div>
+<div id="t-learner" class="section level4">
+<h4>T-learner</h4>
 <p><strong>T-learner</strong>, on the other hand, estimate <span class="math inline">\(E[Y \mid \mathbf X, T]\)</span> which only use part of the observed data. For example, when there are <span class="math inline">\(K\)</span> treatments, a total of <span class="math inline">\(K\)</span> functions need to by estimated, i.e., <span class="math inline">\(\mu_k(\mathbf X) = E[Y \mid \mathbf X, T= k]\)</span> for <span class="math inline">\(k=1,...,K\)</span>. Then, the HTE can be calculated by
 <span class="math display">\[\begin{equation}
 \hat\tau_i^{(j)}(\mathbf X) = \hat\mu_j(\mathbf X) - \hat\mu_{i}(\mathbf X)\label{eq:Tlearner}
 \end{equation}\]</span>
 But it can lose the data efficiency due to the fact that each model is estimated separately.</p>
+</div>
+</div>
+<div id="a-learning" class="section level3">
+<h3>A-learning</h3>
 <p>The basic idea of advantage-learning or <strong>A-learning</strong>, is to estimate treatment effect <span class="math inline">\(\tau(\mathbf x)\)</span> directly. The X-learner and R-learner are considered under this framework. Both approach is initially proposed for two treatments scenario, so we first extend them to multiple treatments.</p>
-<p><strong>X-learner</strong> <span class="citation">(Künzel et al. <a href="#ref-kunzel2019metalearners" role="doc-biblioref">2019</a>)</span> enjoys the simplicity of T-learner but fixes its data efficiency issue by targeting on the treatment effects rather than the response surfaces. The main procedure is the following:</p>
+<div id="x-learner" class="section level4">
+<h4>X-learner</h4>
+<p><strong>X-learner</strong> <span class="citation">(Künzel et al. <a href="#ref-kunzel2019metalearners" role="doc-biblioref">2019</a>)</span> enjoys the simplicity of T-learner but fixes its data efficiency issue by targeting on the treatment effects rather than the response surfaces. The main procedure (here is for two treatment setting) is the following:</p>
 <ul>
 <li>Step 1: Estimate <span class="math inline">\(\hat\mu_1(\cdot)\)</span> and <span class="math inline">\(\hat\mu_{-1}(\cdot)\)</span> just like T-learner</li>
 <li>Step 2a: Impute ITEs for subjects in <span class="math inline">\(T=1\)</span> arm by <span class="math inline">\(\hat\tau_{1,i} = Y_i - \hat\mu_{-1}(\mathbf x_i)\)</span> (recall that <span class="math inline">\(\tau_i = Y_i^{(1)} - Y_i^{(-1)}\)</span>) and ITEs for subjects in <span class="math inline">\(T=-1\)</span> arm by <span class="math inline">\(\hat\tau_{-1,i} = \hat\mu_{1}(\mathbf x_i) - Y_i\)</span></li>
 <li>Step 2b: Fit one model <span class="math inline">\(\hat\tau_1(\cdot)\)</span> to predict <span class="math inline">\(\hat\tau_{1,i}\)</span> using data in <span class="math inline">\(T=1\)</span> arm, i.e., <span class="math inline">\(\{(\mathbf x_i, Y_i)\}_{i:T_i = 1}\)</span>; and fit another model <span class="math inline">\(\hat\tau_{-1}(\cdot)\)</span> to predict <span class="math inline">\(\hat\tau_{-1,i}\)</span> using data in <span class="math inline">\(T=-1\)</span> arm, i.e., <span class="math inline">\(\{(\mathbf x_i, Y_i)\}_{i:T_i = -1}\)</span></li>
 <li>Step 3: Combine <span class="math inline">\(\hat\tau_1(\cdot)\)</span> and <span class="math inline">\(\hat\tau_{-1}(\cdot)\)</span> to achieve the final treatment effect model <span class="math inline">\(\hat\tau(\mathbf x) = g(\mathbf x)\tau_{-1}(\mathbf x) + (1-g(\mathbf x))\tau_{1}(\mathbf x)\)</span>, where <span class="math inline">\(g(\cdot)\)</span> is some weighting function, e.g., propensity score.</li>
 </ul>
+</div>
+<div id="r-learner" class="section level4">
+<h4>R-learner</h4>
 <p><strong>R-learner</strong> <span class="citation">(Nie and Wager <a href="#ref-NieQuasi2020" role="doc-biblioref">2020</a>)</span> adopts the Robinson’s decomposition <span class="citation">(Robinson <a href="#ref-robinson1988root" role="doc-biblioref">1988</a>)</span> to connect the HTE with the observed outcome
 <span class="math display">\[\begin{equation}
 E[Y\mid \mathbf X, T] = m(\mathbf X) + (1[T = 1]- \pi(\mathbf X))\tau(\mathbf X) \label{eq:Rlearner}
@@ -223,6 +260,8 @@ where <span class="math inline">\(m(\mathbf X) = E[Y \mid \mathbf X]\)</span>. F
 \arg\min_{\boldsymbol \tau_i} \ \mathbb E\left[\left( Y - m(\mathbf X) - \sum_{k\neq i} (1[T=k]-\pi^{(k)}(\mathbf X))\tau_i^{(k)}(\mathbf X)\right)^2\right] \label{eq:rawRL}
 \end{equation}\]</span>
 where denote the estimated treatment effects <span class="math inline">\(\hat{\boldsymbol \tau}_i = (\hat\tau_i^{(1)},...,\hat\tau_i^{(k-1)}, \hat\tau_i^{(k+1)}, ..., \hat\tau_i^{(K)})\)</span>. In practice, we can estimate <span class="math inline">\(\hat m()\)</span> and <span class="math inline">\(\hat\pi()\)</span> in the first stage and plug in to obtain <span class="math inline">\(\hat{\boldsymbol \tau}_i\)</span>. Notably, with different reference group selection, loss functions () are different so that we can have <span class="math inline">\(\hat{\boldsymbol \tau}_1,...,\hat{\boldsymbol \tau}_K\)</span>.</p>
+</div>
+</div>
 </div>
 <div id="treatment-recommendation" class="section level2">
 <h2>Treatment recommendation</h2>
@@ -235,15 +274,33 @@ for S-learner and
 T^{\text{opt}} = \arg\max_k \hat\mu_k(\mathbf x)
 \]</span>
 for T-learner, suppose the larger outcome the better.</p>
+<div id="itr" class="section level3">
+<h3>ITR</h3>
 <p>Other than these learners, the angle-based clutering method by <span class="citation">Qi et al. (<a href="#ref-qi2020multi" role="doc-biblioref">2020</a>)</span> is designed for optimal treatment recommendation with multiple treatments.</p>
 <hr />
 </div>
 </div>
-<div id="reference" class="section level1 unnumbered">
-<h1>Reference</h1>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
 <div id="refs" class="references">
+<div id="ref-breiman2001random">
+<p>Breiman, Leo. 2001. “Random Forests.” <em>Machine Learning</em> 45 (1): 5–32.</p>
+</div>
+<div id="ref-Chen_2016">
+<p>Chen, Tianqi, and Carlos Guestrin. 2016. “XGBoost: A Scalable Tree Boosting System.” In <em>Proceedings of the 22nd Acm Sigkdd International Conference on Knowledge Discovery and Data Mining</em>, 785–94. KDD ’16. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/2939672.2939785">https://doi.org/10.1145/2939672.2939785</a>.</p>
+</div>
+<div id="ref-chipman2010bart">
+<p>Chipman, Hugh A, Edward I George, Robert E McCulloch, and others. 2010. “BART: Bayesian Additive Regression Trees.” <em>The Annals of Applied Statistics</em> 4 (1): 266–98.</p>
+</div>
+<div id="ref-hastie1986generalized">
+<p>Hastie, Trevor, and Robert Tibshirani. 1986. “Generalized Additive Models.” <em>Statistical Science</em>, 297–310.</p>
+</div>
 <div id="ref-hernan2010causal">
 <p>Hernán, Miguel A, and James M Robins. 2010. “Causal Inference.” CRC Boca Raton, FL;</p>
+</div>
+<div id="ref-hopfield1982neural">
+<p>Hopfield, John J. 1982. “Neural Networks and Physical Systems with Emergent Collective Computational Abilities.” <em>Proceedings of the National Academy of Sciences</em> 79 (8): 2554–8.</p>
 </div>
 <div id="ref-kunzel2019metalearners">
 <p>Künzel, Sören R, Jasjeet S Sekhon, Peter J Bickel, and Bin Yu. 2019. “Metalearners for Estimating Heterogeneous Treatment Effects Using Machine Learning.” <em>Proceedings of the National Academy of Sciences</em> 116 (10): 4156–65.</p>
@@ -271,6 +328,15 @@ for T-learner, suppose the larger outcome the better.</p>
 </div>
 <div id="ref-schulte2014q">
 <p>Schulte, Phillip J, Anastasios A Tsiatis, Eric B Laber, and Marie Davidian. 2014. “Q-and a-Learning Methods for Estimating Optimal Dynamic Treatment Regimes.” <em>Statistical Science: A Review Journal of the Institute of Mathematical Statistics</em> 29 (4): 640.</p>
+</div>
+<div id="ref-seibold2016model">
+<p>Seibold, Heidi, Achim Zeileis, and Torsten Hothorn. 2016. “Model-Based Recursive Partitioning for Subgroup Analyses.” <em>The International Journal of Biostatistics</em> 12 (1): 45–63.</p>
+</div>
+<div id="ref-van2007super">
+<p>Van der Laan, Mark J, Eric C Polley, and Alan E Hubbard. 2007. “Super Learner.” <em>Statistical Applications in Genetics and Molecular Biology</em> 6 (1).</p>
+</div>
+<div id="ref-zeileis2008model">
+<p>Zeileis, Achim, Torsten Hothorn, and Kurt Hornik. 2008. “Model-Based Recursive Partitioning.” <em>Journal of Computational and Graphical Statistics</em> 17 (2): 492–514.</p>
 </div>
 </div>
 </div>
