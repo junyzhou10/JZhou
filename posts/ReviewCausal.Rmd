@@ -49,10 +49,10 @@ library(kableExtra)
 ![](/images/OpenJoke.png)
 
 # Brief Introduction
-The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. Conceptually, causal inference is all about a question of 'what if'. People can ask themself *what if* I took chemotherapy rather than radiation to treat my cancer, would I get better now? Or *what if* I went to graduate school rather than entering the job market after graduation, would I have a better career prospect? The economists can be curious about *what if* the Federal Reserve raised the interest rate by 50bp rather than 25bp, would the inflation rate be better controlled? The most straightforward way to answer those questions is, *if* we know what will happen for any of these actions, we of course can find the one benefits our goal the most. This leads to the **Potential Outcome Framework** that we will discuss in the next section.
+The need for causal inference arises in many different fields. Economists want to quantify the causal effects of interest rate cut on the economy. Trade policy makers want to know whether increased tariff causes changes in trade deficit. Healthcare providers want to assess whether a therapy causes changes in specific patient outcomes. Conceptually, causal inference is all about a question of 'what if'. People can ask themself *what if* I took chemotherapy rather than radiation to treat my cancer, would I get better now? Or *what if* I went to graduate school rather than entering the job market after graduation, would I have a better career prospect? The economists can be curious about *what if* the Federal Reserve raised the interest rate by 50bp rather than 25bp, would the inflation rate be better controlled? The most straightforward way to answer those questions is, *if* we know what will happen for any of these actions in advance, we of course can choose the one benefits our goal the most. This leads to the [Potential Outcome Framework](#potential) that we will discuss in the next section.
 
 
-# Potential Outcome Framework 
+# Potential Outcome Framework {#potential}
 
 Potential outcome framework, or Rubin-Neyman potential outcome framework [@rubin1974estimating; @neyman1923application; @imbens2015causal], is the most canonical framework for causal inference studies. Suppose the treatment has binary levels, denoted as $T \in \{1,-1\}$, and the corresponding *potential outcomes* are $Y^{(1)}$ and $Y^{(-1)}$, respectively. But people can only observe one realized outcome, i.e., the observed outcome is **factual** and unobserved outcome is **counterfactual**. In other words, the outcome can only be either $Y^{(1)}$ or $Y^{(-1)}$, which is represented by
 $$
@@ -96,12 +96,12 @@ Basically, the observations can be either from randomized experiments, like rand
 
 Briefly speaking, the ATE can be easily obtained via well-designed RCTs or A/B tests (we will see why in section [Average Treatment Effect](#ATE)). That's how pharmaceutical/biotech companies evaluate their drug effectiveness. In recent years, a big trend in drug development which is [supported by FDA](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/considerations-use-real-world-data-and-real-world-evidence-support-regulatory-decision-making-drug) is to use RWD and [real world evidence (RWE)](https://www.fda.gov/science-research/science-and-research-special-topics/real-world-evidence) to support as well as speed-up the regulatory approval. Since RWD is obervational rather than randomized controlled, a sizable methods are proposed including **Matching** [@rosenbaum1983central; @austin2014comparison], **Subclassification** [@rosenbaum1984reducing], **Weighting** [@hirano2003efficient; @austin2011introduction; @austin2015moving], **Regression** [@rubin1979using; @rubin:1985; @hahn1998role; @gutman2013robust], or a mixture of them [@bang2005doubly; @van2006targeted].
 
-Another heat topic in causal inference is about the estimation of CATE/HTE/ITE from observational studies. This is usually tough because given the noise of observational studies and subject-level estimation, the estimates can have large variance. Various of methods have been proposed including but not limited to causal boosting [@powers2018some], causal forests [@athey2016recursive], individual-treatment-rule-based methods that mostly involves outcome weighted learning (OWL) [@qian2011performance; @zhao2012estimating; @zhou2017residual; @qi2020multi], and several meta-learners, such as X-learner [@kunzel2019metalearners] and R-learner [@NieQuasi2020]. These methods can be easily degenerate to study the CATE/HTE/ITE in randomized trials. 
+Another heat topic in causal inference is about the estimation of CATE/HTE/ITE from observational studies. This is usually tough because given the noise of observational studies and subject-level estimation, the estimates can have large variance. Various of methods have been proposed including but not limited to causal boosting [@powers2018some], causal forests [@athey2016recursive], individual-treatment-rule-based methods that mostly involves outcome weighted learning (OWL) [@qian2011performance; @zhao2012estimating; @zhou2017residual; @qi2020multi], and several meta-learners, such as X-learner [@kunzel2019metalearners] and R-learner [@NieQuasi2020]. These methods can be easily degenerated to study the CATE/HTE/ITE in randomized trials by replacing the estimated propensity scores to fixed numbers.
 
 
 
 ## Causal Estimands {#Estimands}
-Different scientific questions leads to the estimation of different causal estimands. As aforementioned, for instance, ATE is basically for assessing the population/sub-population treatment effect which is the key focus for the drug companies. On the other hand, CATE which is more about individual-level treatment effect, so it can be used to do precision medicine or personalized recommendations. Here is a list of the acronym of some commonly used causal estimands:
+Different scientific questions leads to the estimation of different causal estimands. As aforementioned, ATE is basically about assessing the population/sub-population treatment effect which is the key focus for the drug companies. On the other hand, CATE is more about individual-level treatment effect, so it can be used to do precision medicine or personalized recommendations. Here is a list of the acronym of some commonly used causal estimands:
 
 - ITE (individual treatment effect)
 - ATE (average treatment effect)
@@ -128,6 +128,9 @@ $$
 \block{1. Think about why and when the equation holds; \newline 2. What if trial has Response-adaptive Randomization (RAR)}
 
 The essence here is the randomization eliminates all the confounding effects, or in other words, the **Unconfoundedness** and **Positivity** assumptions holds automatically under randomized controlled experiments. 
+
+**Remark** \newline
+$E[Y^{(1)}] - E[Y^{(-1)}]$ is the interested causation but is unobservable in real world. By **unconfoundedness** and **positivity**, we infer the unobservable causation via observed data, i.e., $E[Y \mid T = 1] - E[Y \mid T = -1]$, which is also known as association. In general, association does not imply causation. 
 
 Another commonly used causal estimand is average treatment effect for the treated (ATT), which focus on the population receive the treatment 
 $$
@@ -241,7 +244,7 @@ TMLE is a two-stage procedure with the first stage to obtain an initial estimate
 $$
 \hat\tau^{\text{TMLE}}(\mathbf X) = \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) + \hat\varepsilon \left(\frac{1[T=1]}{\hat\pi(\mathbf X)} - \frac{1[T=-1]}{1-\hat\pi(\mathbf X)}\right)
 $$
-where $\varepsilon$ is a flunctuation parameter to update the initial estimation of response surfaces $\hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X)$ using the information from propensity score, just like other doubly-robust estimator or X-learner. $\varepsilon$ can be estimated by fitting 'clever covariate' $H(T, \mathbf X) = \frac{1[T=1]}{\hat\pi(\mathbf X)} - \frac{1[T=-1]}{1-\hat\pi(\mathbf X)}$ on the residual $Y - \hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X) \sim H(T, \mathbf X)$.
+where $\varepsilon$ is a flunctuation parameter to update the initial estimation of response surfaces $\hat\mu_1(\mathbf X) - \hat\mu_{-1}(\mathbf X)$ using the information from propensity score, just like other doubly-robust estimator or X-learner. $\varepsilon$ can be estimated by fitting 'clever covariate' $H(T, \mathbf X) = \frac{1[T=1]}{\hat\pi(\mathbf X)} - \frac{1[T=-1]}{1-\hat\pi(\mathbf X)}$ on the residual $Y - \mathbb E[Y\mid T, \mathbf X] \sim H(T, \mathbf X)$.
 
 ***
 
@@ -421,7 +424,7 @@ X-learner [@kunzel2019metalearners] enjoys the simplicity of T-learner but fixes
 Notably, when calculating $\hat\tau_1(\cdot)$, for example, X-learner uses whole data, including instances from both $T=1$ and $T=-1$, which is deems as fixing the data efficiency issue in T-learner approach.
 
 ### Individualized Treatment Rule 
-Most of the previous methods target on CATE estimation, whereas the optimal treatment can be found automatically by looking at the estimates. But the fact is, obtaining the consistent and unbiased estimates for CATE is difficult. However, if we only need to know which treatment is the optimal, we actually do not need to estimate the CATE but only the treatment assignment rule, or so-called individual-treatment-rule (ITR), $d(\mathbf x) = sgn\{\tau(\mathbf x)\}$, which is a mapping $d: \mathcal X \rightarrow T$. In practice, we do not need to estimate $\tau(\cdot)$ but $d(\cdot)$ directly. See Figure (\@ref(fig:ITR)) for a demonstration of the difference between Q-learning, A-learning, and ITR.
+Most of the previous methods target on CATE estimation, then the optimal treatment can be found automatically by looking at the estimates. Whereas, obtaining the consistent and unbiased estimates for CATE is difficult in practice. However, if we only need to know which treatment is the optimal, we actually do not need to estimate the CATE but only the treatment assignment rule, or so-called individual-treatment-rule (ITR), $d(\mathbf x) = sgn\{\tau(\mathbf x)\}$, which is a mapping $d: \mathcal X \rightarrow T$. In practice, we do not need to estimate $\tau(\cdot)$ but $d(\cdot)$ directly. See Figure (\@ref(fig:ITR)) for a demonstration of the difference between Q-learning, A-learning, and ITR.
 
 
 ```{r ITR, echo=FALSE, fig.width=10, fig.height=3.2, fig.cap="\\label{fig:ITR}Illustration of causal inference approaches. (A) Q-learning aims at estimating the response surfaces of each treatment group; (B) A-learning aims at estimation of treatment effect directly; (C) ITR aims at estimation of treatment region rather than the treatment effect."}
