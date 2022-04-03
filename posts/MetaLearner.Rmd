@@ -53,6 +53,7 @@ Meta-learners are a simple way to leverage off-the-shelf predictive machine lear
 
 ![](/images/ReviewCausal_1.png)
 
+***
 
 ## Treatment Effect Estimation
 
@@ -90,9 +91,9 @@ The basic idea of advantage-learning or **A-learning**, is to estimate targeted 
 For multi-arm setting, we can extend it with the same gist
 
 - Step 1: Estimate $\hat\mu_k(\cdot),k=1,...,K$ just like T-learner
-- Step 2a: For any pairwise HTE, for example, $\tau_i^{(j)}(\mathbf X) = \mathbb E[Y \mid T=j,\mathbf X] - \mathbb E[Y \mid T=i,\mathbf X]$, we can have two sets of impuations: $\tilde\tau_i^{(j)} := \{Y_s - \hat\mu_i(\mathbf X_s)\}_{s:T_s=j}$ and $\{\hat\mu_j(\mathbf X_s) - Y_s\}_{s:T_s=i}$
-- Step 2b: Fit one model for each imputed HTE, and obtained two models, denote $\hat\tau_{i,i}^{(j)}(\cdot)$ for $\{Y_s - \hat\mu_i(\mathbf X_s)\}_{s:T_s=j}$, and $\hat\tau_{i,j}^{(j)}(\cdot)$ for $\{\hat\mu_j(\mathbf X_s) - Y_s\}_{s:T_s=i}$
-- Step 3: Combine $\hat\tau_{i,i}^{(j)}(\cdot)$ and $\hat\tau_{i,j}^{(j)}(\cdot)$ to obtain final estimate $\hat\tau_{i}^{(j)}(\cdot) = g(\cdot)\hat\tau_{i,i}^{(j)}(\cdot) + (1-g(\cdot))\hat\tau_{i,j}^{(j)}(\cdot)$, where $g(\cdot)$ can be relative propensity scores $g(\cdot)=\hat\pi^{(j)}/(\hat\pi^{(i)}+\hat\pi^{(j)})$
+- Step 2a: For any pairwise HTE, for example, $\tau_i^{(j)}(\mathbf X) = \mathbb E[Y \mid T=j,\mathbf X] - \mathbb E[Y \mid T=i,\mathbf X]$, we can have two sets of impuations: $\{Y_s - \hat\mu_i(\mathbf X_s)\}_{s:T_s=j}$ and $\{\hat\mu_j(\mathbf X_s) - Y_s\}_{s:T_s=i}$
+- Step 2b: Fit one model for each imputed HTE which yields two models, denote $\hat\tau_{i,i}^{(j)}(\cdot)$ for $\{Y_s - \hat\mu_i(\mathbf X_s)\}_{s:T_s=j}$ and $\hat\tau_{i,j}^{(j)}(\cdot)$ for $\{\hat\mu_j(\mathbf X_s) - Y_s\}_{s:T_s=i}$
+- Step 3: Combine $\hat\tau_{i,i}^{(j)}(\cdot)$ and $\hat\tau_{i,j}^{(j)}(\cdot)$ to obtain final estimate $\hat\tau_{i}^{(j)}(\cdot) = g(\cdot)\hat\tau_{i,i}^{(j)}(\cdot) + (1-g(\cdot))\hat\tau_{i,j}^{(j)}(\cdot)$, where $g(\cdot)$ can be related with estimated propensity scores $g(\cdot)=\hat\pi^{(j)}/(\hat\pi^{(i)}+\hat\pi^{(j)})$
 
 
 One potential issue for X-learner is, the method targets on squared loss function, which means it only applies for continuous outcomes but not for other outcome types.
@@ -120,6 +121,7 @@ To deal with the inconsistency recommendation problem in R-learner, the author p
 (Author proposed method. Easy to use and has superior performance comparing to the other meta-learners.)
 
 
+***
 
 ## Treatment recommendation
 For S- and T-learner, the optimal treatment given covariate $\mathbf x$ can be directly derived from
@@ -145,6 +147,7 @@ $$
 But as aforementioned, the choice of $j$ leads to different set of $\hat{\boldsymbol \tau}_j$, and correspondingly, different optimal recommendation $T^{\text{opt}}$. That is, the selection of treatment group can cause various optimal recommendations.
 
 
+***
 
 ### ITR (working)
 Other than these learners, the angle-based clutering method by @qi2020multi is designed for optimal treatment recommendation with multiple treatments. 

@@ -213,6 +213,7 @@
 <li>After step 2, the statistical problem is built up, so in step 3, the main focus is how to solve them. If viewing in machine learning perspective, step 2 actually yields a problem specific loss function no matter following Q-learning or A-learning approach. The strength of meta-learners is they do not have strong requirements or limitations on the structure of loss function so that any off-the-shelf base learners can be readily fill in to solve. Such as Random Forests (RF) <span class="citation">(Breiman <a href="#ref-breiman2001random" role="doc-biblioref">2001</a>)</span>, Bayesian Additive Regression Trees (BART) <span class="citation">(Chipman et al. <a href="#ref-chipman2010bart" role="doc-biblioref">2010</a>)</span>, XGBoost <span class="citation">(Chen and Guestrin <a href="#ref-Chen_2016" role="doc-biblioref">2016</a>)</span>, Generalized Additive Model (GAM) <span class="citation">(Hastie and Tibshirani <a href="#ref-hastie1986generalized" role="doc-biblioref">1986</a>)</span>, Neural Network (NN) <span class="citation">(Hopfield <a href="#ref-hopfield1982neural" role="doc-biblioref">1982</a>)</span>, Model-Based recursive partitioning (MOB) <span class="citation">(Zeileis, Hothorn, and Hornik <a href="#ref-zeileis2008model" role="doc-biblioref">2008</a>; Seibold, Zeileis, and Hothorn <a href="#ref-seibold2016model" role="doc-biblioref">2016</a>)</span>, and Super Learner (SL) <span class="citation">(Van der Laan, Polley, and Hubbard <a href="#ref-van2007super" role="doc-biblioref">2007</a>)</span>.</li>
 </ol>
 <p><img src="/images/ReviewCausal_1.png" /></p>
+<hr />
 <div id="treatment-effect-estimation" class="section level2">
 <h2>Treatment Effect Estimation</h2>
 <div id="q-learning" class="section level3">
@@ -251,9 +252,9 @@ But it can lose the data efficiency due to the fact that each model is estimated
 <p>For multi-arm setting, we can extend it with the same gist</p>
 <ul>
 <li>Step 1: Estimate <span class="math inline">\(\hat\mu_k(\cdot),k=1,...,K\)</span> just like T-learner</li>
-<li>Step 2a: For any pairwise HTE, for example, <span class="math inline">\(\tau_i^{(j)}(\mathbf X) = \mathbb E[Y \mid T=j,\mathbf X] - \mathbb E[Y \mid T=i,\mathbf X]\)</span>, we can have two sets of impuations: <span class="math inline">\(\tilde\tau_i^{(j)} := \{Y_s - \hat\mu_i(\mathbf X_s)\}_{s:T_s=j}\)</span> and <span class="math inline">\(\{\hat\mu_j(\mathbf X_s) - Y_s\}_{s:T_s=i}\)</span></li>
-<li>Step 2b: Fit one model for each imputed HTE, and obtained two models, denote <span class="math inline">\(\hat\tau_{i,i}^{(j)}(\cdot)\)</span> for <span class="math inline">\(\{Y_s - \hat\mu_i(\mathbf X_s)\}_{s:T_s=j}\)</span>, and <span class="math inline">\(\hat\tau_{i,j}^{(j)}(\cdot)\)</span> for <span class="math inline">\(\{\hat\mu_j(\mathbf X_s) - Y_s\}_{s:T_s=i}\)</span></li>
-<li>Step 3: Combine <span class="math inline">\(\hat\tau_{i,i}^{(j)}(\cdot)\)</span> and <span class="math inline">\(\hat\tau_{i,j}^{(j)}(\cdot)\)</span> to obtain final estimate <span class="math inline">\(\hat\tau_{i}^{(j)}(\cdot) = g(\cdot)\hat\tau_{i,i}^{(j)}(\cdot) + (1-g(\cdot))\hat\tau_{i,j}^{(j)}(\cdot)\)</span>, where <span class="math inline">\(g(\cdot)\)</span> can be relative propensity scores <span class="math inline">\(g(\cdot)=\hat\pi^{(j)}/(\hat\pi^{(i)}+\hat\pi^{(j)})\)</span></li>
+<li>Step 2a: For any pairwise HTE, for example, <span class="math inline">\(\tau_i^{(j)}(\mathbf X) = \mathbb E[Y \mid T=j,\mathbf X] - \mathbb E[Y \mid T=i,\mathbf X]\)</span>, we can have two sets of impuations: <span class="math inline">\(\{Y_s - \hat\mu_i(\mathbf X_s)\}_{s:T_s=j}\)</span> and <span class="math inline">\(\{\hat\mu_j(\mathbf X_s) - Y_s\}_{s:T_s=i}\)</span></li>
+<li>Step 2b: Fit one model for each imputed HTE which yields two models, denote <span class="math inline">\(\hat\tau_{i,i}^{(j)}(\cdot)\)</span> for <span class="math inline">\(\{Y_s - \hat\mu_i(\mathbf X_s)\}_{s:T_s=j}\)</span> and <span class="math inline">\(\hat\tau_{i,j}^{(j)}(\cdot)\)</span> for <span class="math inline">\(\{\hat\mu_j(\mathbf X_s) - Y_s\}_{s:T_s=i}\)</span></li>
+<li>Step 3: Combine <span class="math inline">\(\hat\tau_{i,i}^{(j)}(\cdot)\)</span> and <span class="math inline">\(\hat\tau_{i,j}^{(j)}(\cdot)\)</span> to obtain final estimate <span class="math inline">\(\hat\tau_{i}^{(j)}(\cdot) = g(\cdot)\hat\tau_{i,i}^{(j)}(\cdot) + (1-g(\cdot))\hat\tau_{i,j}^{(j)}(\cdot)\)</span>, where <span class="math inline">\(g(\cdot)\)</span> can be related with estimated propensity scores <span class="math inline">\(g(\cdot)=\hat\pi^{(j)}/(\hat\pi^{(i)}+\hat\pi^{(j)})\)</span></li>
 </ul>
 <p>One potential issue for X-learner is, the method targets on squared loss function, which means it only applies for continuous outcomes but not for other outcome types.</p>
 </div>
@@ -278,6 +279,7 @@ where denote the estimated treatment effects <span class="math inline">\(\hat{\b
 <div id="de-centralized-learner" class="section level4">
 <h4>de-Centralized-Learner</h4>
 <p>(Author proposed method. Easy to use and has superior performance comparing to the other meta-learners.)</p>
+<hr />
 </div>
 </div>
 </div>
@@ -302,6 +304,7 @@ j &amp; \quad \text{if } \hat\tau_j^{(k)}(\mathbf{X})&lt;0 \text{ for } k \neq j
 \end{cases}
 \]</span>
 But as aforementioned, the choice of <span class="math inline">\(j\)</span> leads to different set of <span class="math inline">\(\hat{\boldsymbol \tau}_j\)</span>, and correspondingly, different optimal recommendation <span class="math inline">\(T^{\text{opt}}\)</span>. That is, the selection of treatment group can cause various optimal recommendations.</p>
+<hr />
 <div id="itr-working" class="section level3">
 <h3>ITR (working)</h3>
 <p>Other than these learners, the angle-based clutering method by <span class="citation">Qi et al. (<a href="#ref-qi2020multi" role="doc-biblioref">2020</a>)</span> is designed for optimal treatment recommendation with multiple treatments.</p>
