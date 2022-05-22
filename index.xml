@@ -50,7 +50,7 @@ Meta-learners for treatment effect estimation &amp;amp; optimal treatment recomm
       <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://jzhou.org/about/</guid>
-      <description>Junyi Zhou was a Ph.D. candidate in Biostatistics at Richard M. Fairbanks School of Public Health and School of Medicine, Indiana University. He is co-advised by Dr. Wanzhu Tu and Dr. Ying Zhang. His research focuses on clustering algorithms especially for longitudinal data; causal inference in potential outcome framework when multiple treatments exist; Positive-and-Unlabeled data learning methods in the situation like cancer-metastasis that only positive cases are for sure, while the rest are unlabeled.</description>
+      <description>Junyi Zhou receives his Ph.D. in Biostatistics at Richard M. Fairbanks School of Public Health and School of Medicine, Indiana University. He is co-advised by Dr. Wanzhu Tu and Dr. Ying Zhang. His research focuses on clustering algorithms especially for longitudinal data; average treatment effect (ATE) and heterogeneous treatment effect (HTE) estimation under potential outcome framework in particular when multiple treatments exist; Positive-and-Unlabeled data learning (PU-learning) methods in the situation that positive labels are for sure but negative labels are noisy.</description>
     </item>
     
     <item>
